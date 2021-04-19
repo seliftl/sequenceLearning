@@ -152,7 +152,7 @@ def get_dict_of_ngrams(training_data, n_grams=0):
 
 def gen_vocab(training_data):
     vocab = list(flatten(training_data))            
-    return Vocabulary(vocab)
+    return Vocabulary(vocab, unk_cutoff=1)
 
 # %%
 trump_ngrams = get_dict_of_ngrams(trump_data['train'])
