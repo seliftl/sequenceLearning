@@ -71,9 +71,13 @@ def split_data(df):
 
 def train_data(df, n):
     train_data, padded_sents = padded_everygram_pipeline(n, df['tokenized_text'])
+    # for ngramlize_sent in train_data:
+    #     print(list(ngramlize_sent))
+    #     print()
+    # print('#############')
+    # print(list(padded_sents))
     model = Laplace(n)
     model.fit(train_data, padded_sents)
-    # Vocabulary(model.counts, unk_cutoff=1)
     return model
 
 def prepare_test_data(df, n):
@@ -92,8 +96,8 @@ def prepare_test_data(df, n):
 def calc_prob(tweet, model, n):
     prob = 1
     for i in range(0, len(tweet)):
-        l = list(tweet[i])
-        prob = prob * model.score(l[-1], l[:-1])
+        print(tweet)
+        prob = prob * model.score(tweet[i][-1], tweet[i][:-1])
     return prob
 
 def compare_authors(model1, model2, test_tweet, n):
@@ -116,7 +120,7 @@ def pipeline_trump(n: int):
     test_data_trump = prepare_test_data(trump_test, n)
     test_data_trump = [x for x in test_data_trump if x]
     return model_trump, test_data_trump
-model_trump, test_data_trump = pipeline_trump(3)
+model_trump, test_data_trump = pipeline_trump(4)
 #%% [markdown]
 """
 ## Biden
@@ -128,7 +132,7 @@ def pipeline_biden(n: int):
     model_biden = train_data(biden_train, n)
     test_data_biden = prepare_test_data(biden_test, n)
     return model_biden, test_data_biden
-model_biden, test_data_biden = pipeline_biden(3)
+model_biden, test_data_biden = pipeline_biden(4)
 #%% [markdown]
 """
 ## Obama
@@ -140,18 +144,20 @@ def pipeline_obama(n: int):
     model_obama = train_data(obama_train, n)
     test_data_obama = prepare_test_data(obama_test, n)
     return model_obama, test_data_obama
-model_obama, test_data_obama = pipeline_obama(3)
+model_obama, test_data_obama = pipeline_obama(4)
 #%% [markdown]
 """
 ## Comparison of Trump and Biden
 """
 scores = []
 for i in range(0, len(test_data_trump)):
-    scores.append(compare_authors(model_trump, model_biden, test_data_trump[i], 3 ))
+    scores.append(compare_authors(model_trump, model_biden, test_data_trump[i], 4 ))
 if np.mean(scores) > 0:
     print('Author was Trump')
 else: 
     print('Author was Biden')
+#%% [markdown]
+print(scores)
 #%% [markdown]
 """
 ## Comparison of Obama and Biden
