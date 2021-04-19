@@ -63,25 +63,13 @@ def tokenize_texts(input_texts):
 
 # %%
 # Preprocessing methods
-DEFAULT_SENTENCE_BOUNDARIES = ['(?<=[0-9]|[^0-9.])(\.)(?=[^0-9.]|[^0-9.]|[\s]|$)','\.{2,}','\!+','\:+','\?+']
-
-DEFAULT_PUNCTUATIONS = ['(?<=[0-9]|[^0-9.])(\.)(?=[^0-9.]|[^0-9.]|[\s]|$)','\.{2,}',
-                        '\!+','\:+','\?+','\,+','\"+', '\”+', '\“+','\//+', r'\(|\)|\[|\]|\{|\}']
-
-def sentencize(raw_input_document, sentence_boundaries = DEFAULT_SENTENCE_BOUNDARIES, delimiter_token='<SPLIT>'):
-    working_document = raw_input_document
-    punctuation_patterns = sentence_boundaries
-    for punct in punctuation_patterns:
-        working_document = re.sub(punct, '\g<0>'+delimiter_token, working_document, flags=re.UNICODE)
-
-    # Remove links
-    working_document = re.sub(r"http\S+", "", working_document)
-
-    list_of_string_sentences = ['<s> ' + x.strip() + ' </s>' for x in working_document.split(delimiter_token) if x.strip() != ""]
-    return list_of_string_sentences
+DEFAULT_PUNCTUATIONS = ['[^A-Za-z0-9 ]','\!+','\:+','\?+','\,+','\"+', '\”+', '\“+','\//+', r'\(|\)|\[|\]|\{|\}']
 
 def tokenize(input, punctuation_patterns= DEFAULT_PUNCTUATIONS, split_characters = r'\s|\t|\n|\r', delimiter_token='<SPLIT>'):
     input_to_tokenize = input
+
+    input_to_tokenize = re.sub(r"http\S+", "", input_to_tokenize)
+
     # Whitespace removal
     input_to_tokenize = ' '.join(input_to_tokenize.split())
 
@@ -89,8 +77,9 @@ def tokenize(input, punctuation_patterns= DEFAULT_PUNCTUATIONS, split_characters
     input_to_tokenize = input_to_tokenize.lower()
 
     # Remove punctuation and numbers
-    for punct in punctuation_patterns:
-        input_to_tokenize = re.sub(punct, "", input_to_tokenize)
+    #for punct in punctuation_patterns:
+    #    input_to_tokenize = re.sub(punct, "", input_to_tokenize)
+    input_to_tokenize = re.sub(r'[^A-Za-z0-9#@ ]+', '', input_to_tokenize)
 
     # Stemming
     #stemmer = SnowballStemmer(language='english')
@@ -100,6 +89,9 @@ def tokenize(input, punctuation_patterns= DEFAULT_PUNCTUATIONS, split_characters
     input_to_tokenize = re.sub(split_characters, delimiter_token, input_to_tokenize)
     list_of_token_strings = [x.strip() for x in input_to_tokenize.split(delimiter_token) if x.strip() !="" and len(x.strip()) > 1]
    
+    list_of_token_strings.insert(0, '<s>')
+    list_of_token_strings.append('</s>')
+
     return list_of_token_strings
 
 def get_train_and_test_tokens_from_file(file_name, text_of_tweet_entry, number_train_data=5500, number_test_data=100):
@@ -118,21 +110,15 @@ def get_train_and_test_tokens_from_file(file_name, text_of_tweet_entry, number_t
     # Tokenize
     tokenized_tweets = []
     for tweet_text in tweet_texts:
-        sentencized_tweet = sentencize(tweet_text)
+        tokenized_tweet = tokenize(tweet_text)
+        if len(tokenized_tweet) > 2:
+            tokenized_tweets.append(tokenized_tweet)
 
-        tokenized_sentences = []
-        for sentence in sentencized_tweet:
-            tokenized_sentence = tokenize(sentence)
-            if len(tokenized_sentence) > 2:
-                tokenized_sentences.append(tokenized_sentence)
-
-        tokenized_tweets.append(tokenized_sentences)
-    
     # Seperate
     random.shuffle(tokenized_tweets)
     tokens['test'] = tokenized_tweets[:number_test_data]
-    #tokens['train'] = tokenized_tweets[number_test_data:number_test_data+number_train_data]
-    tokens['train'] = tokenized_tweets[number_test_data:]
+    tokens['train'] = tokenized_tweets[number_test_data:number_test_data+number_train_data]
+    #tokens['train'] = tokenized_tweets[number_test_data:]
 
     return tokens
 
@@ -158,24 +144,10 @@ def get_dict_of_ngrams(training_data, n_grams=0):
     if n_grams == 0:
         n_grams = {1:[], 2:[], 3:[], 4:[], 5:[]}
 
-    for sentencized_tweet in training_data:
-        unigrams_of_tweet = []
-        bigrams_of_tweet = []
-        trigrams_of_tweet = []
-        fourgrams_of_tweet = []
-        fivegrams_of_tweet = []
-        for tokenized_sentence in sentencized_tweet:
-            unigrams_of_tweet.extend(list(ngrams(tokenized_sentence, 1)))
-            bigrams_of_tweet.extend(list(ngrams(tokenized_sentence, 2)))
-            trigrams_of_tweet.extend(list(ngrams(tokenized_sentence, 3)))
-            fourgrams_of_tweet.extend(list(ngrams(tokenized_sentence, 4)))
-            fivegrams_of_tweet.extend(list(ngrams(tokenized_sentence, 5)))
-        n_grams[1].append(unigrams_of_tweet)
-        n_grams[2].append(bigrams_of_tweet)
-        n_grams[3].append(trigrams_of_tweet)
-        n_grams[4].append(fourgrams_of_tweet)
-        n_grams[5].append(fivegrams_of_tweet)
-
+    for tokenized_tweet in training_data:
+        for i in range(1,6):
+          n_grams[i].append(list(ngrams(tokenized_tweet, i)))
+      
     return n_grams
 
 def gen_vocab(training_data):
@@ -210,6 +182,8 @@ print(trump_ngrams[3][0])
 print(trump_ngrams[4][0])
 print(trump_ngrams[5][0])
 
+print(len(trump_ngrams[5]))
+
 
 #fdist = nltk.FreqDist(trump_ngrams['bigrams'])
 #print("Most common bigrams: ")
@@ -232,7 +206,7 @@ def get_models_for_president(n_grams, vocab):
 trump_models = get_models_for_president(trump_ngrams, trump_vocab)
 obama_models = get_models_for_president(obama_ngrams, obama_vocab)
 biden_models = get_models_for_president(biden_ngrams, biden_vocab)
-joint_models = get_models_for_president(joint_ngrams, joint_vocab)
+#joint_models = get_models_for_president(joint_ngrams, joint_vocab)
 
 
 
@@ -242,20 +216,20 @@ joint_models = get_models_for_president(joint_ngrams, joint_vocab)
 
 # %%
 def calc_score_of_tweet_grams(tweet, lm_model, n):
-    score = 0
+    score = 1
     for ngram in tweet:
-        score = score + lm_model.score(ngram[-1], ngram[:-1])
+        score = score * lm_model.score(ngram[-1], ngram[:-1])
     return score
 
 def compare_authors_for_tweet(model1, model2, test_tweet, n):
-    scores1 = calc_score_of_tweet_grams(test_tweet, model1, n)
-    scores2 = calc_score_of_tweet_grams(test_tweet, model2, n)
+    score1 = calc_score_of_tweet_grams(test_tweet, model1, n)
+    score2 = calc_score_of_tweet_grams(test_tweet, model2, n)
 
     #print('Tweet-----------')
     #print(scores1)
     #print(scores2)
 
-    if scores1 > scores2:
+    if math.log(score1/score2) > 0:
         return 1
     else:
         return 2
@@ -339,8 +313,16 @@ def get_perplexities_of_tweet_set(tweet_ngrams, n, models):
     return perplexities
 
 # %%
-perplexities_trump_test_data = get_perplexities_of_tweet_set_multi_models(biden_test_ngrams, 2, trump_models, biden_models, obama_models)
-print(get_correct_classifications(perplexities_trump_test_data, 1))
+for i in range(1,6):
+    print('Correct classifications for context length: ', i)
+    perplexities_trump_test_data = get_perplexities_of_tweet_set_multi_models(trump_test_ngrams, i, trump_models, biden_models, obama_models)
+    print('Trump', get_correct_classifications(perplexities_trump_test_data, 0))
+
+    perplexities_biden_test_data = get_perplexities_of_tweet_set_multi_models(biden_test_ngrams, i, trump_models, biden_models, obama_models)
+    print('Biden', get_correct_classifications(perplexities_biden_test_data, 1))
+
+    perplexities_obama_test_data = get_perplexities_of_tweet_set_multi_models(obama_test_ngrams, i, trump_models, biden_models, obama_models)
+    print('Obama', get_correct_classifications(perplexities_obama_test_data, 2))
 
 # %%
 import matplotlib

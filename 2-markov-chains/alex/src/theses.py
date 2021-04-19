@@ -3,12 +3,24 @@
 # we will be using nltk.lm and numpy
 import numpy as np
 import nltk
+import os
 
 
 # 0. Before you get started, make sure to download the `theses.txt` data set.
 
 # 1. Spend some time on pre-processing. How would you handle hyphenated words
 #    and abbreviations/acronyms?
+# %%
+titles = []
+res_directory = os.path.dirname(__file__) + '/../res/'
+text_of_tweets = []
+file = open(res_directory + 'theses.txt', encoding='utf-8')
+for title in file:
+    titles.append(title)
+
+print(titles)
+
+
 
 # 2. Train n-gram models with n = [1, ..., 5]. What about <s> and </s>?
 
@@ -21,3 +33,5 @@ import nltk
 
 # 3.3 If you didn't just copy what nltk's lm.generate does: compare the
 #     outputs
+
+# %%
