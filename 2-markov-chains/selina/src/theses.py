@@ -14,7 +14,6 @@ def load_data() -> list:
     theses = [x.strip() for x in theses] 
     return theses
 theses = load_data()
-print(theses)
 #%%
 # 1. Spend some time on pre-processing. How would you handle hyphenated words
 #    and abbreviations/acronyms?
@@ -24,7 +23,7 @@ def prepare_data(theses: list) -> list:
         # Remove punctuations and numbers except dashes in-between words
         # title = re.sub('[^a-zäöüA-ZÄÖÜ-]', ' ', title)
         title = re.sub('[- ]', ' ', title)
-        title = re.sub('[?!.:]', ' ', title)
+        title = re.sub('[?!.:,]', ' ', title)
         # Remove multiple spaces
         title = re.sub(r'\s+', ' ', title)
         preprocessed_theses.append(title.lower())
@@ -48,8 +47,6 @@ def train(theses: list, n: int):
     return ngrams
 ngrams = train(preprocessed_data, 2)
 #%%
-print(len(ngrams))
-#%%
 # 3. Write a generator that provides thesis titles of desired length. Please
 #    do not use the available `lm.generate` method but write your own.
 #    nb: If you fix the seed in numpy.random.choice, you get reproducible 
@@ -60,7 +57,9 @@ def generate(n: int, length: int, ngrams: dict, seed: str = "") -> str:
     # if no seed: <s> as seed?
     seedlist = ['<s>']
     if seed == "":
-        seedlist.append('handgestenerkennung')
+        # choose one key of ngram randomly as seed that starts with <s>
+        keys = [key for key, value in ngrams.items() if '<s>' in key]
+        seedlist = keys[np.random.choice(len(keys))].split()
     else:
         seedlist.append(seed)
     curr_words = ' '.join(seedlist)
@@ -69,13 +68,18 @@ def generate(n: int, length: int, ngrams: dict, seed: str = "") -> str:
         if curr_words not in ngrams.keys():
             break
         possible_words = ngrams[curr_words]
+        if i < (length-n-1):
+            # try to eliminate </s> before end
+            reduced_words = [word for word in possible_words if not '</s>' in word]
+            if len(reduced_words)!=0:
+                possible_words = reduced_words
         next_word = possible_words[np.random.choice(len(possible_words))]
         output += ' ' + next_word
         tokenized_output = nltk.word_tokenize(output)
         curr_words = ' '.join(tokenized_output[len(tokenized_output)-n:len(tokenized_output)])
 
     return output
-generate(2, 10, ngrams, 'konzeption')
+generate(2, 15, ngrams)
 #%%
 # 3.3 If you didn't just copy what nltk's lm.generate does: compare the
 #     outputs

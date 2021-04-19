@@ -11,7 +11,7 @@ from nltk.lm import Vocabulary
 import re
 import numpy as np
 import math
-
+import matplotlib.pyplot as plt
 #%% [markdown]
 """
 # Data Acquisition
@@ -76,10 +76,10 @@ def train_data(df, n):
     # Vocabulary(model.counts, unk_cutoff=1)
     return model
 
-def prepare_test_data(df):
+def prepare_test_data(df, n):
     test_sents = []
     for index,row in df.iterrows():
-        test_sent=list(ngrams(row['tokenized_text'], 3))
+        test_sent=list(ngrams(row['tokenized_text'], n))
         test_sents.append(test_sent)
     return test_sents
 
@@ -107,33 +107,40 @@ def compare_authors(model1, model2, test_tweet, n):
 # Execute Pipelines
 ## Trump
 """
-tweets_trump_df = get_trump_data()
-tweets_trump_df = tweets_trump_df.head(6064)
-tweets_trump_df = tokenize(tweets_trump_df)
-trump_train, trump_test = split_data(tweets_trump_df)
-model_trump = train_data(trump_train, 3)
-test_data_trump = prepare_test_data(trump_test)
-test_data_trump = [x for x in test_data_trump if x]
-
+def pipeline_trump(n: int):
+    tweets_trump_df = get_trump_data()
+    tweets_trump_df = tweets_trump_df.head(6064)
+    tweets_trump_df = tokenize(tweets_trump_df)
+    trump_train, trump_test = split_data(tweets_trump_df)
+    model_trump = train_data(trump_train, n)
+    test_data_trump = prepare_test_data(trump_test, n)
+    test_data_trump = [x for x in test_data_trump if x]
+    return model_trump, test_data_trump
+model_trump, test_data_trump = pipeline_trump(3)
 #%% [markdown]
 """
 ## Biden
 """
-tweets_biden_df = get_biden_data()
-tweets_biden_df = tokenize(tweets_biden_df)
-biden_train, biden_test = split_data(tweets_biden_df)
-model_biden = train_data(biden_train, 3)
-test_data_biden = prepare_test_data(biden_test)
+def pipeline_biden(n: int):
+    tweets_biden_df = get_biden_data()
+    tweets_biden_df = tokenize(tweets_biden_df)
+    biden_train, biden_test = split_data(tweets_biden_df)
+    model_biden = train_data(biden_train, n)
+    test_data_biden = prepare_test_data(biden_test, n)
+    return model_biden, test_data_biden
+model_biden, test_data_biden = pipeline_biden(3)
 #%% [markdown]
 """
 ## Obama
 """
-tweets_obama_df = get_obama_data()
-tweets_obama_df = tokenize(tweets_obama_df)
-obama_train, obama_test = split_data(tweets_obama_df)
-model_obama = train_data(obama_train, 3)
-test_data_obama = prepare_test_data(obama_test)
-
+def pipeline_obama(n: int):
+    tweets_obama_df = get_obama_data()
+    tweets_obama_df = tokenize(tweets_obama_df)
+    obama_train, obama_test = split_data(tweets_obama_df)
+    model_obama = train_data(obama_train, n)
+    test_data_obama = prepare_test_data(obama_test, n)
+    return model_obama, test_data_obama
+model_obama, test_data_obama = pipeline_obama(3)
 #%% [markdown]
 """
 ## Comparison of Trump and Biden
@@ -157,7 +164,6 @@ if np.mean(scores) > 0:
 else: 
     print('Author was Biden')
 #%% [markdown]
-np.mean(scores)
 # 3.1 Analyze: At what context length (n) does the system perform best?
 #%% [markdown]
 """
@@ -167,3 +173,17 @@ np.mean(scores)
 #    models. Is picking the Model with minimum perplexity a better classifier
 #    than in 3.?
 
+perplexities_trump_trump = []
+perplexities_trump_obama = []
+perplexities_trump_biden = []
+for i in range(0, len(test_data_trump)):
+    perplexities_trump_trump.append(model_trump.perplexity(test_data_trump[i]))
+    perplexities_trump_obama.append(model_obama.perplexity(test_data_trump[i]))
+    perplexities_trump_biden.append(model_biden.perplexity(test_data_trump[i]))
+
+plt.plot(perplexities_trump_trump) 
+plt.plot(perplexities_trump_obama) 
+plt.plot(perplexities_trump_biden) 
+plt.show()
+
+# %%
