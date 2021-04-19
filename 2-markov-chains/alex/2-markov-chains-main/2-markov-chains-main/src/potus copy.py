@@ -32,6 +32,7 @@ def read_texts_from_json(file_path, text_of_tweet_entry):
     text_of_tweets = []
     with open(res_directory + file_path, encoding='utf-8') as json_file:
         data = json.load(json_file)
+        print('Number of Tweets:', len(data))
         for tweet in data:
             if tweet['isRetweet'] == "f":
                 text_of_tweets.append(tweet[text_of_tweet_entry])
@@ -43,9 +44,12 @@ def read_texts_from_csv(file_path, text_of_tweet_entry):
     text_of_tweets = []
     with open(res_directory + file_path, encoding='utf-8') as csv_file:
         csv_reader = csv.DictReader(csv_file)
+        rows = 0
         for row in csv_reader:
             text_of_tweets.append(row[text_of_tweet_entry])
+            rows = rows + 1
 
+        print('Number of Tweets:', rows)
     return text_of_tweets
 
 def tokenize_texts(input_texts):
@@ -88,8 +92,8 @@ def tokenize(input, punctuation_patterns= DEFAULT_PUNCTUATIONS, split_characters
         input_to_tokenize = re.sub(punct, "", input_to_tokenize)
 
     # Stemming
-    #stemmer = SnowballStemmer(language='english')
-    #input_to_tokenize = ' '.join([stemmer.stem(word) for word in s.split(' ')])
+    stemmer = SnowballStemmer(language='english')
+    input_to_tokenize = ' '.join([stemmer.stem(word) for word in input_to_tokenize.split(' ')])
 
     # Tokenization
     input_to_tokenize = re.sub(split_characters, delimiter_token, input_to_tokenize)
@@ -97,7 +101,7 @@ def tokenize(input, punctuation_patterns= DEFAULT_PUNCTUATIONS, split_characters
    
     return list_of_token_strings
 
-def get_train_and_test_tokens_from_file(file_name, text_of_tweet_entry, number_test_data=100):
+def get_train_and_test_tokens_from_file(file_name, text_of_tweet_entry, number_train_data=5500, number_test_data=100):
     tokens = {}
     name, file_extension = os.path.splitext(file_name)
 
@@ -126,7 +130,7 @@ def get_train_and_test_tokens_from_file(file_name, text_of_tweet_entry, number_t
     # Seperate
     random.shuffle(tokenized_tweets)
     tokens['test'] = tokenized_tweets[:number_test_data]
-    tokens['train'] = tokenized_tweets[number_test_data:]
+    tokens['train'] = tokenized_tweets[number_test_data:number_test_data+number_train_data]
 
     return tokens
 
@@ -213,8 +217,8 @@ def train_model(n, training_data, vocab):
 def get_models_for_president(n_grams, vocab):
     models = {}
     for i in range(1,6):
-        print(i)
         models[i] = train_model(i, n_grams[i], vocab)
+        print('Model for ', i , '-grams trained')
     return models
 
 # %%
@@ -229,7 +233,7 @@ print(trump_models[2].counts[['thank']]['you'])
 print(obama_models[2].counts[['thank']]['you'])
 print(biden_models[2].counts[['thank']]['you'])
 
-print('Scores of you after <s> thank:')
+print('Scores of you after thank:')
 print(trump_models[2].logscore('you',['thank']))
 print(obama_models[2].logscore('you',['thank']))
 print(biden_models[2].logscore('you',['thank']))
@@ -246,16 +250,18 @@ def calc_score_of_tweet(tweet, lm_model, n):
         for i in range(1, len(sentence)-1):
             #print(sentence)
             #print(sentence[i],'Context:', sentence[:i])
+            score = 0
             for j in range(n):
                 if i-j > 0:
                     #print('Word:', sentence[i])
                     #print('Context:', sentence[i-j:i])
                     score = score + lm_model.logscore(sentence[i], sentence[i-j:i])
                     #print('Score:', score)
+            scores.append(score)
                 
             #score = score + lm_model.logscore(sentence[i], sentence[i-n:i])
             #score = score * lm_model.score(sentence[i], sentence[:i])
-        scores.append(score)
+
         #print(scores)
     return scores
 
@@ -281,7 +287,43 @@ def compare_authors_for_test_set(models1, models2, test_set, n):
     return correct
 
 # %%
-print(compare_authors_for_test_set(biden_models, obama_models, obama_data['test'], 2))
+# Trump vs. Biden:
+print('Trump vs. Biden:')
+print('Test data of trump (shows correct classifications):')
+for i in range(1,6):
+    print('Context lenght:', i)
+    print(compare_authors_for_test_set(trump_models, biden_models, trump_data['test'], i))
+print('Test data of biden:')
+for i in range(1,6):
+    print('Context lenght:', i)
+    print(compare_authors_for_test_set(biden_models, trump_models, biden_data['test'], i))
+
+print('----------------------------------------------------------------')
+
+# Trump vs. Obama
+print('Trump vs. Obama:')
+print('Test data of trump:')
+for i in range(1,6):
+    print('Context lenght:', i)
+    print(compare_authors_for_test_set(trump_models, obama_models, trump_data['test'], i))
+
+print('Test data of obama:')
+for i in range(1,6):
+    print('Context lenght:', i)
+    print(compare_authors_for_test_set(obama_models, biden_models, obama_data['test'], i))
+
+print('----------------------------------------------------------------')
+
+# Biden vs. Obama
+print('Biden vs. Obama:')
+print('Test data of Biden:')
+for i in range(1,6):
+    print('Context lenght:', i)
+    print(compare_authors_for_test_set(biden_models, obama_models, biden_data['test'], i))
+print('Test data of obama:')
+for i in range(1,6):
+    print('Context lenght:', i)
+    print(compare_authors_for_test_set(obama_models, biden_models, obama_data['test'], i))
 
 
 # 4. Compute (and plot) the perplexities for each of the test tweets and 
