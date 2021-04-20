@@ -102,20 +102,64 @@ language_models = get_models(dict_of_ngrams, vocab)
 #     outputs
 # %%
 def generate(n: int, length: int, language_models:dict, seed: str='<s>') -> str:
-    title = [seed]
-
+    title = seed.split()
+    if seed == '<s>':
+        length += 1
+    
     while len(title) < length:
-        last_n_minus_one_words = tuple(title[-(n-1):])
-        res = language_models[n].counts[last_n_minus_one_words].items()
+        next_word = ""
 
-        possible_words = []
-        weights = []
-        summed_weights = 0
-        for word_with_count in res:
-            possible_words.append(word_with_count[0])
-            weights.append(word_with_count[1])
-            summed_weights += word_with_count[1]
+        next_word = get_word_from_n_gram_model(n, title, language_models)
 
+        if next_word != '</s>' and next_word != "":
+            title.append(next_word)
+
+    return title
+
+def calculate_model_order_to_use(n, cur_title):
+    if len(cur_title) >= n-1:
+        return n
+    else:
+        return n - len(cur_title)
+
+def get_word_from_one_gram_model(language_models):
+    res = language_models[1].counts[1].items()
+    possible_words = []
+    weights = []
+    summed_weights = 0
+
+    for word_with_count in res:
+        possible_words.append(word_with_count[0])
+        weights.append(word_with_count[1])
+        summed_weights += word_with_count[1]
+
+    scaled_weights = []
+    for weight in weights:
+        scaled_weights.append(weight/summed_weights)
+
+    next_word = np.random.choice(possible_words, 1, scaled_weights)[0]
+    return next_word
+
+def get_word_from_n_gram_model(n, cur_title, language_models):
+    cur_n = calculate_model_order_to_use(n, cur_title)
+
+    if cur_n == 1:
+        return get_word_from_one_gram_model(language_models)
+    
+    last_n_minus_one_words = tuple(cur_title[-(cur_n-1):])
+    following_words_with_count = language_models[cur_n].counts[last_n_minus_one_words].items()
+
+    possible_words = []
+    weights = []
+    summed_weights = 0
+    for word_with_count in following_words_with_count:
+        possible_words.append(word_with_count[0])
+        weights.append(word_with_count[1])
+        summed_weights += word_with_count[1]
+
+    if len(possible_words) == 0:
+        return get_word_from_n_gram_model(cur_n-1, cur_title, language_models)
+    else:
         scaled_weights = []
         cumsum = 0
         for weight in weights:
@@ -123,17 +167,15 @@ def generate(n: int, length: int, language_models:dict, seed: str='<s>') -> str:
             #scaled_weights.append(cumsum/summed_weights)
             scaled_weights.append(weight/summed_weights)
 
-        next_word = np.random.choice(possible_words, 1, scaled_weights)
-        title.append(next_word[0])
-    
-    return title
+        next_word = np.random.choice(possible_words, 1, scaled_weights)[0]
+        return next_word
 
 # %%
-#res = language_models[2].counts[('<s>',)].items()
 print(generate(3, 10, language_models))
 
 # %%
-# Keine Worte zuvor
+# ---------------------------------------------------------------
+# Ab hier nur Tests wie sich Library verhält
 res = language_models[2].counts[2].items()
 print(res)
 for i, ele in enumerate(res):
