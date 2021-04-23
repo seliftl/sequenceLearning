@@ -190,3 +190,4 @@ def compare_text_generation(n: int, length: int, language_models:dict, seed: str
     print(generate_ntlk_text(language_models[n], length, text_seed=seed))
 
 compare_text_generation(3, 10, language_models)
+# %%

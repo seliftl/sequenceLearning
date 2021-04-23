@@ -8,6 +8,7 @@ import re
 import json
 import csv
 import os
+from nltk.lm import Vocabulary
 from nltk.stem.snowball import SnowballStemmer
 import random
 import math
@@ -58,6 +59,7 @@ def tokenize_texts(input_texts):
 
 # %%
 # Preprocessing methods
+# Regular Expressions from: https://medium.com/analytics-vidhya/tokenization-building-a-tokenizer-and-a-sentencizer-c19a00393c19
 DEFAULT_SENTENCE_BOUNDARIES = ['(?<=[0-9]|[^0-9.])(\.)(?=[^0-9.]|[^0-9.]|[\s]|$)','\.{2,}','\!+','\:+','\?+']
 
 DEFAULT_PUNCTUATIONS = ['(?<=[0-9]|[^0-9.])(\.)(?=[^0-9.]|[^0-9.]|[\s]|$)','\.{2,}',
@@ -146,22 +148,25 @@ print(biden_data['train'][1])
 # %%
 # 2. Train n-gram models with n = [1, ..., 5] for both Obama, Trump and Biden.
 # 2.1 Also train a joint model, that will serve as background model
-def get_dict_of_ngrams(training_data, n_grams=0):
-    if n_grams == 0:
-        n_grams = {1:[], 2:[], 3:[], 4:[], 5:[]}
 
-    for sentencized_tweet in training_data:
-        for tokenized_sentence in sentencized_tweet:
-            n_grams[1].append(list(ngrams(tokenized_sentence, 1)))
-            n_grams[2].append(list(ngrams(tokenized_sentence, 2)))
-            n_grams[3].append(list(ngrams(tokenized_sentence, 3)))
-            n_grams[4].append(list(ngrams(tokenized_sentence, 4)))
-            n_grams[5].append(list(ngrams(tokenized_sentence, 5)))
+# alternative ngram management
+# def get_dict_of_ngrams(training_data, n_grams=0):
+#     if n_grams == 0:
+#         n_grams = {1:[], 2:[], 3:[], 4:[], 5:[]}
+
+#     for sentencized_tweet in training_data:
+#         for tokenized_sentence in sentencized_tweet:
+#             n_grams[1].append(list(ngrams(tokenized_sentence, 1)))
+#             n_grams[2].append(list(ngrams(tokenized_sentence, 2)))
+#             n_grams[3].append(list(ngrams(tokenized_sentence, 3)))
+#             n_grams[4].append(list(ngrams(tokenized_sentence, 4)))
+#             n_grams[5].append(list(ngrams(tokenized_sentence, 5)))
     
-    return n_grams
+#     return n_grams
 
 def get_ngrams(training_data, n_grams=0):
-    n_grams = []
+    if n_grams == 0:
+        n_grams = []
 
     for sentencized_tweet in training_data:
         for tokenized_sentence in sentencized_tweet:
@@ -177,8 +182,8 @@ def get_ngrams(training_data, n_grams=0):
     return n_grams
 
 def gen_vocab(training_data):
-    vocab = list(flatten(training_data))
-    return vocab
+    vocab = list(flatten(training_data))            
+    return Vocabulary(vocab, unk_cutoff=1)
 
 # %%
 trump_ngrams = get_ngrams(trump_data['train'])
@@ -190,25 +195,17 @@ obama_vocab = gen_vocab(obama_data['train'])
 biden_ngrams = get_ngrams(biden_data['train'])
 biden_vocab = gen_vocab(biden_data['train'])
 
-# joint_ngrams = get_dict_of_ngrams(trump_data['train'])
-# joint_ngrams = get_dict_of_ngrams(obama_data['train'], joint_ngrams)
-# joint_ngrams = get_dict_of_ngrams(biden_data['train'], joint_ngrams)
-# joint_vocab = []
-# joint_vocab.extend(trump_vocab)
-# joint_vocab.extend(obama_vocab)
-# joint_vocab.extend(biden_vocab)
+joint_ngrams = get_ngrams(trump_data['train'])
 
-# print('Sample Output')
-# print(trump_ngrams[1][0])
-# print(trump_ngrams[2][0])
-# print(trump_ngrams[3][0])
-# print(trump_ngrams[4][0])
-# print(trump_ngrams[5][0])
+joint_ngrams = get_ngrams(obama_data['train'], joint_ngrams)
+joint_ngrams = get_ngrams(biden_data['train'], joint_ngrams)
+joint_vocab = list(flatten(trump_data['train'], obama_data['train'], biden_data['train']))
+joint_vocab = Vocabulary(joint_vocab, unk_cutoff=1)
 
+print('Sample Output')
+print(trump_ngrams[0])
+print(joint_ngrams[0])
 
-#fdist = nltk.FreqDist(trump_ngrams['bigrams'])
-#print("Most common bigrams: ")
-#print(fdist.most_common(10))
 # %%
 def train_model(n, training_data, vocab):
     lm = Laplace(n)
@@ -226,7 +223,7 @@ def get_models_for_president(n_grams, vocab):
 trump_models = get_models_for_president(trump_ngrams, trump_vocab)
 obama_models = get_models_for_president(obama_ngrams, obama_vocab)
 biden_models = get_models_for_president(biden_ngrams, biden_vocab)
-# joint_models = get_models_for_president(joint_ngrams, joint_vocab)
+joint_models = get_models_for_president(joint_ngrams, joint_vocab)
 
 # %%
 # 3. Use the log-ratio method to classify the tweets. Trump should be easy to
@@ -235,7 +232,6 @@ biden_models = get_models_for_president(biden_ngrams, biden_vocab)
 def calc_score_of_tweet(tweet, lm_model, n):
     scores = []
     for sentence in tweet:
-        print(sentence)
         for i in range(1, len(sentence)-1):
             score = 0
             for j in range(n):
@@ -262,45 +258,47 @@ def compare_authors_for_test_set(models1, models2, test_set, n):
     return correct
 
 # %%
+def compare(name1: str, name2: str, models1: dict, models2: dict, test_data1, test_data2):
+    print(name1,'vs.', name2)
+    print('Test data of', name1)
+    for i in range(1,6):
+        print('Context lenght:', i)
+        print(compare_authors_for_test_set(models1, models2, test_data1, i))
+    print('Test data of ' + name2)
+    for i in range(1,6):
+        print('Context lenght:', i)
+        print(compare_authors_for_test_set(models2, models1, test_data2, i))
+
+# %%
 # Trump vs. Biden:
-print('Trump vs. Biden:')
-print('Test data of trump (shows correct classifications):')
-for i in range(2,3):
-    print('Context lenght:', i)
-    print(compare_authors_for_test_set(trump_models, biden_models, trump_data['test'], i))
-# print('Test data of biden:')
-# for i in range(1,6):
-#     print('Context lenght:', i)
-#     print(compare_authors_for_test_set(biden_models, trump_models, biden_data['test'], i))
+compare('Trump', 'Biden', trump_models, biden_models, trump_data['test'], biden_data['test'])
 
-print('----------------------------------------------------------------')
 # %%
-# Trump vs. Obama
-print('Trump vs. Obama:')
-print('Test data of trump:')
-for i in range(1,6):
-    print('Context lenght:', i)
-    print(compare_authors_for_test_set(trump_models, obama_models, trump_data['test'], i))
+# Trump vs. Obama:
+compare('Trump', 'Obama', trump_models, obama_models, trump_data['test'], obama_data['test'])
 
-print('Test data of obama:')
-for i in range(1,6):
-    print('Context lenght:', i)
-    print(compare_authors_for_test_set(obama_models, biden_models, obama_data['test'], i))
-
-print('----------------------------------------------------------------')
 # %%
-# Biden vs. Obama
-print('Biden vs. Obama:')
-print('Test data of Biden:')
-for i in range(1,6):
-    print('Context lenght:', i)
-    print(compare_authors_for_test_set(biden_models, obama_models, biden_data['test'], i))
-print('Test data of obama:')
-for i in range(1,6):
-    print('Context lenght:', i)
-    print(compare_authors_for_test_set(obama_models, biden_models, obama_data['test'], i))
+# Biden vs. Obama:
+compare('Biden', 'Obama', biden_models, obama_models, biden_data['test'], obama_data['test'])
 
+# %%
+def compare_joint(name: str, models: dict, joint_models: dict, test_data):
+    print(name,'vs. Joint Model')
+    print('Test data of', name)
+    for i in range(1,6):
+        print('Context lenght:', i)
+        print(compare_authors_for_test_set(models, joint_models, test_data, i))
+# %%
+# Biden vs. Joint
+compare_joint('Biden', biden_models, joint_models, biden_data['test'])
 
+# %%
+# Obama vs. Joint
+compare_joint('Obama', obama_models, joint_models, obama_data['test'])
+
+# %%
+# Trump vs. Joint
+compare_joint('Trump', trump_models, joint_models, trump_data['test'])
 
 # %%
 # 4. Compute (and plot) the perplexities for each of the test tweets and 
@@ -330,17 +328,14 @@ def get_correct_classifications(perplexities, index_expected):
     return correct_amount
 
 def get_perplexities_of_tweet_set(tweet_ngrams, n, models):
-    # perplexities = []
-    # for tweet in tweet_ngrams[n]:
-    #     if len(tweet) > 0:
-    #         perplexities.append(models[n].perplexity(tweet))
-    # return perplexities
     perplexities = []
     for tweet in tweet_ngrams:
+        sentence_perplex = []
         for i in range(0, len(tweet)):
-            tweety=list(ngrams(tweet[i], n))
-            if len(tweety) > 0:
-                perplexities.append(models[n].perplexity(tweety))
+            sent=list(ngrams(tweet[i], n))
+            if len(sent) > 0:
+                sentence_perplex.append(models[n].perplexity(sent))
+        perplexities.append(np.mean(sentence_perplex))
     return perplexities
 
 # %%
@@ -356,30 +351,13 @@ for i in range(1,6):
     print('Obama', get_correct_classifications(perplexities_obama_test_data, 2))
 
 # %%
-trumps_perplexities = get_perplexities_of_tweet_set(trump_data['test'], 2, trump_models)
-bidens_perplexities = get_perplexities_of_tweet_set(biden_data['test'], 2, biden_models)
+trumps_perplexities = get_perplexities_of_tweet_set(obama_data['test'], 2, trump_models)
+bidens_perplexities = get_perplexities_of_tweet_set(obama_data['test'], 2, biden_models)
 obamas_perplexities = get_perplexities_of_tweet_set(obama_data['test'], 2, obama_models)
 
-# labels = [i for i in range(0,len(trumps_perplexities))]
-plt.plot(trumps_perplexities) 
-plt.plot(bidens_perplexities) 
-plt.plot(obamas_perplexities) 
-# x = np.arange(len(labels))  # the label locations
-# width = 0.35  # the width of the bars
-
-# fig, ax = plt.subplots()
-# rects1 = ax.bar(x - width/3, trumps_perplexities, width, label='Trump')
-# rects2 = ax.bar(x, bidens_perplexities, width, label='Biden')
-# rects3 = ax.bar(x + width/3, obamas_perplexities, width, label='Obama')
-
-# Add some text for labels, title and custom x-axis tick labels, etc.
-# ax.set_ylabel('Perplexities')
-# ax.set_title('Perplexities per President Model')
-# ax.set_xticks(x)
-# ax.set_xticklabels(labels)
-# ax.legend()
-
-
-# plt.figure(figsize=(50,50))
+plt.plot(trumps_perplexities, label='Trump') 
+plt.plot(bidens_perplexities, label='Biden') 
+plt.plot(obamas_perplexities, label='Obama') 
+plt.legend()
 plt.show()
 # %%
