@@ -106,6 +106,12 @@ def generate(n: int, length: int, language_models:dict, seed: str='<s>') -> str:
         if next_word != '</s>' and next_word != "":
             title.append(next_word)
 
+        #if next_word == '</s>':
+           # title.append(next_word)
+           # break
+        #elif next_word != '':
+           # title.append(next_word)
+
     return ' '.join(title)
 
 def calculate_model_order_to_use(n, cur_title):
@@ -156,9 +162,9 @@ def get_word_from_n_gram_model(n, cur_title, language_models):
         return get_word_from_n_gram_model(cur_n-1, cur_title, language_models)
     else:
         scaled_weights = []
-        cumsum = 0
+        #cumsum = 0
         for weight in weights:
-            cumsum += weight
+            #cumsum += weight
             #scaled_weights.append(cumsum/summed_weights)
             scaled_weights.append(weight/summed_weights)
 
@@ -168,18 +174,18 @@ def get_word_from_n_gram_model(n, cur_title, language_models):
 # %%
 # 3.3 If you didn't just copy what nltk's lm.generate does: compare the
 #     outputs
-def generate_ntlk_text(model, length, text_seed: str='<s>'):
+def generate_nltk_text(model, length, text_seed: str='<s>'):
     seed = text_seed.split()
     if text_seed == '<s>':
         length += 1
     title = []
     title.append(text_seed)
     for token in model.generate(num_words = length, text_seed=seed):
-        if token == '<s>' or token == "":
+        if token == '<s>' or token == "" or token == '</s>':
             continue
-        if token == '</s>':
-            title.append(token)
-            break
+        #if token == '</s>':
+        #    title.append(token)
+        #    break
         title.append(token)
     return ' '.join(title)
 
@@ -188,7 +194,7 @@ def compare_text_generation(n: int, length: int, language_models:dict, seed: str
     print(generate(n, length, language_models, seed))
     print()
     print('NLTK Text Generation: ')
-    print(generate_ntlk_text(language_models[n], length, text_seed=seed))
+    print(generate_nltk_text(language_models[n], length, text_seed=seed))
 
 compare_text_generation(3, 10, language_models)
 # %%
