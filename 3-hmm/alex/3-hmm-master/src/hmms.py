@@ -6,7 +6,8 @@ import librosa
 import numpy as np
 from hmmlearn import hmm
 import os
-
+from sklearn.metrics import confusion_matrix
+import matplotlib.pyplot as plt
 # be reproducible...
 np.random.seed(1337)
 
@@ -130,20 +131,31 @@ def test_hmms(hmms: dict, test_data_dict: dict):
 # implement a 6-fold cross-validation (x/v) loop so that each speaker acts as
 # test speaker while the others are used for training
 def cross_valid():
+    speaker_pred = {}
     for test_speaker in speakers:
         print('Test Speaker:', test_speaker)
         training_data_dict, test_data_dict = prepare_data(test_speaker)
         hmms = train_hmms(training_data_dict)
         pred_res = test_hmms(hmms, test_data_dict)        
-
+        speaker_pred[test_speaker] = pred_res
+    return speaker_pred
     
 # %%
-cross_valid()
+speaker_pred = cross_valid()
 
 #%%
 # display the overall confusion matrix
-
-
+def display_confusion_matrix(speaker_pred):
+    for speaker in speaker_pred.keys():  
+        y_true = []
+        y_pred = []
+        for digit in speaker_pred[speaker]:
+            for i in range(0, len(speaker_pred[speaker][digit])):
+                y_true.append(digit)
+                y_pred.append(speaker_pred[speaker][digit][i])
+        cm = confusion_matrix(y_true, y_pred)
+        plt.matshow(cm, cmap='binary')
+display_confusion_matrix(speaker_pred)
 #%%
 # ---%<------------------------------------------------------------------------
 # Part 2: Decoding
@@ -165,6 +177,3 @@ cross_valid()
 
 # ---%<------------------------------------------------------------------------
 # Optional: Decoding
-
-
-# %%
