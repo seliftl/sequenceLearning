@@ -8,6 +8,7 @@ from hmmlearn import hmm
 import os
 from sklearn.metrics import confusion_matrix
 import matplotlib.pyplot as plt
+from scipy.spatial.distance import hamming
 # be reproducible...
 np.random.seed(1337)
 
@@ -79,7 +80,7 @@ def prepare_data(test_speaker: str):
             if digit not in test_data_dict:
                 test_data_dict[digit] = []
             
-            test_data_dict[digit] = speaker_dict[speaker][digit]
+            test_data_dict[digit] = speaker_dict[test_speaker][digit]
     return training_data_dict, test_data_dict
 
 # allocate and initialize the HMMs, one for each digit; set a linear topology
@@ -107,7 +108,6 @@ def train_hmms(training_data_dict: dict):
             lenghts.append(len(train_data))
 
         # fit models
-        print(lenghts)
         hmms[digit].fit(conc_train_data, lenghts)
     return hmms
 
@@ -123,7 +123,6 @@ def test_hmms(hmms: dict, test_data_dict: dict):
                 model = hmms[model_digit]
                 score = model.score(test_sample)
                 pred = model.predict(test_sample)
-                print(pred)
                 scoreList[model_digit] = score
             predict = max(scoreList, key=scoreList.get)
             pred_list.append(predict)
@@ -162,32 +161,22 @@ display_confusion_matrix(speaker_pred)
 #%%
 # ---%<------------------------------------------------------------------------
 # Part 2: Decoding
-def load_file(digit: int, spk: str, n: int):
-    directory = os.path.dirname(__file__) + '/../res'
-    filename = str(digit) + '_' + spk + '_' + str(n) + '.wav'
-
-    samples, sample_rate = librosa.load(os.path.join(directory, filename))
-    mfccs = librosa.feature.mfcc(samples, sample_rate, n_mfcc=13)
-    mfccs = np.transpose(mfccs)
-    return mfccs
-# generate test sequences; retain both digits (for later evaluation) and
-# features (for actual decoding)
-
-def generate_test_seq(n_words: int):
+num_digits = 3
+def generate_test_seq(num_digits: int):
     test_seq = []
     true_words = [] 
     lengths = []
-    for i in range(0, n_words):
+    for i in range(0, num_digits):
         word = np.random.randint(0, 10)
         true_words.append(word)
         rec = np.random.randint(0, 50)
-        mfccs = load_file(word, 'george', rec)
+        mfccs = speaker_dict['george'][word][rec]
         lengths.append(len(mfccs))
         test_seq.append(mfccs)
     return test_seq, true_words, lengths
-test_seq, true_words, lengths = generate_test_seq(3)
+test_seq, true_words, lengths = generate_test_seq(num_digits)
 #%%
-print(lengths)
+print(true_words)
 #%%
 training_data_dict, test_data_dict = prepare_data('george')
 #%%
@@ -198,20 +187,20 @@ def train_meta_hmm(training_data_dict: dict):
     meta_hmm = hmm.GaussianHMM(n_components=10, covariance_type="diag",
                     init_params="cm", params="cmt")
     meta_hmm.startprob_ = np.array([0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1])
-    # meta_hmm.transmat_ = np.array([[0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1],
-    #                                 [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1],
-    #                                 [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1],
-    #                                 [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1],
-    #                                 [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1],
-    #                                 [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1],
-    #                                 [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1],
-    #                                 [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1],
-    #                                 [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1],
-    #                                 [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1]])
+    meta_hmm.transmat_ = np.array([[0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1],
+                                    [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1],
+                                    [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1],
+                                    [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1],
+                                    [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1],
+                                    [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1],
+                                    [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1],
+                                    [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1],
+                                    [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1],
+                                    [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1]])
 
     # prep train data
     conc_train_data = 0
-    lenght = []
+    length = []
     for i, digit in enumerate(digits):
         for j, train_data in enumerate(training_data_dict[digit]):
             if i == 0 and j == 0:
@@ -219,15 +208,13 @@ def train_meta_hmm(training_data_dict: dict):
             else:
                 conc_train_data = np.concatenate([conc_train_data, train_data])
             
-            lenght.append(len(train_data))
+            length.append(len(train_data))
     # fit models
-    meta_hmm.fit(conc_train_data, lenght)
+    meta_hmm.fit(conc_train_data, length)
     return meta_hmm
 
 # %%
 meta_hmm = train_meta_hmm(test_data_dict)
-# %%
-print(lengths)
 # %%
 # use the `decode` function to get the most likely state sequence for the test
 # sequences; re-map that to a sequence of digits
@@ -237,18 +224,30 @@ def decode(meta_hmm, test_seq, lengths):
             conc_test_data = test_data
         else:
             conc_test_data = np.concatenate([conc_test_data, test_data])
-        pred = meta_hmm.predict(conc_test_data)
-        print(pred)
     logprob, state = meta_hmm.decode(conc_test_data, lengths, algorithm="viterbi")
-    print(state)
+    return state
 
-decode(meta_hmm, test_seq, lengths)
+state = decode(meta_hmm, test_seq, lengths)
+# %%
+def map_states(meta_hmm, test_data_dict, state):
+    sequence = []
+    for i in range(0, num_digits):
+        dist = {}
+        for j in range(0, len(test_data_dict)):
+            pred = meta_hmm.predict(test_data_dict[j][5])    
+            dist[j] = sum(i != j for i, j in zip(pred, state[:len(pred)]))
+        print(dist)
+        digit = min(dist, key=dist.get)
+        state = state[len(meta_hmm.predict(test_data_dict[digit][3])):]
+        sequence.append(digit)
+    print(sequence)
+
+map_states(meta_hmm, test_data_dict, state)
+
+# %%
 # use jiwer.wer to compute the word error rate between reference and decoded
 # digit sequence
 
 # compute overall WER (ie. over the cross-validation)
 
-# ---%<------------------------------------------------------------------------
-# Optional: Decoding
 
-# %%
