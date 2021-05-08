@@ -4,8 +4,10 @@
 
 import librosa
 import numpy as np
-import hmmlearn.hmm as hmm
-
+from hmmlearn import hmm
+import os
+from sklearn.metrics import confusion_matrix
+import matplotlib.pyplot as plt
 # be reproducible...
 np.random.seed(1337)
 
@@ -18,107 +20,229 @@ nr = 50
 speakers = list(['george', 'jackson', 'lucas', 'nicolas', 'theo', 'yweweler'])
 
 # %%
+# load sounds file, compute MFCC; eg. n_mfcc=13
 def load_fts(digit: int, spk: str, n: int):
-    filename = str(digit) + '_' + spk + '_' + str(n)
-    y, sr = librosa.load('../res/'+filename+'.wav', sr=None)
-    mfcc = librosa.feature.mfcc(y=y, sr=sr, hop_length=int(0.010*sr), n_fft=int(0.025*sr), n_mfcc=13)
-    return mfcc
+    directory = os.path.dirname(__file__) + '/../res'
+    file_name_start = str(digit) + '_' + spk
+    stored_mfccs = []
 
-def load():
-    mfccs = {}
-    for speaker in speakers:
-        digit_list = [] 
-        for digit in digits:
-            rec_list = []
-            for i in range(0, 50):
-                mfcc = load_fts(digit, speaker, i)
-                rec_list.append(mfcc)
-            digit_list.append(rec_list)
-        mfccs[speaker] = digit_list
-    return mfccs
+    for filename in os.listdir(directory):
+        if filename.startswith(file_name_start) and filename.endswith('.wav'):
+            samples, sample_rate = librosa.load(os.path.join(directory, filename))
+            mfccs = librosa.feature.mfcc(samples, sample_rate, n_mfcc=n)
+            mfccs = np.transpose(mfccs)
+            stored_mfccs.append(mfccs)
 
-mfccs = load()
+    return stored_mfccs
+
+def load_speaker_fts_as_dict(spk: str):
+    dict_of_speaker = {}
+    for i in digits:
+        dict_of_speaker[i] = load_fts(i, spk, 13)
+    return dict_of_speaker
+
 # %%
-# Sample output
-mfccs['george'][0][0]
-# %% 
-# implement a 6-fold cross-validation (x/v) loop so that each speaker acts as
-# test speaker while the others are used for training
+# load data files and extract features
+speaker_dict = {}
+for speaker in speakers:
+    speaker_dict[speaker] = load_speaker_fts_as_dict(speaker)
 
-# allocate and initialize the HMMs, one for each digit; set a linear topology
-# choose and a meaningful number of states
+
+
+# %% 
 # note: you may find that one or more HMMs are performing particularly bad;
 # what could be the reason and how to mitigate that?
 
 # train the HMMs using the fit method; data needs to be concatenated,
 # see https://github.com/hmmlearn/hmmlearn/blob/38b3cece4a6297e978a204099ae6a0a99555ec01/lib/hmmlearn/base.py#L439
 
-# evaluate the trained models on the test speaker; how do you decide which word
-# was spoken?
-
 # compute and display the confusion matrix
 # https://scikit-learn.org/stable/auto_examples/model_selection/plot_confusion_matrix.html
 
-def prepare_train_data(train_mfccs: dict):
-    train_data = {}
-    for i in range(0,len(digits)):
-        digit_recs = []
-        for speaker_data in train_mfccs.keys():
-            for j in range(0, nr):
-                digit_recs.append(train_mfccs[speaker_data][i][j])
-        flatlist = [item for sublist in digit_recs for item in sublist]
-        y = np.concatenate(flatlist, axis=0)
-        train_data[i] = y.reshape(-1, 1)
-    return train_data
+# Addiditonal Resources:
+# https://machinelearningmastery.com/k-fold-cross-validation/
+# https://medium.com/voice-tech-podcast/single-word-speech-recognition-892c7e01f5fc
 
-def train_hmms(train_mfccs: dict):
-    trained_hmms={}
-    for label in train_mfccs.keys():
-        model = hmm.GaussianHMM(n_components=3, covariance_type="full", n_iter=10)
-        model.fit(train_mfccs[label])  
-        trained_hmms[label] = model
-    return trained_hmms
+def prepare_data(test_speaker: str):
+    training_speakers = [speaker for speaker in speakers if speaker != test_speaker]
+    training_data_dict = {}
 
-def test_hmms(trained_hmms:dict, test_mfccs: list):
-    for i in range(0, len(test_mfccs)):
-        flatlist = [item for sublist in test_mfccs[i] for item in sublist]
-        y = np.concatenate(flatlist, axis=0)
-        features = y.reshape(-1, 1)
-        scoreList = {}
-        for model_label in trained_hmms.keys():
-            model = trained_hmms[model_label]
-            score = model.score(features)
-            scoreList[model_label] = score
-        predict = max(scoreList, key=scoreList.get)
-        print("True label ", i, ": Predicted Label: ", predict)
+    for training_speaker in training_speakers:
+        for digit in digits:
+            if digit not in training_data_dict:
+                training_data_dict[digit] = []
 
-def cross_validation(mfccs: dict):    
-    for speaker in speakers: 
-        train_mfccs = mfccs.copy()
-        del train_mfccs[speaker]
-        train_data = prepare_train_data(train_mfccs)
-        trained_hmms = train_hmms(train_data)
-        test_hmms(trained_hmms, mfccs[speaker])
-cross_validation(mfccs)
+            training_data_dict[digit].extend(speaker_dict[training_speaker][digit])
 
+    test_data_dict = {}
+    for digit in digits:
+            if digit not in test_data_dict:
+                test_data_dict[digit] = []
+            
+            test_data_dict[digit] = speaker_dict[speaker][digit]
+    return training_data_dict, test_data_dict
 
+# allocate and initialize the HMMs, one for each digit; set a linear topology
+# choose and a meaningful number of states
+def train_hmms(training_data_dict: dict):
+    hmms = {}
+    for digit in digits:
+        # create models
+        hmms[digit] = hmm.GaussianHMM(n_components=3, covariance_type="diag",
+                        init_params="cm", params="cmt")
+        hmms[digit].startprob_ = np.array([1.0, 0.0, 0.0])
+        hmms[digit].transmat_ = np.array([[0.5, 0.5, 0.0],
+                                        [0.0, 0.5, 0.5],
+                                        [0.0, 0.0, 1.0]])
+
+        # prep train data
+        conc_train_data = 0
+        lenghts = []
+        for index, train_data in enumerate(training_data_dict[digit]):
+            if index == 0:
+                conc_train_data = train_data
+            else:
+                conc_train_data = np.concatenate([conc_train_data, train_data])
+            
+            lenghts.append(len(train_data))
+
+        # fit models
+        print(lenghts)
+        hmms[digit].fit(conc_train_data, lenghts)
+    return hmms
+
+# evaluate the trained models on the test speaker; how do you decide which word
+# was spoken?
+def test_hmms(hmms: dict, test_data_dict: dict):
+    predict_res = {}
+    for digit in test_data_dict.keys(): 
+        pred_list = []
+        for test_sample in test_data_dict[digit]:
+            scoreList = {}            
+            for model_digit in hmms.keys():            
+                model = hmms[model_digit]
+                score = model.score(test_sample)
+                pred = model.predict(test_sample)
+                print(pred)
+                scoreList[model_digit] = score
+            predict = max(scoreList, key=scoreList.get)
+            pred_list.append(predict)
+        print("True label ", digit, ": Predicted Label: ", str(pred_list))
+        predict_res[digit]=pred_list
+    return predict_res
+
+# implement a 6-fold cross-validation (x/v) loop so that each speaker acts as
+# test speaker while the others are used for training
+def cross_valid():
+    speaker_pred = {}
+    for test_speaker in speakers:
+        print('Test Speaker:', test_speaker)
+        training_data_dict, test_data_dict = prepare_data(test_speaker)
+        hmms = train_hmms(training_data_dict)
+        pred_res = test_hmms(hmms, test_data_dict)        
+        speaker_pred[test_speaker] = pred_res
+    return speaker_pred
+    
 # %%
+speaker_pred = cross_valid()
+
+#%%
 # display the overall confusion matrix
-
-
+def display_confusion_matrix(speaker_pred):
+    for speaker in speaker_pred.keys():  
+        y_true = []
+        y_pred = []
+        for digit in speaker_pred[speaker]:
+            for i in range(0, len(speaker_pred[speaker][digit])):
+                y_true.append(digit)
+                y_pred.append(speaker_pred[speaker][digit][i])
+        cm = confusion_matrix(y_true, y_pred)
+        plt.matshow(cm, cmap='binary')
+display_confusion_matrix(speaker_pred)
+#%%
 # ---%<------------------------------------------------------------------------
 # Part 2: Decoding
+def load_file(digit: int, spk: str, n: int):
+    directory = os.path.dirname(__file__) + '/../res'
+    filename = str(digit) + '_' + spk + '_' + str(n) + '.wav'
 
+    samples, sample_rate = librosa.load(os.path.join(directory, filename))
+    mfccs = librosa.feature.mfcc(samples, sample_rate, n_mfcc=13)
+    mfccs = np.transpose(mfccs)
+    return mfccs
 # generate test sequences; retain both digits (for later evaluation) and
 # features (for actual decoding)
 
+def generate_test_seq(n_words: int):
+    test_seq = []
+    true_words = [] 
+    lengths = []
+    for i in range(0, n_words):
+        word = np.random.randint(0, 10)
+        true_words.append(word)
+        rec = np.random.randint(0, 50)
+        mfccs = load_file(word, 'george', rec)
+        lengths.append(len(mfccs))
+        test_seq.append(mfccs)
+    return test_seq, true_words, lengths
+test_seq, true_words, lengths = generate_test_seq(3)
+#%%
+print(lengths)
+#%%
+training_data_dict, test_data_dict = prepare_data('george')
+#%%
 # combine the (previously trained) per-digit HMMs into one large meta HMM; make
 # sure to change the transition probabilities to allow transitions from one
 # digit to any other
+def train_meta_hmm(training_data_dict: dict):
+    meta_hmm = hmm.GaussianHMM(n_components=10, covariance_type="diag",
+                    init_params="cm", params="cmt")
+    meta_hmm.startprob_ = np.array([0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1])
+    # meta_hmm.transmat_ = np.array([[0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1],
+    #                                 [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1],
+    #                                 [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1],
+    #                                 [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1],
+    #                                 [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1],
+    #                                 [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1],
+    #                                 [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1],
+    #                                 [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1],
+    #                                 [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1],
+    #                                 [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1]])
 
+    # prep train data
+    conc_train_data = 0
+    lenght = []
+    for i, digit in enumerate(digits):
+        for j, train_data in enumerate(training_data_dict[digit]):
+            if i == 0 and j == 0:
+                conc_train_data = train_data
+            else:
+                conc_train_data = np.concatenate([conc_train_data, train_data])
+            
+            lenght.append(len(train_data))
+    # fit models
+    meta_hmm.fit(conc_train_data, lenght)
+    return meta_hmm
+
+# %%
+meta_hmm = train_meta_hmm(test_data_dict)
+# %%
+print(lengths)
+# %%
 # use the `decode` function to get the most likely state sequence for the test
 # sequences; re-map that to a sequence of digits
+def decode(meta_hmm, test_seq, lengths):
+    for index, test_data in enumerate(test_seq):
+        if index == 0:
+            conc_test_data = test_data
+        else:
+            conc_test_data = np.concatenate([conc_test_data, test_data])
+        pred = meta_hmm.predict(conc_test_data)
+        print(pred)
+    logprob, state = meta_hmm.decode(conc_test_data, lengths, algorithm="viterbi")
+    print(state)
 
+decode(meta_hmm, test_seq, lengths)
 # use jiwer.wer to compute the word error rate between reference and decoded
 # digit sequence
 
@@ -127,3 +251,4 @@ cross_validation(mfccs)
 # ---%<------------------------------------------------------------------------
 # Optional: Decoding
 
+# %%
