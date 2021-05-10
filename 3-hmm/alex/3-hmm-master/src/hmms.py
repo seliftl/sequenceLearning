@@ -193,12 +193,8 @@ training_data_dict, test_data_dict = prepare_data('george')
 # sure to change the transition probabilities to allow transitions from one
 # digit to any other
 def generate_meta_hmm(hmms: dict):
-    meta_hmm = hmm.GaussianHMM(n_components=30, covariance_type="full")
 
-    meta_hmm.startprob_ = np.array([0.1, 0, 0, 0.1, 0, 0, 0.1, 0, 0, 0.1, 0, 0, 
-                                    0.1, 0, 0, 0.1, 0, 0, 0.1, 0, 0, 0.1, 0, 0, 
-                                    0.1, 0, 0, 0.1, 0, 0])
-
+    startprops_of_hmm = []
     transmat_of_meta_hmm = []
     means_of_meta_hmm = []
     covariances_of_meta_hmm = []
@@ -208,7 +204,15 @@ def generate_meta_hmm(hmms: dict):
         for added_state_index in range(3):
             # Per hmm three states will be added
 
-            # First hanlde transition props
+            # First handle startprops of each state
+            # Each first state of exisiting hmms gets start prop 0.1
+            # Other two get 0
+            if added_state_index == 0:
+                startprops_of_hmm.append(0.1)
+            else:
+                startprops_of_hmm.append(0)
+
+            # Then hanlde transition props
             transition_props_of_state = []
             for meta_hmm_target_state in range(30):
                 # Per added state 30 transition props (for all 30 states) need to be set
@@ -233,10 +237,14 @@ def generate_meta_hmm(hmms: dict):
             means_of_meta_hmm.append(hmms[digit].means_[added_state_index])
             covariances_of_meta_hmm.append(hmms[digit].covars_[added_state_index])
     
+
+    meta_hmm = hmm.GaussianHMM(n_components=30, covariance_type="full")
+
+    meta_hmm.startprob_ = np.array(startprops_of_hmm)
     meta_hmm.transmat_ = np.array(transmat_of_meta_hmm)
     meta_hmm.means_ = np.array(means_of_meta_hmm)
     meta_hmm.covars_ = np.array(covariances_of_meta_hmm)
-
+    
     return meta_hmm
     
 # %%
@@ -257,27 +265,20 @@ def decode(meta_hmm, test_seq, lengths):
     logprob, state = meta_hmm.decode(conc_test_data, lengths, algorithm="viterbi")
     return state
 
+
+# %%
+def map_state_to_digit(state):
+    return int(state/3)
+
 #%%
 num_digits = 3
 test_seq, true_words, lengths = generate_test_seq(num_digits)
-
+print(true_words)
 states = decode(meta_hmm, test_seq, lengths)
 print(states)
-# %%
-def map_states(meta_hmm, test_data_dict, state):
-    sequence = []
-    for i in range(0, num_digits):
-        dist = {}
-        for j in range(0, len(test_data_dict)):
-            pred = meta_hmm.predict(test_data_dict[j][5])    
-            dist[j] = sum(i != j for i, j in zip(pred, state[:len(pred)]))
-        print(dist)
-        digit = min(dist, key=dist.get)
-        state = state[len(meta_hmm.predict(test_data_dict[digit][3])):]
-        sequence.append(digit)
-    print(sequence)
 
-map_states(meta_hmm, test_data_dict, state)
+spoken_digits = [map_state_to_digit(state) for state in states]
+print(spoken_digits)
 
 # %%
 # use jiwer.wer to compute the word error rate between reference and decoded
