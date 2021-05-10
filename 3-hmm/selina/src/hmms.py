@@ -122,7 +122,7 @@ def test_hmms(hmms: dict, test_data_dict: dict):
             for model_digit in hmms.keys():            
                 model = hmms[model_digit]
                 score = model.score(test_sample)
-                pred = model.predict(test_sample)
+                #pred = model.predict(test_sample)
                 scoreList[model_digit] = score
             predict = max(scoreList, key=scoreList.get)
             pred_list.append(predict)

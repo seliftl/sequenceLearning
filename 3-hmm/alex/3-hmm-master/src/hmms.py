@@ -6,8 +6,11 @@ import librosa
 import numpy as np
 from hmmlearn import hmm
 import os
+from numpy.lib.function_base import append
+from pandas.core import api
 from sklearn.metrics import confusion_matrix
 import matplotlib.pyplot as plt
+from scipy.spatial.distance import hamming
 # be reproducible...
 np.random.seed(1337)
 
@@ -79,7 +82,7 @@ def prepare_data(test_speaker: str):
             if digit not in test_data_dict:
                 test_data_dict[digit] = []
             
-            test_data_dict[digit] = speaker_dict[speaker][digit]
+            test_data_dict[digit] = speaker_dict[test_speaker][digit]
     return training_data_dict, test_data_dict
 
 # allocate and initialize the HMMs, one for each digit; set a linear topology
@@ -121,6 +124,9 @@ def test_hmms(hmms: dict, test_data_dict: dict):
             for model_digit in hmms.keys():            
                 model = hmms[model_digit]
                 score = model.score(test_sample)
+                test = model.means_
+                test2 = model.covars_
+                #pred = model.predict(test_sample)
                 scoreList[model_digit] = score
             predict = max(scoreList, key=scoreList.get)
             pred_list.append(predict)
@@ -160,20 +166,123 @@ display_confusion_matrix(speaker_pred)
 # ---%<------------------------------------------------------------------------
 # Part 2: Decoding
 
-# generate test sequences; retain both digits (for later evaluation) and
-# features (for actual decoding)
+def generate_test_seq(num_digits: int):
+    test_seq = []
+    true_words = [] 
+    lengths = []
+    for i in range(0, num_digits):
+        word = np.random.randint(0, 10)
+        true_words.append(word)
+        rec = np.random.randint(0, 50)
+        mfccs = speaker_dict['george'][word][rec]
+        lengths.append(len(mfccs))
+        test_seq.append(mfccs)
+    return test_seq, true_words, lengths
 
+# %%
+num_digits = 3
+test_seq, true_words, lengths = generate_test_seq(num_digits)
+
+#%%
+print(true_words)
+#%%
+training_data_dict, test_data_dict = prepare_data('george')
+
+#%%
 # combine the (previously trained) per-digit HMMs into one large meta HMM; make
 # sure to change the transition probabilities to allow transitions from one
 # digit to any other
+def generate_meta_hmm(hmms: dict):
+    meta_hmm = hmm.GaussianHMM(n_components=30, covariance_type="full")
 
+    meta_hmm.startprob_ = np.array([0.1, 0, 0, 0.1, 0, 0, 0.1, 0, 0, 0.1, 0, 0, 
+                                    0.1, 0, 0, 0.1, 0, 0, 0.1, 0, 0, 0.1, 0, 0, 
+                                    0.1, 0, 0, 0.1, 0, 0])
+
+    transmat_of_meta_hmm = []
+    means_of_meta_hmm = []
+    covariances_of_meta_hmm = []
+
+    for digit in hmms.keys():
+        # Add each hmm to meta-hmm
+        for added_state_index in range(3):
+            # Per hmm three states will be added
+
+            # First hanlde transition props
+            transition_props_of_state = []
+            for meta_hmm_target_state in range(30):
+                # Per added state 30 transition props (for all 30 states) need to be set
+                if added_state_index < 3:
+                    # handle first to states of existing hmm
+                    if meta_hmm_target_state >= digit*3 and meta_hmm_target_state <= digit*3+2:
+                        # transition to own states can be set from learned transition of existing hmm
+                        transition_props_of_state.append(hmms[digit].transmat_[added_state_index][meta_hmm_target_state%3])
+                    else:
+                        # other transitions are set to 0
+                        transition_props_of_state.append(0)
+                else:
+                    # for the last state of exisiting hmm props for to all first states of exisinting hmms should be possible
+                    if meta_hmm_target_state%3 == 0:
+                        transition_props_of_state.append(0.1)
+                    else:
+                        transition_props_of_state.append(0)
+
+            transmat_of_meta_hmm.append(transition_props_of_state)
+
+            # After transition props, handle means and covariances
+            means_of_meta_hmm.append(hmms[digit].means_[added_state_index])
+            covariances_of_meta_hmm.append(hmms[digit].covars_[added_state_index])
+    
+    meta_hmm.transmat_ = np.array(transmat_of_meta_hmm)
+    meta_hmm.means_ = np.array(means_of_meta_hmm)
+    meta_hmm.covars_ = np.array(covariances_of_meta_hmm)
+
+    return meta_hmm
+    
+# %%
+# Create meta hmm
+training_data_dict, test_data_dict = prepare_data('george')
+hmms = train_hmms(training_data_dict)
+meta_hmm = generate_meta_hmm(hmms)
+
+# %%
 # use the `decode` function to get the most likely state sequence for the test
 # sequences; re-map that to a sequence of digits
+def decode(meta_hmm, test_seq, lengths):
+    for index, test_data in enumerate(test_seq):
+        if index == 0:
+            conc_test_data = test_data
+        else:
+            conc_test_data = np.concatenate([conc_test_data, test_data])
+    logprob, state = meta_hmm.decode(conc_test_data, lengths, algorithm="viterbi")
+    return state
 
+#%%
+num_digits = 3
+test_seq, true_words, lengths = generate_test_seq(num_digits)
+
+states = decode(meta_hmm, test_seq, lengths)
+print(states)
+# %%
+def map_states(meta_hmm, test_data_dict, state):
+    sequence = []
+    for i in range(0, num_digits):
+        dist = {}
+        for j in range(0, len(test_data_dict)):
+            pred = meta_hmm.predict(test_data_dict[j][5])    
+            dist[j] = sum(i != j for i, j in zip(pred, state[:len(pred)]))
+        print(dist)
+        digit = min(dist, key=dist.get)
+        state = state[len(meta_hmm.predict(test_data_dict[digit][3])):]
+        sequence.append(digit)
+    print(sequence)
+
+map_states(meta_hmm, test_data_dict, state)
+
+# %%
 # use jiwer.wer to compute the word error rate between reference and decoded
 # digit sequence
 
 # compute overall WER (ie. over the cross-validation)
 
-# ---%<------------------------------------------------------------------------
-# Optional: Decoding
+
