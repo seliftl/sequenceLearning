@@ -271,9 +271,10 @@ def cross_valid_meta(num_digits: int):
             test_seq, true_words, lengths = generate_test_seq(num_digits, test_speaker)
             states = decode(meta_hmm, test_seq, lengths)
             hyp_words = map_state_to_digit(states, lengths)
-            error = wer(' '.join(true_words), ' '.join(hyp_words))
+            error = wer(' '.join(str(true_words)), ' '.join(str(hyp_words)))
             errors.append(error)
     print(errors)
     print(np.mean(errors))
 
 cross_valid_meta(3)
+# %%
