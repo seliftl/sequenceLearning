@@ -1,280 +1,123 @@
 #!/usr/bin/env python3
 
 # %%
-
-import librosa
 import numpy as np
-from hmmlearn import hmm
 import os
-from numpy.lib.function_base import append
-from pandas.core import api
-from sklearn.metrics import confusion_matrix
 import matplotlib.pyplot as plt
-from scipy.spatial.distance import hamming
-from jiwer import wer
-# be reproducible...
-np.random.seed(1337)
+import pandas as pd
+import torch
+from torch.autograd import Variable
+import torch.functional as F
+import torch.nn.functional as F
 
+# %%
+# Part 1
 # ---%<------------------------------------------------------------------------
-# Part 1: Basics
-
-# version 1.0.10 has 10 digits, spoken 50 times by 6 speakers
-digits = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-nr = 50
-speakers = list(['george', 'jackson', 'lucas', 'nicolas', 'theo', 'yweweler'])
-
-# %%
-# load sounds file, compute MFCC; eg. n_mfcc=13
-def load_fts(digit: int, spk: str, n: int):
-    directory = os.path.dirname(__file__) + '/../res'
-    file_name_start = str(digit) + '_' + spk
-    stored_mfccs = []
-
-    for filename in os.listdir(directory):
-        if filename.startswith(file_name_start) and filename.endswith('.wav'):
-            samples, sample_rate = librosa.load(os.path.join(directory, filename))
-            mfccs = librosa.feature.mfcc(samples, sample_rate, n_mfcc=n)
-            mfccs = np.transpose(mfccs)
-            stored_mfccs.append(mfccs)
-
-    return stored_mfccs
-
-def load_speaker_fts_as_dict(spk: str):
-    dict_of_speaker = {}
-    for i in digits:
-        dict_of_speaker[i] = load_fts(i, spk, 13)
-    return dict_of_speaker
-
-# %%
-# load data files and extract features
-speaker_dict = {}
-for speaker in speakers:
-    speaker_dict[speaker] = load_speaker_fts_as_dict(speaker)
-# %% 
-# note: you may find that one or more HMMs are performing particularly bad;
-# what could be the reason and how to mitigate that?
-
-# train the HMMs using the fit method; data needs to be concatenated,
-# see https://github.com/hmmlearn/hmmlearn/blob/38b3cece4a6297e978a204099ae6a0a99555ec01/lib/hmmlearn/base.py#L439
-
-# compute and display the confusion matrix
-# https://scikit-learn.org/stable/auto_examples/model_selection/plot_confusion_matrix.html
-
-# Addiditonal Resources:
-# https://machinelearningmastery.com/k-fold-cross-validation/
-# https://medium.com/voice-tech-podcast/single-word-speech-recognition-892c7e01f5fc
-
-def prepare_data(test_speaker: str):
-    training_speakers = [speaker for speaker in speakers if speaker != test_speaker]
-    training_data_dict = {}
-
-    for training_speaker in training_speakers:
-        for digit in digits:
-            if digit not in training_data_dict:
-                training_data_dict[digit] = []
-
-            training_data_dict[digit].extend(speaker_dict[training_speaker][digit])
-
-    test_data_dict = {}
-    for digit in digits:
-            if digit not in test_data_dict:
-                test_data_dict[digit] = []
-            
-            test_data_dict[digit] = speaker_dict[test_speaker][digit]
-    return training_data_dict, test_data_dict
-
-# allocate and initialize the HMMs, one for each digit; set a linear topology
-# choose and a meaningful number of states
-def train_hmms(training_data_dict: dict):
-    hmms = {}
-    for digit in digits:
-        # create models
-        hmms[digit] = hmm.GaussianHMM(n_components=3, covariance_type="diag",
-                        init_params="cm", params="cmt")
-        hmms[digit].startprob_ = np.array([1.0, 0.0, 0.0])
-        hmms[digit].transmat_ = np.array([[0.5, 0.5, 0.0],
-                                        [0.0, 0.5, 0.5],
-                                        [0.0, 0.0, 1.0]])
-
-        # prep train data
-        conc_train_data = 0
-        lenghts = []
-        for index, train_data in enumerate(training_data_dict[digit]):
-            if index == 0:
-                conc_train_data = train_data
-            else:
-                conc_train_data = np.concatenate([conc_train_data, train_data])
-            
-            lenghts.append(len(train_data))
-
-        # fit models
-        hmms[digit].fit(conc_train_data, lenghts)
-    return hmms
-
-# evaluate the trained models on the test speaker; how do you decide which word
-# was spoken?
-def test_hmms(hmms: dict, test_data_dict: dict):
-    predict_res = {}
-    for digit in test_data_dict.keys(): 
-        pred_list = []
-        for test_sample in test_data_dict[digit]:
-            scoreList = {}            
-            for model_digit in hmms.keys():            
-                model = hmms[model_digit]
-                score = model.score(test_sample)
-                test = model.means_
-                test2 = model.covars_
-                #pred = model.predict(test_sample)
-                scoreList[model_digit] = score
-            predict = max(scoreList, key=scoreList.get)
-            pred_list.append(predict)
-        print("True label ", digit, ": Predicted Label: ", str(pred_list))
-        predict_res[digit]=pred_list
-    return predict_res
-
-# implement a 6-fold cross-validation (x/v) loop so that each speaker acts as
-# test speaker while the others are used for training
-def cross_valid():
-    speaker_pred = {}
-    for test_speaker in speakers:
-        print('Test Speaker:', test_speaker)
-        training_data_dict, test_data_dict = prepare_data(test_speaker)
-        hmms = train_hmms(training_data_dict)
-        pred_res = test_hmms(hmms, test_data_dict)        
-        speaker_pred[test_speaker] = pred_res
-    return speaker_pred
+def read_data():    
+    theses_df = pd.read_csv('../res/theses.tsv',header=None, sep='\t')
     
-# %%
-speaker_pred = cross_valid()
+    # remove in final solution
+    theses_df = theses_df.head(100)    
+    titles = theses_df[3].tolist()
+    return titles
 
-#%%
-# display the overall confusion matrix
-def display_confusion_matrix(speaker_pred):
-    for speaker in speaker_pred.keys():  
-        y_true = []
-        y_pred = []
-        for digit in speaker_pred[speaker]:
-            for i in range(0, len(speaker_pred[speaker][digit])):
-                y_true.append(digit)
-                y_pred.append(speaker_pred[speaker][digit][i])
-        cm = confusion_matrix(y_true, y_pred)
-        plt.matshow(cm, cmap='binary')
-display_confusion_matrix(speaker_pred)
-#%%
-# ---%<------------------------------------------------------------------------
-# Part 2: Decoding
+def tokenize_corpus(titles):
+    titles = [x.lower() for x in titles]
+    tokenized_titles = [x.split() for x in titles]
+    return tokenized_titles
 
-def generate_test_seq(num_digits: int, speaker: str):
-    test_seq = []
-    true_words = [] 
-    lengths = []
-    for i in range(0, num_digits):
-        word = np.random.randint(0, 10)
-        true_words.append(word)
-        rec = np.random.randint(0, 50)
-        mfccs = speaker_dict[speaker][word][rec]
-        lengths.append(len(mfccs))
-        test_seq.append(mfccs)
-    return test_seq, true_words, lengths
-#%%
-# combine the (previously trained) per-digit HMMs into one large meta HMM; make
-# sure to change the transition probabilities to allow transitions from one
-# digit to any other
-def generate_meta_hmm(hmms: dict):
-
-    startprops_of_hmm = []
-    transmat_of_meta_hmm = []
-    means_of_meta_hmm = []
-    covariances_of_meta_hmm = []
-
-    for digit in hmms.keys():
-        # Add each hmm to meta-hmm
-        for added_state_index in range(3):
-            # Per hmm three states will be added
-
-            # First handle startprops of each state
-            # Each first state of exisiting hmms gets start prop 0.1
-            # Other two get 0
-            if added_state_index == 0:
-                startprops_of_hmm.append(0.1)
-            else:
-                startprops_of_hmm.append(0)
-
-            # Then hanlde transition props
-            transition_props_of_state = []
-            for meta_hmm_target_state in range(30):
-                # Per added state 30 transition props (for all 30 states) need to be set
-                if added_state_index < 3:
-                    # handle first two states of existing hmm
-                    if meta_hmm_target_state >= digit*3 and meta_hmm_target_state <= digit*3+2:
-                        # transition to own states can be set from learned transition of existing hmm
-                        transition_props_of_state.append(hmms[digit].transmat_[added_state_index][meta_hmm_target_state%3])
-                    else:
-                        # other transitions are set to 0
-                        transition_props_of_state.append(0)
-                else:
-                    # for the last state of exisiting hmm props for to all first states of exisinting hmms should be possible
-                    if meta_hmm_target_state%3 == 0:
-                        transition_props_of_state.append(0.1)
-                    else:
-                        transition_props_of_state.append(0)
-
-            transmat_of_meta_hmm.append(transition_props_of_state)
-
-            # After transition props, handle means and covariances
-            means_of_meta_hmm.append(hmms[digit].means_[added_state_index])
-            covariances_of_meta_hmm.append(hmms[digit].covars_[added_state_index])
-    
-
-    meta_hmm = hmm.GaussianHMM(n_components=30, covariance_type="full")
-
-    meta_hmm.startprob_ = np.array(startprops_of_hmm)
-    meta_hmm.transmat_ = np.array(transmat_of_meta_hmm)
-    meta_hmm.means_ = np.array(means_of_meta_hmm)
-    meta_hmm.covars_ = np.array(covariances_of_meta_hmm)
-    
-    return meta_hmm
+titles = read_data()
+tokenized_titles = tokenize_corpus(titles)
 
 # %%
-# use the `decode` function to get the most likely state sequence for the test
-# sequences; re-map that to a sequence of digits
-def decode(meta_hmm, test_seq, lengths):
-    for index, test_data in enumerate(test_seq):
-        if index == 0:
-            conc_test_data = test_data
-        else:
-            conc_test_data = np.concatenate([conc_test_data, test_data])
-    logprob, state = meta_hmm.decode(conc_test_data, lengths, algorithm="viterbi")
-    return state
+def create_vocab():
+    vocabulary = []
+    for sentence in tokenized_titles:
+        for token in sentence:
+            if token not in vocabulary:
+                vocabulary.append(token)
 
-def map_state_to_digit(states, lengths):
-    hyp_words = []
-    for i in range(0, len(lengths)):
-        state = states[:lengths[i]]
-        states = states[lengths[i]:]
-        digits = [int(x / 3) for x in state]
-        hyp_words.append(max(digits, key = digits.count))
-    return hyp_words
+    word2idx = {w: idx for (idx, w) in enumerate(vocabulary)}
+    idx2word = {idx: w for (idx, w) in enumerate(vocabulary)}
 
-#%%
-# use jiwer.wer to compute the word error rate between reference and decoded
-# digit sequence
-# compute overall WER (ie. over the cross-validation)
-def cross_valid_meta(num_digits: int):
-    errors = []
-    for test_speaker in speakers:
-        print(test_speaker)
-        training_data_dict, test_data_dict = prepare_data(test_speaker)
-        hmms = train_hmms(training_data_dict)
-        meta_hmm = generate_meta_hmm(hmms)
-        for i in range(0, 10):
-            test_seq, true_words, lengths = generate_test_seq(num_digits, test_speaker)
-            states = decode(meta_hmm, test_seq, lengths)
-            hyp_words = map_state_to_digit(states, lengths)
-            error = wer(' '.join(str(true_words)), ' '.join(str(hyp_words)))
-            errors.append(error)
-    print(errors)
-    print(np.mean(errors))
+    vocabulary_size = len(vocabulary)
+    return word2idx, idx2word, vocabulary_size
 
-cross_valid_meta(3)
+word2idx, idx2word, vocabulary_size = create_vocab()
+# %%
+def create_context(window_size: int):
+    idx_pairs = []
+    # for each sentence
+    for sentence in tokenized_titles:
+        indices = [word2idx[word] for word in sentence]
+        # for each word, threated as center word
+        for center_word_pos in range(len(indices)):
+            # for each window position
+            for w in range(-window_size, window_size + 1):
+                context_word_pos = center_word_pos + w
+                # make soure not jump out sentence
+                if context_word_pos < 0 or context_word_pos >= len(indices) or center_word_pos == context_word_pos:
+                    continue
+                context_word_idx = indices[context_word_pos]
+                idx_pairs.append((indices[center_word_pos], context_word_idx))
+
+    idx_pairs = np.array(idx_pairs) # it will be useful to have this as numpy array
+    return idx_pairs
+
+idx_pairs = create_context(4)
+
+# %%  
+def get_input_layer(word_idx):
+    x = torch.zeros(vocabulary_size).float()
+    x[word_idx] = 1.0
+    return x
+
+def train_skipgram():
+    embedding_dims = 5
+    W1 = Variable(torch.randn(embedding_dims, vocabulary_size).float(), requires_grad=True)
+    W2 = Variable(torch.randn(vocabulary_size, embedding_dims).float(), requires_grad=True)
+    num_epochs = 100
+    learning_rate = 0.001
+
+    for epo in range(num_epochs):
+        loss_val = 0
+        for data, target in idx_pairs:
+            x = Variable(get_input_layer(data)).float()
+            y_true = Variable(torch.from_numpy(np.array([target])).long())
+
+            z1 = torch.matmul(W1, x)
+            z2 = torch.matmul(W2, z1)
+        
+            log_softmax = F.log_softmax(z2, dim=0)
+
+            loss = F.nll_loss(log_softmax.view(1,-1), y_true)
+            loss_val += loss.item()
+            loss.backward()
+            W1.data -= learning_rate * W1.grad.data
+            W2.data -= learning_rate * W2.grad.data
+
+            W1.grad.data.zero_()
+            W2.grad.data.zero_()
+        if epo % 10 == 0:    
+            print(f'Loss at epo {epo}: {loss_val/len(idx_pairs)}')
+    return W1, W2
+
+# %%
+W1, W2 = train_skipgram()
+# %%
+def similarity(v,u):
+  return torch.dot(v,u)/(torch.norm(v)*torch.norm(u))
+
+def find_most_similar_word(word):
+    similarities = {}
+    w1v = torch.matmul(W1,get_input_layer(word2idx[word]))
+    for i in range(len(idx2word)):
+        compared_word = idx2word[i]
+        w2v = torch.matmul(W1,get_input_layer(word2idx[compared_word]))
+        computed_similarity = similarity(w1v, w2v)
+        similarities[compared_word] = computed_similarity
+    most_similar_words = sorted(similarities.items(), key=lambda x: x[1], reverse=True)
+    print(most_similar_words[:3])
+
+find_most_similar_word('konzeption')
 # %%
