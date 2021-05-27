@@ -9,6 +9,7 @@ import torch.functional as F
 import torch.nn.functional as F
 from scipy import spatial
 import random
+from torch.utils.data import DataLoader, TensorDataset
 
 #%%
 # -----------------------------------------------------------------
@@ -25,13 +26,16 @@ def load_data() -> list:
 theses = load_data()
 print(theses[0])
 
+#reduce theses for testing purposes
+theses = theses[:200]
+
 # %%
 # Tokenize thesis titles
-def tokenize_corpus(corpus):
+def tokenize(corpus):
     tokens = [x.split() for x in corpus]
     return tokens
 
-tokenized_corpus = tokenize_corpus(theses)
+tokenized_corpus = tokenize(theses)
 print(tokenized_corpus[0])
 
 # %%
@@ -146,10 +150,10 @@ def get_most_n_similar_words(n, word):
 n = 5
 most_sim_words_konzeption = get_most_n_similar_words(n, 'konzeption')
 print(most_sim_words_konzeption)
-most_sim_words_cloud = get_most_n_similar_words(n, 'cloud')
-print(most_sim_words_cloud)
-most_sim_words_virtuelle = get_most_n_similar_words(n, 'virtuelle')
-print(most_sim_words_virtuelle)
+#most_sim_words_cloud = get_most_n_similar_words(n, 'cloud')
+#print(most_sim_words_cloud)
+#most_sim_words_virtuelle = get_most_n_similar_words(n, 'virtuelle')
+#print(most_sim_words_virtuelle)
 
 
 # %%
@@ -277,7 +281,8 @@ for title in tokenized_corpus:
         
         # All words besides first need to be added as one-hot-encoded-vecs to target
         if i != 0:
-            target_sequence.append(one_hot_encoded_vecs[idx])
+            #target_sequence.append(one_hot_encoded_vecs[idx])
+            target_sequence.append(idx)
 
     input_sequences.append(input_sequence)
     target_sequences.append(target_sequence)
@@ -313,31 +318,28 @@ class Model(nn.Module):
         # Fully connected layer
         self.fc = nn.Linear(hidden_dim, output_size)
     
-    def forward(self, x):
-        
+    def forward(self, x):    
         batch_size = x.size(0)
 
-        # Initializing hidden state for first input using method defined below
+        #Initializing hidden state for first input using method defined below
         hidden = self.init_hidden(batch_size)
 
         # Passing in the input and hidden state into the model and obtaining outputs
         out, hidden = self.rnn(x, hidden)
-        
         # Reshaping the outputs such that it can be fit into the fully connected layer
         out = out.contiguous().view(-1, self.hidden_dim)
         out = self.fc(out)
-        
         return out, hidden
     
     def init_hidden(self, batch_size):
         # This method generates the first hidden state of zeros which we'll use in the forward pass
-        # We'll send the tensor holding the hidden state to the device we specified earlier as well
-        hidden = torch.zeros(self.n_layers, batch_size, self.hidden_dim)
+        hidden = torch.zeros(self.n_layers, batch_size, self.hidden_dim).to(device)
+         # We'll send the tensor holding the hidden state to the device we specified earlier as well
         return hidden
 
 # %%
 # ----------- Part 5: Initialize Model -----------
-model = Model(input_size=embedding_dims, output_size=len(vocabulary), hidden_dim=12, n_layers=1)
+model = Model(input_size=embedding_dims, output_size=len(vocabulary), hidden_dim=32, n_layers=1)
 # Set model to defined device
 model.to(device)
 
@@ -356,22 +358,33 @@ train_samples = 100
 test_samples = 50
 
 train_input_sequences = input_sequences[:train_samples]
-train_input_sequences = np.array(train_input_sequences)
+train_input_sequences = np.array(train_input_sequences, dtype=np.float32)
+train_input_sequences = torch.from_numpy(train_input_sequences)
 
-train_target_sequences = target_sequences[:train_samples]
-train_target_sequences = np.array(train_target_sequences)
+#train_target_sequences = target_sequences[:train_samples]
+#train_target_sequences = np.array(train_target_sequences, dtype=np.float32)
+#train_target_sequences = torch.from_numpy(train_target_sequences)
 
+# %%
+train_target_new = []
+for x in target_sequences[:train_samples]:
+    for y in x:
+        train_target_new.append(y)
+
+train_target_sequences = torch.Tensor(train_target_new)
 # Training Run
 # %%
-# Transform input and target sequences to tensors
-input_tensor = torch.from_numpy(train_input_sequences)
-target_tensor = torch.from_numpy(train_target_sequences)
 
 for epoch in range(1, n_epochs + 1):
     optimizer.zero_grad() # Clears existing gradients from previous epoch
-    input_tensor.to(device)
-    output, hidden = model(input_tensor)
-    loss = criterion(output, target_tensor.view(-1).long())
+
+    #train_input_sequences.to(device)
+    output, hidden = model(train_input_sequences)
+    output = output.to(device)
+    train_target_sequences = train_target_sequences.to(device)
+    print(train_target_sequences.size())
+
+    loss = criterion(output, train_target_sequences.view(-1).long())
     loss.backward() # Does backpropagation and calculates gradients
     optimizer.step() # Updates the weights accordingly
     
@@ -379,9 +392,85 @@ for epoch in range(1, n_epochs + 1):
         print('Epoch: {}/{}.............'.format(epoch, n_epochs), end=' ')
         print("Loss: {:.4f}".format(loss.item()))
 
+
 # %%
-np_input = np.array(input_sequences)
-print(np_input.shape)
-np_target = np.array(target_sequences)
-print(np_target.shape)
+# --------------- RNN-LM: Exercies 1: Validation of RNN-LM ----------------
+def train_model(train_embedding_sequences, train_target_sequences):
+    model = Model(input_size=embedding_dims, output_size=len(vocabulary), hidden_dim=32, n_layers=1)
+    # Set model to defined device
+    model.to(device)
+
+    # Define hyperparameters
+    n_epochs = 10
+    lr=0.01
+
+    # Define Loss and Optimizer
+    criterion = nn.CrossEntropyLoss()
+    optimizer = torch.optim.Adam(model.parameters(), lr=lr)
+
+    # Prepare Training Data
+    train_input_sequences = np.array(train_embedding_sequences, dtype=np.float32)
+    train_input_sequences = torch.from_numpy(train_input_sequences)
+
+    # Flatten Training Targets
+    train_target = []
+    for title in train_target_sequences:
+        for target_index in title:
+            train_target.append(target_index)
+
+    train_target = torch.Tensor(train_target)
+
+    for epoch in range(1, n_epochs + 1):
+        optimizer.zero_grad() # Clears existing gradients from previous epoch
+
+        #train_input_sequences.to(device)
+        output, hidden = model(train_input_sequences)
+        output = output.to(device)
+        train_target_sequences = train_target_sequences.to(device)
+        print(train_target_sequences.size())
+
+        loss = criterion(output, train_target_sequences.view(-1).long())
+        loss.backward() # Does backpropagation and calculates gradients
+        optimizer.step() # Updates the weights accordingly
+        
+        if epoch%10 == 0:
+            print('Epoch: {}/{}.............'.format(epoch, n_epochs), end=' ')
+            print("Loss: {:.4f}".format(loss.item()))
+
+    return model
+
+
+def predict(model, words):
+    # One-hot encoding our input to fit into the model
+    input_embeddings = np.array([[embeddings[word2idx[w]] for w in words]], dtype=np.float32)
+    input_embeddings = torch.from_numpy(input_embeddings)
+    input_embeddings.to(device)
+    
+    out, hidden = model(input_embeddings)
+
+    prob = nn.functional.softmax(out[-1], dim=0).data
+
+    # Taking the class with the highest probability score from the output
+    word_idx = torch.max(prob, dim=0)[1].item()
+
+    return idx2word[word_idx], hidden
+
+
 # %%
+# --------------- RNN-LM: Exercies 2: Sampling from titles ----------------
+def sample(model, out_len, start=''):
+    model.eval() # eval mode
+    start = start.lower()
+    title = start.split()
+
+    size = out_len - len(title)
+
+    # Now pass in the previous characters and get a new one
+    for i in range(size):
+        word, h = predict(model, title)
+        title.append(word)
+
+    return title
+
+# %%
+print(sample(model, 5, 'Konzeption'))
