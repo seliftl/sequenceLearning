@@ -20,7 +20,7 @@ from torch.utils.data import DataLoader, TensorDataset
 def load_data() -> list:
     file = io.open("../res/theses.tsv", mode="r", encoding="utf-8")
     theses = file.readlines()
-    theses = [x.split('\t')[3].strip().lower() for x in theses] 
+    theses = ['<s> ' + x.split('\t')[3].strip().lower() for x in theses] 
     return theses
 
 theses = load_data()
@@ -212,7 +212,7 @@ for i in range(5):
     print('------------------------------------------------------')
 # %%
 # -----------------------------------------------------------------
-# Task 2: Language Model
+# Task 2: RNN Language Model
 # Partly used tutorial: https://blog.floydhub.com/a-beginners-guide-on-recurrent-neural-networks-with-pytorch/
 # %%
 #----------- Part 1: Add padding to sequences -----------
@@ -249,15 +249,15 @@ print(tokenized_corpus[0])
 
 # %%
 # ----------- Part 2: Generate one-hot-encoded-vectors -----------
-
-one_hot_encoded_vecs = []
-
-for i in range(len(vocabulary)):
-    vec = np.zeros(len(vocabulary))
-    vec[i] = 1.0
-    one_hot_encoded_vecs.append(vec)
-
-print(one_hot_encoded_vecs[0])
+#
+#one_hot_encoded_vecs = []
+#
+#for i in range(len(vocabulary)):
+#    vec = np.zeros(len(vocabulary))
+#    vec[i] = 1.0
+#    one_hot_encoded_vecs.append(vec)
+#
+#print(one_hot_encoded_vecs[0])
 
 # ----------- Part 3: Prepare embeddings and targets for training -----------
 # %%
@@ -338,62 +338,6 @@ class Model(nn.Module):
         return hidden
 
 # %%
-# ----------- Part 5: Initialize Model -----------
-model = Model(input_size=embedding_dims, output_size=len(vocabulary), hidden_dim=32, n_layers=1)
-# Set model to defined device
-model.to(device)
-
-# Define hyperparameters
-n_epochs = 10
-lr=0.01
-
-# Define Loss and Optimizer
-criterion = nn.CrossEntropyLoss()
-optimizer = torch.optim.Adam(model.parameters(), lr=lr)
-
-# %%
-# ----------- Part 6: Train the model -----------
-# Split into Training and Test data
-train_samples = 100
-test_samples = 50
-
-train_input_sequences = input_sequences[:train_samples]
-train_input_sequences = np.array(train_input_sequences, dtype=np.float32)
-train_input_sequences = torch.from_numpy(train_input_sequences)
-
-#train_target_sequences = target_sequences[:train_samples]
-#train_target_sequences = np.array(train_target_sequences, dtype=np.float32)
-#train_target_sequences = torch.from_numpy(train_target_sequences)
-
-# %%
-train_target_new = []
-for x in target_sequences[:train_samples]:
-    for y in x:
-        train_target_new.append(y)
-
-train_target_sequences = torch.Tensor(train_target_new)
-# Training Run
-# %%
-
-for epoch in range(1, n_epochs + 1):
-    optimizer.zero_grad() # Clears existing gradients from previous epoch
-
-    #train_input_sequences.to(device)
-    output, hidden = model(train_input_sequences)
-    output = output.to(device)
-    train_target_sequences = train_target_sequences.to(device)
-    print(train_target_sequences.size())
-
-    loss = criterion(output, train_target_sequences.view(-1).long())
-    loss.backward() # Does backpropagation and calculates gradients
-    optimizer.step() # Updates the weights accordingly
-    
-    if epoch%10 == 0:
-        print('Epoch: {}/{}.............'.format(epoch, n_epochs), end=' ')
-        print("Loss: {:.4f}".format(loss.item()))
-
-
-# %%
 # --------------- RNN-LM: Exercies 1: Validation of RNN-LM ----------------
 def train_model(train_embedding_sequences, train_target_sequences):
     model = Model(input_size=embedding_dims, output_size=len(vocabulary), hidden_dim=32, n_layers=1)
@@ -426,10 +370,9 @@ def train_model(train_embedding_sequences, train_target_sequences):
         #train_input_sequences.to(device)
         output, hidden = model(train_input_sequences)
         output = output.to(device)
-        train_target_sequences = train_target_sequences.to(device)
-        print(train_target_sequences.size())
+        train_target = train_target.to(device)
 
-        loss = criterion(output, train_target_sequences.view(-1).long())
+        loss = criterion(output, train_target.view(-1).long())
         loss.backward() # Does backpropagation and calculates gradients
         optimizer.step() # Updates the weights accordingly
         
@@ -441,19 +384,85 @@ def train_model(train_embedding_sequences, train_target_sequences):
 
 
 def predict(model, words):
-    # One-hot encoding our input to fit into the model
+    if len(words) == 0:
+        words = ['<s>']
+
     input_embeddings = np.array([[embeddings[word2idx[w]] for w in words]], dtype=np.float32)
     input_embeddings = torch.from_numpy(input_embeddings)
     input_embeddings.to(device)
     
     out, hidden = model(input_embeddings)
 
-    prob = nn.functional.softmax(out[-1], dim=0).data
+    probability_distribution = nn.functional.softmax(out[-1], dim=0).data
 
     # Taking the class with the highest probability score from the output
-    word_idx = torch.max(prob, dim=0)[1].item()
+    # word_idx = torch.max(prob, dim=0)[1].item()
 
-    return idx2word[word_idx], hidden
+    return probability_distribution
+
+def calc_perplexity(model, test_data):
+    probability_of_model = 1
+    word_count = 0
+    for title in test_data:
+        context = []
+        for word in title:
+            if word == pad_symbol:
+                break
+            
+            word_count += 1
+
+            probability_distribution = predict(model, context)
+            word_index = word2idx[word]
+            probability_of_model *= probability_distribution[word_index]
+
+            context.append(word)
+    
+    perplexity = (1/probability_of_model)**(1/float(word_count))
+    return perplexity
+
+# %%
+def split_data_in_k_parts(k, input_data, target_data):
+    size_of_part = len(tokenized_corpus)//k
+    cur_index = 0
+    input_data_parts = []
+    target_data_parts = []
+    
+    for i in range(1,k+1):
+        input_data_parts.append(input_data[cur_index:cur_index+size_of_part])
+        target_data_parts.append(target_data[cur_index:cur_index+size_of_part])
+        cur_index += size_of_part
+    
+    return input_data_parts, target_data_parts
+        
+# %%
+# 5 fold validation
+seperated_input_sequences, seperated_training_sequences = split_data_in_k_parts(5, input_sequences, target_sequences)
+summed_perplexity = 0
+
+for k in range(5):
+    # Set training and test data
+    train_input_seq = []
+    train_target_seq = []
+    
+    test_input_seq = seperated_input_sequences[k]
+            
+    for i in range(5):
+        if i != k:
+            if len(train_input_seq) == 0:
+                train_input_seq = seperated_input_sequences[i]
+                train_target_seq = seperated_training_sequences[i]
+            else:
+                train_input_seq.extend(seperated_input_sequences[i])
+                train_target_seq.extend(seperated_training_sequences[i])
+
+    # Train model
+    model = train_model(train_input_seq, train_target_seq)
+    # Evaluate model
+    perplexity = calc_perplexity(model, test_input_seq)
+    
+    summed_perplexity += perplexity
+
+print('Overall Perplexity:', summed_perplexity/5)
 
 
 # %%
@@ -467,8 +476,13 @@ def sample(model, out_len, start=''):
 
     # Now pass in the previous characters and get a new one
     for i in range(size):
-        word, h = predict(model, title)
-        title.append(word)
+        propability_distribution = predict(model, title)
+        word_ranking = np.random.choice(list(word2idx.keys()), 1, propability_distribution)
+        next_word = word_ranking[0]
+        if next_word == pad_symbol:
+            next_word = word_ranking[1]
+
+        title.append(next_word)
 
     return title
 
