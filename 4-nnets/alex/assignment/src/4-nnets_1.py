@@ -27,7 +27,7 @@ theses = load_data()
 print(theses[0])
 
 #reduce theses for testing purposes
-theses = theses[:200]
+#theses = theses[:200]
 
 # %%
 # Tokenize thesis titles
@@ -265,9 +265,13 @@ embeddings = W2.cpu().detach().numpy()
 
 # Add 0 embedding for padding symbol
 embeddings = np.append(embeddings, [np.zeros(embedding_dims)], axis=0)
+embedding2idx = {}
+for index, embedding in enumerate(embeddings):
+    embedding2idx[np.array2string(embedding)] = index
 
 input_sequences = []
 target_sequences = []
+
 
 for title in tokenized_corpus:
     input_sequence = []
@@ -405,14 +409,17 @@ def calc_perplexity(model, test_data):
     word_count = 0
     for title in test_data:
         context = []
-        for word in title:
+        for embedding in title:
+            word_index = embedding2idx[np.array2string(embedding)]
+            word = idx2word[word_index]
+            if word == '<s>':
+                continue
             if word == pad_symbol:
                 break
             
             word_count += 1
 
             probability_distribution = predict(model, context)
-            word_index = word2idx[word]
             probability_of_model *= probability_distribution[word_index]
 
             context.append(word)
