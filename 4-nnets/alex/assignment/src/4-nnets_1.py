@@ -3,6 +3,7 @@ import numpy as np
 from numpy.linalg import norm
 import io
 import torch
+from torch import nn
 from torch.autograd import Variable
 import torch.functional as F
 import torch.nn.functional as F
@@ -10,6 +11,8 @@ from scipy import spatial
 import random
 
 #%%
+# -----------------------------------------------------------------
+# Task 1: Skip-Gram
 # ----Part 2 of assignment: Generate embeddings from thesis.tsv----
 
 # Load the data
@@ -203,4 +206,182 @@ for i in range(5):
     print('Ähnliche Titel: ')
     print(get_n_most_similar_thesis(4, tokenized_corpus[index]))
     print('------------------------------------------------------')
+# %%
+# -----------------------------------------------------------------
+# Task 2: Language Model
+# Partly used tutorial: https://blog.floydhub.com/a-beginners-guide-on-recurrent-neural-networks-with-pytorch/
+# %%
+#----------- Part 1: Add padding to sequences -----------
+pad_symbol = '#PAD#'
+# Define helper methods
+def find_longest_sequences(sequences):
+    longest_length = 0
+
+    for sequence in sequences:
+        cur_length = len(sequence)
+        if longest_length < cur_length:
+            longest_length = cur_length
+
+    return longest_length
+
+def add_padding_to_sequences(longest_length, sequences):
+    for sequence in sequences:
+        if len(sequence) < longest_length:
+            number_of_appends = longest_length - len(sequence)
+            to_extend = [pad_symbol] * number_of_appends
+            sequence.extend(to_extend)
+
+# %%
+# Add padding to sequences and add pad_symbol to vocabulary
+longest_length = find_longest_sequences(tokenized_corpus)
+add_padding_to_sequences(longest_length, tokenized_corpus)
+
+padding_symbol_idx = len(vocabulary)
+vocabulary.append(pad_symbol)
+word2idx[pad_symbol] = padding_symbol_idx
+idx2word[padding_symbol_idx] = pad_symbol
+
+print(tokenized_corpus[0])
+
+# %%
+# ----------- Part 2: Generate one-hot-encoded-vectors -----------
+
+one_hot_encoded_vecs = []
+
+for i in range(len(vocabulary)):
+    vec = np.zeros(len(vocabulary))
+    vec[i] = 1.0
+    one_hot_encoded_vecs.append(vec)
+
+print(one_hot_encoded_vecs[0])
+
+# ----------- Part 3: Prepare embeddings and targets for training -----------
+# %%
+embeddings = W2.cpu().detach().numpy()
+
+# Add 0 embedding for padding symbol
+embeddings = np.append(embeddings, [np.zeros(embedding_dims)], axis=0)
+
+input_sequences = []
+target_sequences = []
+
+for title in tokenized_corpus:
+    input_sequence = []
+    target_sequence = []
+    for i, word in enumerate(title):
+        idx = word2idx[word]
+
+        # All words besides last need to be added as embeddings to input
+        if i != len(title)-1:
+            input_sequence.append(embeddings[idx])
+        
+        # All words besides first need to be added as one-hot-encoded-vecs to target
+        if i != 0:
+            target_sequence.append(one_hot_encoded_vecs[idx])
+
+    input_sequences.append(input_sequence)
+    target_sequences.append(target_sequence)
+
+print(tokenized_corpus[0])
+print(input_sequences[0])
+print(target_sequences[0])
+
+
+# %%
+# Set device for PyTorch
+is_cuda = torch.cuda.is_available()
+if is_cuda:
+    device = torch.device("cuda")
+    print("GPU is available")
+else:
+    device = torch.device("cpu")
+    print("GPU not available, CPU used")
+
+# %%
+# ----------- Part 4: Define the rnn-model -----------
+class Model(nn.Module):
+    def __init__(self, input_size, output_size, hidden_dim, n_layers):
+        super(Model, self).__init__()
+
+        # Defining some parameters
+        self.hidden_dim = hidden_dim
+        self.n_layers = n_layers
+
+        #Defining the layers
+        # RNN Layer
+        self.rnn = nn.RNN(input_size, hidden_dim, n_layers, batch_first=True)   
+        # Fully connected layer
+        self.fc = nn.Linear(hidden_dim, output_size)
+    
+    def forward(self, x):
+        
+        batch_size = x.size(0)
+
+        # Initializing hidden state for first input using method defined below
+        hidden = self.init_hidden(batch_size)
+
+        # Passing in the input and hidden state into the model and obtaining outputs
+        out, hidden = self.rnn(x, hidden)
+        
+        # Reshaping the outputs such that it can be fit into the fully connected layer
+        out = out.contiguous().view(-1, self.hidden_dim)
+        out = self.fc(out)
+        
+        return out, hidden
+    
+    def init_hidden(self, batch_size):
+        # This method generates the first hidden state of zeros which we'll use in the forward pass
+        # We'll send the tensor holding the hidden state to the device we specified earlier as well
+        hidden = torch.zeros(self.n_layers, batch_size, self.hidden_dim)
+        return hidden
+
+# %%
+# ----------- Part 5: Initialize Model -----------
+model = Model(input_size=embedding_dims, output_size=len(vocabulary), hidden_dim=12, n_layers=1)
+# Set model to defined device
+model.to(device)
+
+# Define hyperparameters
+n_epochs = 10
+lr=0.01
+
+# Define Loss and Optimizer
+criterion = nn.CrossEntropyLoss()
+optimizer = torch.optim.Adam(model.parameters(), lr=lr)
+
+# %%
+# ----------- Part 6: Train the model -----------
+# Split into Training and Test data
+train_samples = 100
+test_samples = 50
+
+train_input_sequences = input_sequences[:train_samples]
+train_input_sequences = np.array(train_input_sequences)
+
+train_target_sequences = target_sequences[:train_samples]
+train_target_sequences = np.array(train_target_sequences)
+
+# Training Run
+# %%
+# Transform input and target sequences to tensors
+input_tensor = torch.from_numpy(train_input_sequences)
+target_tensor = torch.from_numpy(train_target_sequences)
+
+for epoch in range(1, n_epochs + 1):
+    optimizer.zero_grad() # Clears existing gradients from previous epoch
+    input_tensor.to(device)
+    output, hidden = model(input_tensor)
+    loss = criterion(output, target_tensor.view(-1).long())
+    loss.backward() # Does backpropagation and calculates gradients
+    optimizer.step() # Updates the weights accordingly
+    
+    if epoch%10 == 0:
+        print('Epoch: {}/{}.............'.format(epoch, n_epochs), end=' ')
+        print("Loss: {:.4f}".format(loss.item()))
+
+# %%
+np_input = np.array(input_sequences)
+print(np_input.shape)
+np_target = np.array(target_sequences)
+print(np_target.shape)
 # %%
