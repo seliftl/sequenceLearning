@@ -15,7 +15,7 @@ import torch.nn.functional as F
 # ---%<------------------------------------------------------------------------
 def read_data():    
     theses_df = pd.read_csv('../res/theses.tsv',header=None, sep='\t')
-    
+
     # remove in final solution
     theses_df = theses_df.head(100)    
     titles = theses_df[3].tolist()
@@ -120,4 +120,8 @@ def find_most_similar_word(word):
     print(most_similar_words[:3])
 
 find_most_similar_word('konzeption')
+# %%
+# Part 2
+# ---%<------------------------------------------------------------------------
+idx_pairs[:100]
 # %%
