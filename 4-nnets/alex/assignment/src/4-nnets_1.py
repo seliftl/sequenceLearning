@@ -10,6 +10,7 @@ import torch.nn.functional as F
 from scipy import spatial
 import random
 from torch.utils.data import DataLoader, TensorDataset
+import math
 
 #%%
 # -----------------------------------------------------------------
@@ -27,7 +28,7 @@ theses = load_data()
 print(theses[0])
 
 #reduce theses for testing purposes
-#theses = theses[:200]
+#theses = theses[:210]
 
 # %%
 # Tokenize thesis titles
@@ -84,7 +85,7 @@ def get_input_layer(word_idx):
 embedding_dims = 5
 W1 = Variable(torch.randn(embedding_dims, vocabulary_size).float(), requires_grad=True)
 W2 = Variable(torch.randn(vocabulary_size, embedding_dims).float(), requires_grad=True)
-num_epochs = 21
+num_epochs = 100
 learning_rate = 0.001
 
 for epo in range(num_epochs):
@@ -121,7 +122,6 @@ def get_vec_of_word(word):
     word_idx = word2idx[word]
     return W2[word_idx].detach().cpu().numpy()
 
-    
 def ret_2nd_ele(tuple_1):
     return tuple_1[1]
 
@@ -185,12 +185,12 @@ def calc_vec_distance(vec1, vec2):
 
 # Use dtw to find most similar titles
 def get_n_most_similar_thesis(n, thesis_as_tokens):
-    word_vecs_target = get_list_of_word_vecs_for_thesis(thesis_as_tokens)
+    embeddings_input = get_list_of_word_vecs_for_thesis(thesis_as_tokens)
     n_most_similar_thesis = []
 
     for tokenized_thesis in tokenized_corpus:
-        word_vecs = get_list_of_word_vecs_for_thesis(tokenized_thesis)
-        distance = dtw(word_vecs_target, word_vecs, calc_vec_distance)
+        cur_embeddings = get_list_of_word_vecs_for_thesis(tokenized_thesis)
+        distance = dtw(embeddings_input, cur_embeddings, calc_vec_distance)
 
         if len(n_most_similar_thesis) < n:
             n_most_similar_thesis.append((tokenized_thesis, distance))
@@ -210,6 +210,11 @@ for i in range(5):
     print('Ähnliche Titel: ')
     print(get_n_most_similar_thesis(4, tokenized_corpus[index]))
     print('------------------------------------------------------')
+
+
+
+
+
 # %%
 # -----------------------------------------------------------------
 # Task 2: RNN Language Model
@@ -217,6 +222,7 @@ for i in range(5):
 # %%
 #----------- Part 1: Add padding to sequences -----------
 pad_symbol = '#PAD#'
+
 # Define helper methods
 def find_longest_sequences(sequences):
     longest_length = 0
@@ -261,10 +267,12 @@ print(tokenized_corpus[0])
 
 # ----------- Part 3: Prepare embeddings and targets for training -----------
 # %%
+# Get all embeddings out of nn matrix
 embeddings = W2.cpu().detach().numpy()
 
 # Add 0 embedding for padding symbol
 embeddings = np.append(embeddings, [np.zeros(embedding_dims)], axis=0)
+
 embedding2idx = {}
 for index, embedding in enumerate(embeddings):
     embedding2idx[np.array2string(embedding)] = index
@@ -272,24 +280,23 @@ for index, embedding in enumerate(embeddings):
 input_sequences = []
 target_sequences = []
 
-
 for title in tokenized_corpus:
-    input_sequence = []
-    target_sequence = []
+    input_sequence_for_title = []
+    target_sequence_for_title = []
     for i, word in enumerate(title):
         idx = word2idx[word]
 
         # All words besides last need to be added as embeddings to input
         if i != len(title)-1:
-            input_sequence.append(embeddings[idx])
+            input_sequence_for_title.append(embeddings[idx])
         
         # All words besides first need to be added as one-hot-encoded-vecs to target
         if i != 0:
-            #target_sequence.append(one_hot_encoded_vecs[idx])
-            target_sequence.append(idx)
+            #target_sequence_for_title.append(one_hot_encoded_vecs[idx])
+            target_sequence_for_title.append(idx)
 
-    input_sequences.append(input_sequence)
-    target_sequences.append(target_sequence)
+    input_sequences.append(input_sequence_for_title)
+    target_sequences.append(target_sequence_for_title)
 
 print(tokenized_corpus[0])
 print(input_sequences[0])
@@ -343,19 +350,20 @@ class Model(nn.Module):
 
 # %%
 # --------------- RNN-LM: Exercies 1: Validation of RNN-LM ----------------
-def train_model(train_embedding_sequences, train_target_sequences):
+""" # Method without use of batches:
+def train_model(train_embedding_sequences, train_target_sequences, batch_size):
     model = Model(input_size=embedding_dims, output_size=len(vocabulary), hidden_dim=32, n_layers=1)
     # Set model to defined device
     model.to(device)
 
     # Define hyperparameters
-    n_epochs = 10
+    n_epochs = 50
     lr=0.01
 
     # Define Loss and Optimizer
     criterion = nn.CrossEntropyLoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=lr)
-
+    
     # Prepare Training Data
     train_input_sequences = np.array(train_embedding_sequences, dtype=np.float32)
     train_input_sequences = torch.from_numpy(train_input_sequences)
@@ -371,7 +379,6 @@ def train_model(train_embedding_sequences, train_target_sequences):
     for epoch in range(1, n_epochs + 1):
         optimizer.zero_grad() # Clears existing gradients from previous epoch
 
-        #train_input_sequences.to(device)
         output, hidden = model(train_input_sequences)
         output = output.to(device)
         train_target = train_target.to(device)
@@ -383,6 +390,75 @@ def train_model(train_embedding_sequences, train_target_sequences):
         if epoch%10 == 0:
             print('Epoch: {}/{}.............'.format(epoch, n_epochs), end=' ')
             print("Loss: {:.4f}".format(loss.item()))
+
+    return model """
+
+# Method with use of batches
+def train_model(train_embedding_sequences, train_target_sequences, batch_size):
+    model = Model(input_size=embedding_dims, output_size=len(vocabulary), hidden_dim=32, n_layers=1)
+    # Set model to defined device
+    model.to(device)
+
+    # Define hyperparameters
+    n_epochs = 100
+    lr=0.01
+
+    # Define Loss and Optimizer
+    criterion = nn.CrossEntropyLoss()
+    optimizer = torch.optim.Adam(model.parameters(), lr=lr)
+
+    # Prepare Training Data as Batches
+    num_batches = len(train_embedding_sequences) // batch_size
+    if len(train_embedding_sequences) % batch_size != 0:
+        num_batches += 1
+
+    batched_input_sequences = []
+    batched_target_sequences = []
+
+    for i in range(num_batches):
+        train_embeddings_for_batch = 0
+        target_indices_for_batch = 0
+
+        start_idx = i*batch_size
+        end_idx = start_idx + batch_size
+
+        if end_idx < len(train_embedding_sequences):
+            train_embeddings_for_batch = train_embedding_sequences[start_idx:end_idx]
+            target_indices_for_batch = train_target_sequences[start_idx:end_idx]
+        else:
+            train_embeddings_for_batch = train_embedding_sequences[start_idx:]
+            target_indices_for_batch = train_target_sequences[start_idx:]
+
+        train_embeddings_for_batch = np.array(train_embeddings_for_batch, dtype=np.float32)
+        batched_input_sequences.append(torch.from_numpy(train_embeddings_for_batch))
+
+        # Flatten Training Targets
+        flattened_train_target = []
+        for title in target_indices_for_batch:
+            for target_index in title:
+                flattened_train_target.append(target_index)
+
+        batched_target_sequences.append(torch.Tensor(flattened_train_target))
+
+    # Train the model
+    for epoch in range(1, n_epochs + 1):
+        total_epoch_loss = 0
+
+        for batch_idx in range(num_batches):
+            optimizer.zero_grad() # Clears existing gradients from previous epoch
+
+            output, hidden = model(batched_input_sequences[batch_idx])
+            output = output.to(device)
+            train_target = batched_target_sequences[batch_idx].to(device)
+
+            loss = criterion(output, train_target.view(-1).long())
+            loss.backward() # Does backpropagation and calculates gradients
+            optimizer.step() # Updates the weights accordingly
+
+            total_epoch_loss += loss.item()
+        if epoch%10 == 0:
+            print('Epoch: {}/{}.............'.format(epoch, n_epochs), end=' ')
+            print("Loss: {:.4f}".format(total_epoch_loss))
 
     return model
 
@@ -405,7 +481,7 @@ def predict(model, words):
     return probability_distribution
 
 def calc_perplexity(model, test_data):
-    probability_of_model = 1
+    probability_of_model = 0
     word_count = 0
     for title in test_data:
         context = []
@@ -420,11 +496,13 @@ def calc_perplexity(model, test_data):
             word_count += 1
 
             probability_distribution = predict(model, context)
-            probability_of_model *= probability_distribution[word_index]
+            probability_of_model += math.log2(probability_distribution[word_index])
 
             context.append(word)
     
-    perplexity = (1/probability_of_model)**(1/float(word_count))
+    
+    perplexity_exponend = -probability_of_model/word_count
+    perplexity = 2 ** perplexity_exponend
     return perplexity
 
 # %%
@@ -444,9 +522,11 @@ def split_data_in_k_parts(k, input_data, target_data):
 # %%
 # 5 fold validation
 seperated_input_sequences, seperated_training_sequences = split_data_in_k_parts(5, input_sequences, target_sequences)
-summed_perplexity = 0
+models = {}
+perplexities = []
 
 for k in range(5):
+    print('Run for fold ', k+1, ' started.')
     # Set training and test data
     train_input_seq = []
     train_target_seq = []
@@ -461,20 +541,16 @@ for k in range(5):
             else:
                 train_input_seq.extend(seperated_input_sequences[i])
                 train_target_seq.extend(seperated_training_sequences[i])
-
     # Train model
-    model = train_model(train_input_seq, train_target_seq)
+    models[(k,i)] = train_model(train_input_seq, train_target_seq, 32)
     # Evaluate model
-    perplexity = calc_perplexity(model, test_input_seq)
-    
-    summed_perplexity += perplexity
+    perplexities.append(calc_perplexity(models[(k,i)], test_input_seq))
 
-print('Overall Perplexity:', summed_perplexity/5)
-
+print('Average PP:', sum(perplexities)/5)
 
 # %%
 # --------------- RNN-LM: Exercies 2: Sampling from titles ----------------
-def sample(model, out_len, start=''):
+def sample(model, out_len, start='<s>'):
     model.eval() # eval mode
     start = start.lower()
     title = start.split()
@@ -484,7 +560,11 @@ def sample(model, out_len, start=''):
     # Now pass in the previous characters and get a new one
     for i in range(size):
         propability_distribution = predict(model, title)
-        word_ranking = np.random.choice(list(word2idx.keys()), 1, propability_distribution)
+        propability_distribution = propability_distribution.cpu().detach().numpy()
+
+        # words have some order as values in probability distribution
+        words = np.array(list(word2idx.keys()))
+        word_ranking = np.random.choice(words, 2, p=propability_distribution)
         next_word = word_ranking[0]
         if next_word == pad_symbol:
             next_word = word_ranking[1]
@@ -494,4 +574,12 @@ def sample(model, out_len, start=''):
     return title
 
 # %%
-print(sample(model, 5, 'Konzeption'))
+# Train overall model
+overall_model = train_model(input_sequences, target_sequences, 128)
+
+# %%
+# Call sample method
+print(sample(overall_model, 5))
+print(sample(overall_model, 10, 'konzeption'))
+
+# %%
