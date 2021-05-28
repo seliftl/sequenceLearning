@@ -1,416 +1,415 @@
-Konzeption und Realisierung einer mobilen Lohnerfassung für die Baubranche,extern,Bachelor
-Internes IT-Marketing - Übersicht über genutzte und ungenutzte Potenziale der absatzpolitischen Instrumente,intern,Bachelor
-Dynamischer Test der Software-Schnittstellenkomponenten in KFZ-Steuerelektronik,extern,Bachelor
-Übertragung großer Datenmengen in einer Service-orientierten Architektur,extern,Bachelor
-Parallelisierung endlicher Automaten am Beispiel XML Scanner/Tokenizer,intern,Bachelor
-Redesign einer Wörterbuch-Webanwendung mit gleichzeitiger Portierung von Java nach .NET,extern,Bachelor
-Entwurf eines IEC62304-konformen agilen Medizintechnik-Entwicklungsprozesses unter Verwendung des Prozessframework Scrum,extern,Bachelor
-Neukonzeption und -entwicklung einer HR Geschäftsanwendung,extern,Bachelor
-Imitation menschlicher Bewegungsabläufe durch einen humanoiden Roboter unter Einsatz einer Tiefensensorkamera,intern,Bachelor
-Optimierung der Arbeitsplanung von mobilen Pflegediensten durch automatische Erstellung von Leistungsnachweisen,extern,Bachelor
-Die Erschließung zukunftsorientierter Geschäftsfelder durch Anwendung von E-Business in verschiedenen Branchen,intern,Bachelor
-"Konzeption, Modellierung und Implementierung eines Business Intelligence Prototyps im Bereich Road-Services der Spedition Geis",extern,Bachelor
-Implementierung und Evaluierung eines TCP/IP-Stapels mit IPv6-Unterstützung auf einem Embedded-Gerät,extern,Master
-Future concepts for smart and scalable access to digital media content in global companies,extern,Master
-Entwicklung einer effizienteren Texteingabe für Smartphones,intern,Bachelor
-Proof of Concept: Aufbau eines Stateless IPv4/IPc6 Address Translators (IVI) für die Kommunikation vom IPv4-basierten Internet-Clients mit IPv6-only Services,extern,Bachelor
-Einführung eines ESB-Systems bei einem Versandhändler am Beispiel der Kommunikation zwischen Onlineshop und ERP/CRM System.,extern,Master
-User Experience - Analytics for Business Software,extern,Bachelor
-Prototyp eines Kfz-Infotainment-Systems auf GENIVI-Basis auf einer embedded Plattform,extern,Bachelor
-Analyse und Bewertung von Replikationsstrategien für eine hochskalierbare Active Directory Lightweight Directory Services (AD LDS) Umgebung,extern,Bachelor
-Konzeption softwaregestützter Prozessoptimierung des Projekt- und Multiprojektmanagements bei hotel.de.,extern,Bachelor
-Konzept und prototypische Implementierung einer Business Intelligence-Standardlösung,extern,Master
-Untersuchung der möglichen Einflussmöglichkeiten und Auswirkungen auf die Performance der DATEV-Anwendungen durch das Anbringen der Codesignatur,extern,Bachelor
-SEO als Marketinginstrument für eine Unternehmensbertung,intern,Bachelor
-Entwicklung und Implementierung einer Softwareanwendung für die Thermographieprüfung an LEDs und Wafern,extern,Master
-Integration mobiler HTML-5-Anwendungen bei der DATEV eG  ,extern,Master
-Autonomously detecting an picking up scattered objects: design and implementation of a module for humanoid robots  ,intern,Bachelor
-Serious Gaming - Konzeptionelle Entwicklung und prototypische Umsetzung eines Lernspiels zur Vermittlung von ausgewählten COBIT-Inhalten anhand eines lerntheoretischen Ansatzes  ,extern,Master
-Automatisierte Erzeugung. Verteilung und Installation von Linux-Images in virtualisierte Umgebungen  ,extern,Bachelor
-Aufbau von Testumgebungen für automatisierte Tests in verteilten Szenarien ,extern,Bachelor
-Evaluation von Test-Tools für ASP.NET MVC3 Anwendungen bei hotel.de ,extern,Bachelor
-Konzeption und Realisierung einer Standard Berichtslösung und eines Kenntzahl-Cockpits für die Versandhandelsbranche  ,extern,Master
-Konzipierung und Realisierung einer Client-Server-Datenbanklösung inklusive User-Front-End zur Haushaltsstrukturprüfung von Kommunen,extern,Bachelor
-"Analyse, Erweiterung und Optimierung eines verteilten Test-Mangement-Systems in einem akkreditierten Prüflabor",extern,Bachelor
-Entwicklung einer standardisierten Controllinglösung für kleine und mittelständische Unternehmen,extern,Master
-Webanwendung und iPhone App für den mobilen Zugriff auf das Störungsmanagementsystem einer EAM-Applikation,extern,Master
-Projektmanagement - Symbiose zwischen klassischen Projektmanagement und agilen Methoden von Scrum,extern,Bachelor
-HTML-5 Anwendungen: Nutzung der offline Storage,extern,Bachelor
-Analyse von Race Conditions in WebSeiten,intern,Bachelor
-Konzeption und Implementierung einer Infrastruktur zur Übertragung und Speicherung großer Mengen von Sensodaten,extern,Bachelor
-Analyse und Erweiterung eines Projekt-Management Tools,extern,Bachelor
-Entwicklung einer modularen Medienverwaltung für DCPs,extern,Bachelor
-Potenziale einer Data-Warehous basierten Unternehmensplanung,intern,Bachelor
-Entwicklung einer Software zur Generierung von interaktiven Diagrammen,extern,Bachelor
-Konzeption einer Festfallverwaltung für Siemens-Anlagen - Bedien- und Beobachtungsanlagen,extern,Bachelor
-Automatisierte Erkennung von Tracking im Web,extern,Bachelor
-Evaluation von Wettbewerbsvorteilen für die Brand Community myAudi durch die Nutzung von telemetrischen Diensten,extern,Master
-"Discovery, Monitoring und Statusvisualisierung in einer komplexen Multi-Vendor-Loadbalancer-Umgebung",extern,Bachelor
-Konzeption und Implementierung einer Schnittstelle zwischen dem Immowelt i-Tool und Microsoft Office 365 Cloudlösung,extern,Bachelor
-Konzeption und Realisierung einer textuellen und räumlichen Suche von Geo-Objekten auf Smart-Phones,intern,Master
-Zugriffsbeschränkungen für Webapplikationen mit Parameterized Views in einer PostreSQL-Datenbank,intern,Bachelor
-Programmierung eines Steuerungsmoduls für den humanoiden Roboter Nao zur Durchführung gezielter Minigolfschläge,intern,Bachelor
-"Manuelle und automatisierte Tests mobiler Anwendungen für Smartphones und Tablet-Computer - Herangehensweisen, Herausforderungen und Unterschiede zu herkömmlichen Tests.“ ",extern,Master
-Konzeption und Implementierung eines interaktiven Szenarios mit einem humanoiden Roboter,intern,Bachelor
-Softwarezuverlässigkeit - Parameterschätzung und Überprüfung der Vorhersagegenauigkeit bei Vorliegen gruppierter Daten,intern,Bachelor
-Generierung von Flächen aus einzelnen Linienobjekten in Geodatenbeständen,intern,Bachelor
-Berechnung von kürzesten Wegen unter Berücksichtigung von Flächen,extern,Master
-"IT-Leistungsverrechnung - Aufgaben, Methoden und Entwicklungen  ",intern,Bachelor
-Entwurf und Implementierung eines Tools zur Migration von Datenbeständen nach DATEV-DMS  ,extern,Bachelor
-Sichere (secure) elektrische Ladesäule  ,extern,Master
-Modellierung von Geschäftsprozessen in Steuerkanzleien mit DATEV-Software - Integration der BPMN in die Workflow-Umgebung DATEV ProCheck pro-  ,extern,Master
-Entwicklung und Anwendung eines Prozessmodells für Aufwandssmimulation in der Forschung und Entwicklung,extern,Bachelor
-Konzeption eines Systems zum standardisierten Entwurf von Prozessmodellen in Fachabteilungen - Analyse und Design des MID Prozess Engineering Frameworks -  ,extern,Master
-Entwicklung eines modularen Vorgehensmodells zur Einführung von Wissensmanagement - Modellentwicklung auf Basis aktueller Literatur und empirischen Umsetzungsverfahren der IPI GmbH  ,extern,Master
-Analyse des Planungsprozesses bei Siemens Healthcare und Evaluierung von Planungswerkzeugen,extern,Master
-Erarbeitung eines Konzepts zur Sicherstellung der nachhaltigen Datenqualität im zentralen Enterprise Architecture Repository bei Siemens     ,extern,Master
-Bereitstellung eines E-Shops für mobile Endgeräte,extern,Bachelor
-Serviceorientierte Client-Architektur mit HTML5 - Konzeption und prototypische Realisierung am Beispiel der Online-Anwendung Belege der DATEV eG  ,extern,Master
-Selfservice-Toolset zur Administration von Cisco-Komponenten im WAN-Bereich,extern,Bachelor
-"Integration von Risikomanagementaspekten in die Geschäftsprozessmodellierung mit ""Innovator für Business Analysts""  ",extern,Bachelor
-Entwurf und Implementierung eines CA-Webservices in C#,extern,Master
-"Bewertung und Konzeption des Demand-Portfolio-Managements bei der Siemens AG, I IA IT und Einsatz einer unterstützenden BI-Software am Beispiel von QlikView.  ",extern,Bachelor
-Ermittlung und Analyse der Bedarfsanforderungen eines mittelständischen Unternehmens an ein SAP CATS Modul,extern,Bachelor
-studierBar - Entwicklung einer App für das Schülermarketing,intern,Bachelor
-Anwendung von Methoden des Requirements Engineering für BI Systeme an Hochschulen    ,intern,Bachelor
-Design und Implementierung eines Frameworks zur effizienten Konsolidierung von Testergebnissen in der Automobilindustrie,extern,Bachelor
-Combinatorial problem solving and optimization on GPUs,intern,Master
-Variantenkonfiguration mit produktionssynchronen Abrufen am Beispiel Johnson Controls,extern,Master
-Kryptographischer Coprozessor für Automatisierungssysteme,extern,Master
-Gamification in a B2B Environment - How to make it fun working with business intelligence data on an mobile app.,extern,Bachelor
-Konzeption und prototypische Realisierung eines Testframeworks für eine Medizinsoftware,extern,Bachelor
-Prozessmodellierung zur Abteilung von Anforderungen an ein technisches Assistenzsystem für die Betreuung alter Menschen,extern,Bachelor
-Konzeption und prototypische Umsetzung einer datenbankbasierten Applikation zur Produktklassifizierung und Auswertung betriebswirtschaftlicher Kennzahlen bei der GfK  ,extern,Bachelor
-"Analysieren, manipulieren und visualisieren von Stammdaten für Planungszwecke  ",extern,Bachelor
-Konzeption und Realisierung eines Reporting Cockpits im Service Level Management der DATEV eG,extern,Master
-Konzipierung und prototypische Realisierung zentraler OLAP-Funktionen für mobile Endgeräte am Beispiel der Online-Datensicherung für Systempartner der DATEV eG,extern,Master
-Perspektivabhängige 3D-Darstellung mittels Kopf-Tracking und Stereoskopie,intern,Master
-Integration und Evaluierung eines Usability-Prozesses in einen SCRUM-orientierten SW-Entwicklungsprozess,extern,Bachelor
-Berechnung von Isochronen auf Straßennetzen,intern,Bachelor
-Konzeption und Realisierung einer IT-Lösung zur Unterstützung der Prozesse des IT-Projektportfoliomanagements     ,extern,Bachelor
-Automatisiertes Extrahieren von Informationenüber virtuelle Maschinen aus Hypervisoren,extern,Bachelor
-Einführung und Analyse eines Business Intelligence Prozessmodells in dem Microsoft Sharepoint Server (MOSS) basierten Business Process Management-Modells Project4Sure (P4S),extern,Bachelor
-Automatisierte Messwerte Analyse,extern,Bachelor
-Analyse und Optimierung der Erstellung von Gehaltsdatenauswertungen auf dem IBM Mainframe der DATEV eG,extern,Bachelor
-Implementierung eines Dokumentenmanagementsystems für die zentrale Bereitstellung von Unternehmensrichtlinien und -prozeduren bei adidas AG,extern,Bachelor
-Modellierung und Implementierung der Projektmanagement-bezogenen Geschäftsprozesse der mediendesign AG,extern,Bachelor
-Von der Anforderung hin zur qualitativen Software - Ein Ansatz zur Umwandlung von Anforderungen in Testfälle,intern,Master
-Möglichkeiten und Nutzen für Auswerteapplikationen für Vicos RCS am praktischen Beispiel,extern,Bachelor
-Effiziente Implementierung der AUTOSAR Festpunktarithmetik Bibliothek ,extern,Bachelor
-Optimierung von verteilten Ereignisverarbeitungssystemen durch Umverteilung von Ereignis-Detektoren zur Laufzeit,extern,Bachelor
-Design und Implementierung eines Konfigurations- und Diagnose-Proxy-Servers für eingebettete Systeme,extern,Master
-Konzeption und Implementierung einer komplexen HTML-Dokumentanzeige unter Verwendung von Entwurfsmustern für JavaSkript,extern,Master
-Einsatz von Heimautomatisierung im häuslichen Umfeld für ein längeres selbstbestimmtes Leben,extern,Bachelor
-Entwicklung eines standardisierten Vorgehensmodells zur Anforderung für eine Anforderungsanalyse für eine Postaleinführung am Beispiel eines Energieversorgers,extern,Master
-Entwicklung eines standardiesierten Vorgehensmodells zur Anforderungsanalyse für eine Portaleinführung am Beispiel eines Energieversorgers,extern,Master
-"Planung, Programmierung und Implementierung einer Kommunikationskomponente für eine Pateientenunterstützungssoftware und Bewertung der Nützlichkeit dieser Software als Organisationshilfe im medizinischen Bereich",extern,Bachelor
-"Entwicklung und Implementierung eines Befragungssystems für ""Car Clinics"" unter besonderer Berücksichtigung von mobilen Client Systemen",extern,Master
-Auswahl und Implementierung eines Echtzeit-Betriebssystems für Libelium Waspmote Sensorknoten,extern,Bachelor
-Erarbeitung eines Konzepts zur Integration der Finanzsysteme einer deutschen Konzerntochter an den amerikanischen Mutterkonzern,extern,Bachelor
-Automatisches Lokalisieren und Annäherung an im freien Raum platzierte Objekte mit einem humanoiden Roboter,intern,Bachelor
-Transskriptions- und Transrationsmethode vom arabischen ins lateinische Alphabet,intern,Bachelor
-Entwurf eines Augmented Reality Toolkits für Windows Phone und die Verwendung in einer Demonstrations-Applikation,extern,Master
-Sensobasierte Modellerstellung für die Simulation von industriellen Roboteranwendungen mit dem Microsoft Robotics Developer Studio,extern,Bachelor
-Indoor-Selbstlokalisierung eines autonomen Quadrocopters mit Methoden der Bildverarbeitung,intern,Bachelor
-Stand und Vision der Anwendungen des Semantic Web und deren betriebswirtschaftlicher Bedeutung - speziell Ontologien,intern,Bachelor
-Konzeption und Realisierung einer kundenspezifischen Verpackungsdatenbank für einen mittelständischen Automobilzulieferer,extern,Bachelor
-Controlling und Monitoringwerkzeuge für Social Media Aktivitäten in der Unternehmenskommunikation,intern,Bachelor
-Analysis of the impact of Smart Home Applicances in combination with Photovoltaic Systems on monetary benefits and CO2-Emission for private households,extern,Bachelor
-Analyse und Konzeption eines Systems zur Verwaltung von Web-Hosting-Kunden auf Basis von MVC,extern,Bachelor
-Entwicklung einer universellen Eingabemaske für modellzentriertes Testen mit Interface zu verschiedenen UML-Werkzeugen,extern,Bachelor
-Konzept und Implementierung eines Prototypen zur Verbesserung des Trendidentifikationsprozesses,intern,Master
-Mehrwert durch Multi-Touch-Anwendungen im Geschäftsfeld Steuern der DATEV eG,extern,Master
-Entwicklung einer Android App zur Visualisierung von Sensordaten,extern,Bachelor
-Projektmanagement in Großunternehmen: Konzeption und prototypische Anwendung eines Pre-Project-Checks für die EBH GmbH,extern,Bachelor
-"Evaluierung des SIMD Instruction Sets im Dual ARM Cortex A9 (""NEON Extensions"")",extern,Master
-Soziale Plattform für einen Hobby-Feuerwerk-Club,intern,Bachelor
-Konzeption und Implementierung einer auf XSL-Templates basierenden Dokumentaufbereitung für unterschiedliche Endgeräte,extern,Bachelor
-Graphische Modellierung von Sicherheitsanforderungen in Geschäftsprozessen zur feingranularen Autorisierung in Webdatenbanken,intern,Bachelor
-Optimierung der Projektmanagementstrukturen im Bereich Consulting bei der DATEV eG,extern,Bachelor
-Entwicklung und Implementierung eines Vorgehens zur Auswertung thermographischer Aufnahmen von Mikrochips,extern,Bachelor
-Evaluierung der Rechtsvorschriften für einen Webauftritt am Beispiel einer Praxis für Coaching und Psychotherapie,extern,Bachelor
-Entwicklung eines Verfahrens zur Verzögerungs- und Genauigkeitsmessung von Head- und Facetracking Systemen,extern,Bachelor
-Analyse und Konzeption einer Client-Virtualisierungslösung für das Landratsamt Fürth,extern,Master
-Entwicklung eines Vorgehensmodells zur Pflichtenhefterstellung sowie von Pflichtenhefttemplates für ein mittelständisches Softwareentwicklungsunternehmen,extern,Bachelor
-Entwicklung und Implementierung eines Kalibrierverfahrens für robotergestützte Computertomographiesysteme auf Basis von Röntgenprojekten,extern,Master
-Erstellen eines Postprocessors für den Cause & Effect Editor,extern,Bachelor
-Ausarbeitung einer BI-Strategie für ein mittelständisches Unternehmen auf Microsoft SQL Server 2012 unter Berücksichtigung von In-Memory- und OLAP-Verfahren,extern,Master
-Realisierung eines Softwaresystems zur Datenerfassung und Speicherung von Messwerten aus PV-Kraftwerken mit variabel konfigurierbaren Hardwareschnittstellen  ,extern,Master
-Business Reporting einer Geschäftseinheit auf Basis von SAP BW - Evaluierung und Optmierung der Prozesse und Harmonisierung des Reportings,extern,Master
-Erkennung und Modellierung von Fahrbahnrändern für Straßen ohne Spurmarkierungen,extern,Master
-Entwicklung und Implementierung eines Frameworks für dynamische Tests eingebetteter Software auf einer Zielplattform,extern,Bachelor
-Eine Windows 8-Anwendung für die gestengesteuerte Erstellung von Teilnehmerlisten,extern,Bachelor
-3D-Visualisierung von überlappenden Materialien bei der Reifenfertigung,extern,Bachelor
-"Konzeption und Implementierung eines Prozesses zur Erkennung von ""Megatrends"" im Rahmen des Innovationsmanagement im Bereich Business Development der DATEV e.G.",extern,Bachelor
-Implementierung eines Dateisystems und einer RAM-Disk für das Betriebssystem ULIX,intern,Bachelor
-Implementierung eines ELF-Programm-Loaders für das Betriebssystem ULIX,intern,Bachelor
-Evaluieren von Modellierungsmöglichkeiten für vorhandenen STEP7-Code und Beispielimplementierung mit C#,intern,Bachelor
-Evaluation von CRM Systemen: CRM for free: Was leisten Open Source CRM Systeme?,intern,Bachelor
-Warum scheitern CRM Projekte in der Praxis?,intern,Bachelor
-Konzeption und Implementierung einer projektübergreifenden Personaleinsatzplanung,extern,Bachelor
-Erkennung und Digitalisierung von Noten mit iOS und der iPad-Kamera,intern,Bachelor
-Konzeption und Realisierung eines Verfahrens für eine automatische Silbentrennung deutscher Wörter,intern,Bachelor
-3D Game Engine Comparison Educational Purpose,extern,Bachelor
-Analyse der Nutzung des Moduls Tectura Project bei der Firma Semikron Elektronik GmbH & Co. KG und Erstellung einer strategischen Handlungsempfehlung zur weiteren Implementierung,extern,Bachelor
-Design and Development of a Social Network Platform for Sports,intern,Bachelor
-"Definition und Umsetzung eines Daten- und Anwendungsmodells zur Erfassung und Auswertung regional agierender Ressourcen zur Optimierung des Reportings, Siemens I IA AS",extern,Bachelor
-Ausarbeiten eines Vergleichs moderner Echtzeitsysteme und Anfertigen von geeigneten Referenzimplementierungen,extern,Bachelor
-Entwicklung einer E-Learning-Umgebung für den Siemens Healthcare Sektor AX,extern,Bachelor
-Konzeption und Entwicklung eines Intranet-Tools zur Verwaltung von Stammdaten,extern,Bachelor
-Konzeption und Entwicklung eines Werkzeugs zur Aktualisierung einer mobilen Zählererfassungssoftware,intern,Bachelor
-Evaluierung und Implementierung eines Konzeptes für die autonome Orientierung eines humanoiden Roboters anhand potentieller Warnzeichen oder Gefahrensituationen,intern,Master
-Erstellung eines Architektur Models für TenneT in Verbindung mit der Darstellung von Businessreport- und Technology Map für die Bereiche Netzführung sowie Energiedatenmanagement und Forderungsmanagement,extern,Bachelor
-Konzeption und Realisierung eines Informationsportals für Gewerbeimmobiliensuchende und -makler,extern,Bachelor
-Warteschlangenmodellierung zur Performancesimulation von Storage Systemen,extern,Bachelor
-Webanwendung für generatives Layout-Design,intern,Bachelor
-Konzeption und Umsetzung der Migration von IT News Blog in Share Point 2010,extern,Bachelor
-"Konzeption, Entwurf und Implementierung eines Visualisierungstools zu Veranschaulichung von Protokolldateien",extern,Bachelor
-Untersuchung der Machbarkeit und Entwicklung von Einsatzmöglichkeiten von Windows Metro Style Anwendungen für Labormanagementsysteme,extern,Bachelor
-Interaktive Restaurantsoftware auf Basis einer Windows 8 App,extern,Bachelor
-Test einer komplexen Korrekturkette zur Verbesserung von CT Rekonstruktionen,extern,Bachelor
-Evaluierung von Applikationsentwicklung mittels Metro-Design am Beispiel eines Radiology Information System,extern,Bachelor
-Konzept zur Einführung eines IT-basierten Flächenmanagementsystems bei der PUMA SE unter Berücksichtigung betriebswirtschaftlicher und strategischer Aspekte,extern,Bachelor
-"Entwicklung einer einfach konfigurierbaren interaktiven Side-Scroller-Umgebung nach dem ""Jump and Run""-Spielprinzip",intern,Bachelor
-"Konzeptionierung systemübergreifender Workflows auf Basis von Microsoft SharePoint 2010, Nintex Workflow 2010 und Microsoft Dynamics NAV 2013",extern,Bachelor
-Entwicklung eines Systemprozesses für die automatisierte Bereitstellung und interne Abrechnung von virtuellen Testumgebungen für die DATEV eG,extern,Bachelor
-Konzeption von Performance-Metriken für das Project Office im Rahmen des Account Portfolio Managements bei der IBM Deutschland GmbH,extern,Bachelor
-Konzeption und Implementierung einer neuen Software für eine Messanlage zur Verbesserung der Produktqualität und zur Erweiterung der vorhandenen Funktionen,extern,Bachelor
-Interaktive Segmentierung von CT-Volumendatensätzen von Museumsexponaten,intern,Bachelor
-Bedienung eines 3D-Objekts via Multitouch Display,extern,Bachelor
-Klassifikation und Bewertung von Web 2.0 Anwendungen in Marketing und Vertrieb,intern,Bachelor
-"Data Mining und türkische Verbalmorphologie - Morphologische Analyse der verneinten, fragenden und fragend-verneinten Verbalformen mit farbcodierter Darstellung der Morpheusstrukturen",intern,Bachelor
-"Konfiguration, Anpassung und Erweiterung der Visualisierungsschnittstelle einer Geschäftsprozessplattform am Beispiel Omnitracker",extern,Bachelor
-Datenbankmodell für ein drahtloses Sensornetz basiertes Überwachungssystem für logistische Prozesse,extern,Bachelor
-Verfahren zur Korrektur von Kreisringartefakten in der Röntgen-Computertomographie,extern,Bachelor
-Continous Integration in Embedded-Systems,extern,Bachelor
-Social Semantic Web - Zusammenführen von Social WEb Anwendungen mit Semantic Web Technologien und Erstellung eines Social Semantic Wikis,intern,Bachelor
-Entwicklung einer Entscheidungsvorlage inklusive Wirtschaftlichkeitsbetrachtung für die zukünftige Gestaltung der IT Systemlandschaft im Bereich Konzernkonsolidierung eines Energiedienstleisters,extern,Bachelor
-Integration von Supportprozessen in ein Liferay Service Portal bei einem Automobilhersteller,extern,Bachelor
-Realisierung eines Datenworkflows für die lokale Bereitstellung von in der Cloud erstellten Befundungsergebnisse für Ärzte in einer medizinischen Einrichtung,extern,Bachelor
-Entwurf und Implementierung einer Echtzeitanalyse von Twitter,intern,Bachelor
-Entwurf und Implementation einer Echtzeit-Analyse von Twitter-Nachrichten,intern,Bachelor
-Besondere Herausforderungen der digitalen Forensik auf SmartPhones,extern,Bachelor
-Analyse und Verbesserung der Supportprozesse bei einem mittelständischen ERP-Anbieter,extern,Bachelor
-Implementierung und Zertifizierung eines Qualitätsmanagementsystems für ein IT-Systemhaus nach DIN EN ISO 9001:2008,extern,Bachelor
-Pseudonymisierung der medizinischen Bilddaten zur regulatorisch konformen Übertragung über öffentliches Internet in ein Data Center,extern,Bachelor
-"Lock removal via ""Smart Scheduling""",extern,Master
-Evaluierung verschiedener Software Development Kits zur Entwicklung plattformunabhängiger Anwendungen für mobile Geräte,extern,Bachelor
-Mobile Transaktionen mit SAP ERP zur Unterstützung der Logistik - Konzeption und beispielhafte Umsetzung mit ITSmobile und Web Dynpro,extern,Bachelor
-Self-Service BI Visualisirungswerkzeuge: Vergleichende Tools Evaluierung und Machbarkeitsanalyse bei Siemens Energy,extern,Bachelor
-Zeitlicher Abgleich zwischen dem Audiosignal und den Noten eines instrumentalen Musikstücks,intern,Bachelor
-Konzeptionierung und Implementierung eines Systemkonfigurationswerkzeuges für ein funkbasiertes Lokalisierungssystem,extern,Bachelor
-Konzept zur automatisierten Reduzierung des Straßennetzes für eine Navigationssoftware,extern,Master
-"Customer Relationship Management: Konzepte, Technologie und Trends",intern,Bachelor
-Marktanalyse für den Einsatz von PC-based Produktion in der Gebäudeautomatisierung,extern,Bachelor
-Evaluierung und prototypische Realisierung einer Plattform zur Speicherung und Verwaltung von Know-How,extern,Bachelor
-Enterprise Architecture Management bei der TenneT TSO GmbH,extern,Bachelor
-Konzeption und Implementierung eines Profile-Serviced im Umfeld von HMI / SCADA Runtime Innovation Line,extern,Master
-Aufbau einer Hadoop-Umgebung zur Analyse von Massendaten eines Onlineshops,extern,Bachelor
-Comparison of Mobile Technology Applications in Germany and Korea,intern,Bachelor
-Entwicklung einer Verfahrensweise für die Erstellung von 3D-Unternehmenspräsentationen für 3D-Bildschirme ohne Brille,extern,Master
-Evaluierung verschiedener Verfahren für die performante Abfrage von Massendaten am Beispiel eines Online-Werbeservice,intern,Master
-Konzeption eines grafischen Instrumentations-Clusters auf einem NVIDIA Tegra 2 Prozessor unter Verwendung des NVIDIA Composter Studios,extern,Bachelor
-Plattformübergreifende Synchronisierung von Daten und Kollaboration am Beispiel der Anwendung Owncloud unter besonderer Beachtung von Datensicherheit,extern,Bachelor
-Die Entwicklung des Versandhandels und die Auswirkungen des E-Commerce auf traditionelle Versandhandelsunternehmen,intern,Bachelor
-Web-basierte Versionsverwaltung für die revisionssichere Speicherung von Designdokumenten mit Hilfe des express-Frameworks,extern,Bachelor
-Entwickeln eines Oberflächen-Designers inkl. optimierter grafischer Benutzeroberflächen für eine Cdn/Lin-Busanalyse-Applikation,extern,Bachelor
-Konzept für eine automatisierte stabile Berechnung der Verfügbarkeit für die Produkte DATEVcloud Software und DATEVasp.,extern,Bachelor
-"Leitfaden für SQL-Übungen als Bestandteil eines Hochschul-Kurses ""Datenbanken""",intern,Bachelor
-Einführung eines Warenwirtschaftssystems bei einem mittelständischen Anlagenbauunternehmen in der Rohrsanierungsbranche,extern,Bachelor
-Entwurf und Implementierung eines Systems zum Austausch von Aufgaben und Lösungen während einer Lehrveranstaltung,intern,Bachelor
-Analyse und Definition von Anforderungen zur Auswahl eines Frameworks für die Entwicklung einer generischen Webapplikation im Versicherungsumfeld,extern,Bachelor
-Entwicklung einer webbasierten Zeiterfassung mit Datenaustausch mit einem Kanzleinetzwerk,extern,Bachelor
-Entwicklung und Realisierung einer Applikation für das Erstellen von Sendungen für ein Webradio,intern,Bachelor
-Die Bedeutung von Soft Skills im Prozess der Softwareentwicklung mit agilen Verfahren,extern,Bachelor
-Untersuchung des Einsatzes semantischer Technologien im E-Business - Ist-Analyse und Forschungsgebiete,extern,Bachelor
-"Usability Engineering für die bestehende Energiecontrolling-Software IngSoft InterWatt mittels Erstellung eines Aufgabenmodells und einiger Prototypen, so dass sie die aus der Implementierung der ISO 50001 .....",extern,Bachelor
-"Konzeption und prototypische Realisierung eines Plugin-Konzepts für WPF Anwendungen auf Basis von MEF unter Berücksichtigung des MVVM Patterns am Beispiel des Redaktionswerkezugs ""DFacto"" der DATEV eG   ",extern,Bachelor
-Erstellung einer Datenaufzeichnungs- und Darstellungskomponente für Daten einer SPS,extern,Bachelor
-Erschließung von Erfolgspotenzialen bei Projektabwicklungsprozessen durch Lean Management,extern,Bachelor
-Untersuchen der Möglichkeiten von IntelliTrace für die Reproduktion von Fehlern in einer Anwendung,extern,Bachelor
-Entwicklung einer dynamischen Kommunikationsschnittstelle in einem Hardware/Software Co-Simulationssystem,extern,Bachelor
-Punktmerkmalsverfahren zur Kollisionsvermeidung beim Quadrocopter,intern,Bachelor
-Erkennung und Vermeidung von Hindernissen in der Flugbahn eines autonomen Quadrocopters mittels optischem Fluss,extern,Master
-Anforderungsanalyse und Neuentwicklung einer Software zur Auswertung und Visualisierung von statistischen Daten am Beispiel des Importvorgangs von Immobiliendaten,extern,Bachelor
-Echtzeitkorrektur des Rolling-Shutter-Effekts in Videostreams einer Quadrocopter-Bordkamera,extern,Bachelor
-Entwicklung eines UML-Profils für EAST-ADL in Rational Rhapsody,extern,Bachelor
-Entwicklung von Handlungsempfehlungen zur Optimierung eines Applikationsportfolios im Bereich Offer-Management,extern,Bachelor
-Entwicklung eines Vendor-Managed-Inventory-Systems mit Anbindung an Microsoft Dynamics NAV,extern,Bachelor
-Vergleich von In-Memory und relationalen Datenbanksystemen in Anwendungen der DATEV,extern,Bachelor
-Agile Programmiersprachen - Analyse und Bestimmung der Agilitätsfaktoren von Programmiersprachen und deren Übertragbarkeit auf klassische Sprachen,extern,Master
-Patterns in Web-Anwendungen mit JavaScript,extern,Bachelor
-Möglichkeiten und Grenzen agiler Entwicklung von technischen Dokumentationen in einem Softwareunternehmen,extern,Bachelor
-Rekursive Virtualisierung - Stand der Technik und Möglichkeiten,extern,Bachelor
-Aufbau einer flexiblen Virtual-Reality-Lösung für die Visualisierung von Punktwolken und CAD-Modellen,intern,Bachelor
-Konzeption und Umsetzung einer Kartographieanwendung durch einen Quadrocopter,extern,Bachelor
-Evaluierung der Zertifizierungsmöglichkeiten eines innovativen Smartphone-Bezahlsystems sowie die Analyse der Markt- und Vertriebsfähigkeit,extern,Bachelor
-"Konzeption und Entwicklung einer Scripting-gestützten Softwareanwendung zur Vereinheitlichung logisch unabhängiger, fachlich zusammengehöriger Systeme am Beispiel eines länderübegreifenden Lohnabrechnungssystems",extern,Master
-Konzept und Umsetzung eines Programmes zur Nutzung des Microsoft KINECT Sensors zur Erfassung der Handbewegungen eines Werkers,extern,Master
-Aufbauz eines RDF-Stores als semantische Komponente der Intranetsuchmaschine für die Fakultät Informatik,extern,Bachelor
-Konzeption und Entwicklung eines Softwareprototypen für die CIV-Methodik,extern,Bachelor
-"Konzeption und prototypische Realisierung eines IT-Infrastruktur-Monitoring-Frameworks, angepasst an die Bedürfnisse von Anwendungsentwicklern im Umfeld eines ausgelagerten IT-Infrastruktur-Betriebs am Beispiel der Siemens AG  ",extern,Bachelor
-Restrukturierung eines auf Microsoft SharePoint Services basierenden Intranetportal bei Siemens Healthcare,extern,Bachelor
-Einbindung von juristischem Content in eine Kanzleiorganisationssoftware für Rechtsanwälte,extern,Bachelor
-Marktanalyse von Software-Ressourcen für das Ideenmanagement der Siemens AG,extern,Bachelor
-Weiterentwicklung eines Eclipse-RCP basierten Editors zur Steuergerätedatenbeschreibung im Hinblick auf Bedienerfreundlichkeit und Eingabe-Effizienz  ,extern,Bachelor
-Formularerstellung aus SAP ERP bei der MAN Truck & Bus AG - Untersuchung alternativer Drucksysteme,extern,Bachelor
-Duale Proxy Appliance zur feingranularen Zugriffskontrolle in Webanwendungen,extern,Bachelor
-Anbindung vorhandener Software an das Ausstellungs-Management- & Tagging-System und Erweitern der Foyer-Ausstellung mit zusätzlichen Exponaten. ,extern,Bachelor
-"Analyse, Konzeption und Implementierung einer domainspezifischen Methode zur automatisierten Lagerstammdatengenerierung bei der Dematic GmbH",extern,Master
-Automatisierte Co-Simulation und Simulationsdatenmanagement im PLM-System Teamcenter unter Verwendung des Functional Mock-up Interface,extern,Master
-Modern User Interface Devices - Möglichkeiten eines effizienten und sinnvollen Einsatzes der Kinect in Business-Anwendungen,extern,Bachelor
-Unterstützung des Änderungsmanagements bei agilen IT-Projekten,extern,Bachelor
-Entwicklung eines Konfigurationsschlüsselkonzeptes und einer Anlagenkonfigurations-Software zur automatisierten Verarbeitung von ERP-Daten (Stücklisten)  ,extern,Bachelor
-Entwicklung einer 3D-Objekterkennung zur Bestimmung der Bauteillage in einem Greifsystem auf der Basis von Partikelverdichtung als Eingangsdaten für die Movelt! Bewegungsplanung,extern,Bachelor
-Evaluierung und Umsetzung eines SOA Management Konzepts mit Fokus auf Service-Governance und Service Life Cycle bei Cortal Consors S.A.  ,extern,Bachelor
-Erweiterte Klassifikation in Hörgeräten durch Georeferenzierung mit mobilen Endgeräten,extern,Bachelor
-Kameragestützte Erkennung eines Quadocopterlandeplatzes in verschiedenen Freiheitsgraden    ,extern,Bachelor
-Erweiterung des Treibers eines virtuellen Dateisystems für skalierbare Medien um die Funktionalität eines parametierbaren Dateiaufrufes am Beispiel von JPEG 2000,extern,Bachelor
-Konzeption und Entwiclung einer Java-Anwendung zum Erkennen von Zyklen in Baubarkeitsregeln für Fahrzeuge mit Mitteln der Graphentheorie  ,extern,Bachelor
-"Parallele, fehlertolerante Programmierung unter Anwendung von Design Pattern in Erlang/OTP",extern,Bachelor
-Untersuchungen zu den Testanforderungen von AUTOSAR und Erarbeitung eines Testkonzepts,extern,Bachelor
-Konzeption und Implementierung der Visualisierung eines fachlichen Datenmodells im Bereich der Arbeitsvermittlung,extern,Bachelor
-"Analyse, Optimierung und Konzeption des Angebotsmanagement-Prozesses der evosoft GmbH",extern,Bachelor
-Implementierung eines echtzeitfähigen Feature-Extraction-Algorithmus aus Livebilddaten auf der ARM-i.MX6-Architektur für ein Medizingerät,extern,Bachelor
-"Konzeption und Prototypisierung zum Thema Gewinnung und Analyse von Nutzungsdaten mit Hilfe von ""Runtime Intelligence""",extern,Bachelor
-Analyse und Evaluation verschiedener Dokumentenmanagementsysteme zur Schaffung einer einheitlichen Archivschnittstelle,extern,Bachelor
-"Serverseitige Verwaltung von Spielzuständen für geräteübergreifende, asynchrone Spielkonzepte",extern,Bachelor
-Optimierung der Produktstammdatenversorgung einer weltweiten E-Commerce Lösung für Industrie Produkte mit der Technologieplattform SAP HANA,extern,Master
-Konzeption und Implementierung eines Werkzeugs zum Vergleich von Performancetestergebnissen,extern,Bachelor
-Viral Marketing,extern,Bachelor
-Konzeptionelle Untersuchung des SAP Business Process Exception Managements in Verbindung mit dem SAP Common Layer für den Einsatz bei einem Energieversorgungsunternehmen,extern,Bachelor
-Aufbau eines Frameworks für die Testautomatisierung der Softwarekomponenten eines UNIX-basierten SCADA-Systems,extern,Bachelor
-Software Projektcontrolling basierend auf Requirementanalysen,extern,Bachelor
-"Marktüberblick, Evaluation und Erstellung eines Showcases zur Datenerfassung mit einem digitalen Stift",extern,Bachelor
-Entwicklung eines NFC Reader Modules,extern,Bachelor
-Konzeption und Entwicklung einer plattformunabhängigen HTML5-Desktop-Application für die Office Fitness Solutions GmbH,extern,Bachelor
-Web 2.0 im Peronalbereich - Analyse und Klassifizierung der Einsatzpotenziale von Web 2.0 Anwendungen in Unternehmen,extern,Master
-Realisierung einer Webanwendung zur datenbankgestützten Konfiguration eines Clusters von Java-Standalone-Anwendungen,extern,Bachelor
-Technische Evaluierung und prototypische Realisierung einer unternehmensinternen Plattform zur Speicherung und Verwaltung von Wissen,extern,Bachelor
-Konzeption und Realisierung eines Stellen- und Informationsportals als Smartphone Applikation für die evosoft GmbH  ,extern,Bachelor
-"Entwicklung einer interaktiven Webapplikation für die Verwaltung von Spielern, Mannschaften und Wettbewerben sowie die Verarbeitung und Visualisierung von Statistiken eines Multiplayer-Online-Spiels mit Ruby on Rails und jQuery",extern,Master
-Implementierung des FAT-Dateisystems für das Lehrbetriebssystem ULIX,extern,Bachelor
-Untersuchung möglicher Fehlerquellen bei der Änderung von Netzwerk-Hardware und Entwicklung eines vereinfachten Change-Management-Systems,extern,Bachelor
-Entwicklung eines Prototypen für eine Augmented-Reality Applikation zur Unterstützung der Bedienung von Alltagsgeräten an ausgewählten Beispielen,extern,Bachelor
-Prototypische Implementierung einer interaktiven Geschäftsgrafik für die Simulation betriebswirtschaftlicher Szenarios am Beispiel des DATEV Controllingreports mobil,extern,Bachelor
-Ein browserbasiertes Dashboard zur dynamischen Datenvisualisierung im Innovationsmanagement,extern,Bachelor
-Analyse des Anforderungsmanagements der DATEV eG und konzeptionelle Erweiterung um übergreifende Prozesse,extern,Bachelor
-Ankopplung einer Softwareplattform für Bioprozessentwicklung mit OPC DA,extern,Bachelor
-Konzeption und Implementierung eine Infoscreens zur Darstellung von Projektinformationen einer Entwicklungsabteilung,extern,Bachelor
-Prozedurale Modellierung und Constraint-Programmierung zur Generierung von dreidimensionalen Objekten,extern,Bachelor
-Konzeption und Einsatz einer Hybrid IAAS Cloud mit OpenStock auf SUSE Linux Enterprise Server  ,extern,Bachelor
-"Anforderungsanalyse, Konzeption und Implementierung einer webbasierten Software zur Verarbeitung von Dokumenten",extern,Bachelor
-Variantenkonfiguration im Spannungsfeld von Betriebswirtschaft (ERP) und Technik (PLM),extern,Bachelor
-Konzeption und Entwicklung einer Plattformübergreifenden Web-Applikation zur Erfassung und Visualisierung der persönlichen Gemütslage anhand einer parallel geführten Nutzerstudie,extern,Bachelor
-Konzeption und Implementierung eines skalierfähigen Server-Backends für eine Web-Anwendung unter Auswahl einer passenden Cloud-Plattform,extern,Bachelor
-"Umsetzung von ""point&click"" Aufgaben zur 3D-Volumenmanipulation mit Leap Motion im klinischen Umfeld der Angiographie",extern,Bachelor
-"Oberflächen-, Benutzer- und Bedienkonzepte für einen XML-Editor in der Windows 8 Desktop- und Tablet-Umgebung bei der Fa. SCHEMA",extern,Bachelor
-"Konzeption und Umsetzung eines BI-Workflows auf Basis der Microsoft BI Lösung (SSIS, SSAS, SSRS)",extern,Bachelor
-Bewertung und prototypische Umsetzung semantischer Datenmodelle für Customer-Relationship-Management-Systeme,extern,Bachelor
-Portable Browser-Integration und Sicherheitsdemo für das Nürnberger Anti-Phisching Device,extern,Bachelor
-Entwicklung einer Client-Sever Applikation zur Filespace-Kostenreduzierung,extern,Bachelor
-Entwicklung einer Client-Server Applikation zur Filespace-Kostenreduzierung,extern,Bachelor
-"Automatisierter Test einer betriebswirtschaftlichen Anwendungssoftware - Konzipierung, Entwiclung und Implementierung eines neuen Softwaretestverfahrens bei der DATEV eG",extern,Bachelor
-"Analyse, Konzeption und Implementierung eines Tools zur Messung der Auslastung eines Materialflusssystems bei der Dematic GmbH  ",extern,Bachelor
-Entwurf eines Konzepts zur Einbindung eines sozialen Netzwerks in die Personalverwaltung,extern,Bachelor
-Entwicklung einer Beschreibungssprache für skalierbare Medien,extern,Bachelor
-"Responsive Webdesign: Herausforderungen, Technologiebewertung und praktische Anwendung",extern,Bachelor
-DATEVcloud Software und DATEVasp Self Service Application für mobile Endgeräte Evaluation verschiedener Entwicklungsansätze mit anschließendem Proof of Concept  ,extern,Bachelor
-Einsatz von Werkzeugen für das Windows-Rechtemanagement in der DATEV eG,extern,Bachelor
-Konzeption und prototypische Implementierung einer Smartphone-App für SIMATIC B.Data,extern,Bachelor
-Konzeption und Implementierung einer Prüf- und Analysesoftware für einen Schubstangenantrieb,extern,Bachelor
-Konzeption und prototypische Umsetzung einer Smartphone App für SIMATIC B.Data,extern,Bachelor
-"Entwicklung einer Web-Applikation mit RESTful Web-Services zur Übertragung, Konfiguration und Auswertung von Fitbit-Sensordaten",extern,Bachelor
-Analyse und Konzeption einer mobilen Makler-Applikation zur Unterstützung im täglichen Geschäft,extern,Bachelor
-Automatisierung der Bereitstellung von thematischen Karten im DATEV-Intranet,extern,Bachelor
-Konzeption einer sicheren Speicherung von Kreditkarteninformationen auf einem Smartphone im Rahmen von Mobile Payment,extern,Bachelor
-"Entwicklung einer autonomen, mobilen Anwendung zum Auffinden von Produkten in Regalen von Einzelhandelsgeschäften",extern,Bachelor
-Entwicklung dynamischer Algorithmen zur Erkennung von Web-Tracking auf Basis von Benutzer-Domain-Interaktionen,extern,Bachelor
-Analyse und Erweiterung der SAP-ATP-Verfügbarkeitsprüfung bei der Firma Fackelmann GmbH & Co. KG,extern,Bachelor
-Evaluierung von ausgewählten Tools zur Prozesssimulation von Beispielprozessen,extern,Bachelor
-Behandlung komplexer Abbiegesituation in der Routenplanung,extern,Bachelor
-Machbarkeitsstudie zur HTML5-Migration eines Java-basierten Planungstools,extern,Bachelor
-Debug and Trace using Logic Analyzers in AUTOSAR,extern,Master
-Wie Web 2.0 das Wissensmanagement verändert,extern,Bachelor
-Bereitstellung von Verlaufsdaten und Auswertungen im SelfService-Portal und DATEVasp und DATEVcloud Software zur Nutzung auf mobilen Endgeräten,extern,Bachelor
-"Entwicklung eines Frameworks für Multiagentensysteme zur Verwendung in industriellen Fertigungsnetzen nach dem Konzept ""Industrie 4.0"" und Evaluation eines Prototyps für einen Modellaufbau",extern,Bachelor
-Konzeption und Implementierung eines Online-Echtzeit-Strategie-Spiels für iOS,extern,Bachelor
-Entwicklung einer hardwarenahen µ-Controller-Software zur Steuerung und Modulation eines Bakensenders über ein proprietäres Protokoll und Webinterface  ,extern,Bachelor
-Schemaänderungen im laufenden Betrieb,extern,Bachelor
-Entwurf und prototypische Entwicklung eines Werkzeugs zur Arbeitsplanerstellung mit Hilfe von genetischen Verfahren,extern,Bachelor
-Hochskalierbare Single-page Applications,extern,Master
-Konzeption und Realisierung eines Monitoring-Systems für spezifische unternehmenskritische Abläufe der DATEV eG,extern,Bachelor
-Möglichkeiten und Grenzen bei der Portierung interaktiver C++ Multimediaanwendungen zu Webanwendungen    ,extern,Bachelor
-HTML5 Alternativen zur Ablösung von Flash-Inhalten,extern,Bachelor
-Analyse von Self-Service-Funktionalitäten im Bereich Business Intelligence exemplarisch dargestellt anhand des Microsoft SQL Servers 2012,extern,Bachelor
-Möglichkeiten des Einsatzes eines semantischen Desktops an Hochschulen,extern,Bachelor
-Evaluierung einer ganzheitlichen und modellgetriebenen Business Analyse Plattform und Konzeption zugehöriger Prozesse bei der DATEV eG,extern,Bachelor
-Entwicklung einer Single-page Web Application zur Erstellung und Auswertung von Umfragen,extern,Bachelor
-Entwicklung einer Wissensbasis zur Unterstützung eines agilen Projektmanagements anhand eines Fallbeispiels,extern,Bachelor
-Speicherung großer Geodaten-Bestände in NO-SQL-Datenbanken,extern,Bachelor
-Modellierung und Implementierung eines Automotive Steuergeräts mit EAST-ADL und AUTOSAR,extern,Bachelor
-Technologien und Umsetzung des WYSIWYG Ansatzes für WCMS,extern,Bachelor
-Technische und Kognitive Optimierungsansätze für WPF-Oberflächen,extern,Bachelor
-Konzeption und Umsetzung von strategischen und operative Internet-Marketing-Maßnahmen für den Onlineshop www.vorlagen.de - Schwerpunkt Suchmaschinenmarketing (SEM),extern,Master
-Konzeption und Entwicklung einer Softwarekomponente für eine Mobileplattform zur lokalen Suche von Geo-Objekten,extern,Bachelor
-Erstellung eines Regelwerks für das Requirements Engineering in Business Intelligence-Projekten bei mittelständischen Unternehmen,extern,Bachelor
-Spezifische Qualitätssicherungsmaßnahmen bei der Entwicklung verteilter Anwendungen im .NET-Umfeld der DATEV eG    ,extern,Bachelor
-Umsetzung einer grafischen Nutzerschnittstelle zur interaktiven Steuerung des örtlichen Höreindrucks in einer Audiokonferenz,extern,Bachelor
-Automatische Annotierung geografischer Objekte in Texten,extern,Bachelor
-Keyword-basierter Zugriff auf RDF-basierte semantische Datenbanken,extern,Master
-Realisierung einer Geodatensuche mit Lucene,extern,Bachelor
-Automatische Kartenbeschriftung von Linien- und Flächenobjekten,extern,Bachelor
-Vollautomatische Bereitstellung virtueller Maschinen im Umfeld VMware aus der Verwaltungsdatenbank heraus,extern,Bachelor
-Konzeption und prototypische Implementierung einer plattformunabhängigen Client-Schnittstelle im Bereich der Zählerverwaltung und Verbrauchsdatenerfassung,extern,Bachelor
-Automatisiertes Testen und Bewerten von GUI Oberflächen,extern,Bachelor
-Konzeption der Vorgehensweise eines Anbieters von Unternehmenssoftware im Rahmen der Softwareinführungen in kleinen und mittelständischen Unternehmen,extern,Bachelor
-Koroutinen in modernen Programmiersprachen,extern,Bachelor
-Augmented reality in Kindergarten-Challenges and possibilities of object recognition in games for preschool children,extern,Master
-Gamification mit Hilfe der E-learning Plattform MOODLE an der TH Nürnberg,extern,Bachelor
-Kennzahlengestütztes Projekt-Controlling für Supply Chains in der Bauindustrie,extern,Bachelor
-Behavior-Based Web User Identification: An Experimental Approach for Pointing Devices,extern,Bachelor
-Erweiterung der Eingabewerkzeuge des radiologischen Arbeitsplatzes um ein Multi-Touch-Tablet,extern,Bachelor
-Evaluation der Einsatzmöglichkeiten einer an ein Prüfgerät angebundenen Datenbrille und prototypische Implementierung einer Applikation für ein Einsatzszenario ,extern,Bachelor
-Vom statischen Intranet zu einer interaktiven Social Media Plattform bei der DATEV eG,extern,Bachelor
-Konzeptionierung und prototypische Entwicklung eines Self Service BI Werkzeuges für die Inhalte eines DATEV Cockpits,extern,Bachelor
-Vorstudie zu einem Migrationsprojekt bezüglich Frontend-Tools im SAP Umfeld bei der Bundesagentur für Arbeit,extern,Bachelor
-Konzeption und Prototyp zur Aufbereitung von Prozesskennzahlen für das Service Level Management im Rahmen des IT Controlling bei DATEV,extern,Bachelor
-"Analyse, Modellierung und Implementierung eines Workflows für die Aufwandsschätzung von IT-Systementwicklungsfragen",extern,Bachelor
-Implementierung von Algorithmen der kooperativen Spieltheorie,extern,Bachelor
-"Konzeption und Implementierung einer mobilen Anwendung zur Verdeutlichung von baulichen und sozialen Teilhabe-Barrieren, denen Rollstuhlfahrer gegenüber stehen",extern,Bachelor
-Quantitativer Vergleich von Echtzeitbetriebssystemen,extern,Bachelor
-"Kritische Analyse und Erweiterung der DB-basierten Korrespondenzverwaltung bei der N-Ergie - Methodenreflexion, -anwendung und -evaluation in den einzelnen Projektphasen",extern,Bachelor
-Aufbau einer Umgebung für funktionale Tests und Lasttests für einen REST-basierten Web Client,extern,Bachelor
-Entwurf eines Konzepts zum Aufbau einer IT-Community zum Thema - Application Lifecycle Management,extern,Bachelor
-Mitarbeiter-Demographie in Abhängigkeit vom Software-Lifecycle an einem Beispiel bei der Siemens AG,extern,Bachelor
-Evaluierung der Werkzeuge zur Unterstützung in agilen Projekten mit Schwerpunkt Anforderungsmanagement,extern,Bachelor
-Konzeption und Realisierung einer auf Cross-Synthese basierenden iPhone-Applikation zum Sound-Design    ,extern,Bachelor
-Frühneuzeitliche und heutige Buchhaltung im Vergleich - Die Geschäftsvorfälle bei Heinrich Schreiber (Nürnberg 1521) und ihre Aufbereitung für ein Datenbank-basiertes IT-System  ,extern,Bachelor
-Entwicklung einer Meta-Suchmaschine für 3D-Modelle mit automatisierter Weiterverarbeitung der Suchresultate für den 3D-Druck    ,extern,Bachelor
-State-of-the-Art: Mobile CRM,extern,Bachelor
-"Erweiterung der infoteam Software Plattform um eine wiederverwendbare Schnittstelle, mit der Daten auf mobilen Endgeräten angezeigt werden können",extern,Bachelor
-Technische Evaluierung mehrerer java-basierter WCMS zur Konzeption und Entwicklung einer Unternehmenswebseite,extern,Bachelor
-Evaluierung und Konzeptionierung der Einführung eines homogenen Incident-Management-Systems in ein bestehendes globales IT-Service Angebot,extern,Bachelor
-"Entwurf, Implementierung und Test einer Kalibrierstufe für Trägerphasenmesswerte in einem Lokalisierungssystem",extern,Bachelor
-Supplier Relationship Management (SRM): Evaluation der Einsatzpotentiale des Lieferantenmanagements für die Baubranche,extern,Bachelor
-Erweiterung von interaktiven Webanwendungen um Funktionalitäten zur Unterstützung von mobilen Endgeräten und beispielhafte Durchführung anhand eines Urlaubsplanungstools,extern,Bachelor
-Konzeption und prototypische Realisierung einer mobilen Website der Fakultät Informatik,extern,Bachelor
-Konzeption und Implementierung einer Sprache zur Beschreibung von Oberflächen und Abläufen eines generischen Anwendungsdienstes,extern,Bachelor
-"Multidimensionale Daten und ihre Besonderheiten am Beispiel von Microsoft SQL Server und Analysis Services - Struktur, Entwicklung und Analyse",extern,Bachelor
-Realisierung eines FlexRay Clusters,extern,Bachelor
-Entwicklung einer OCR-Applikation zur Erfassung von Belegen auf mobilen Endgeräten für das Unternehmen DATEV eG,extern,Bachelor
-Smartphone Anwendung zur auditiven Unterstützung blinder Menschen bei der Erkundung von taktilen Karten,extern,Bachelor
-Konzeption und Implementierung eines Assistenten zur Erstellng von Templates für die E-Learning Plattform Moodle,extern,Bachelor
-Juristische und technische Beurteilung von Datenschutz und Datensicherheit in produzierenden Unternehmen - Ein Beratungsleitfaden für DATEV-Consulting  ,extern,Bachelor
-Analyse und Darstellung von Verbesserungspotentialen in einer systemübergreifenden Werksberichterstattung bei Siemens Industry Automation,extern,Bachelor
-Softwareentwicklungsprozess der DATEV DMS Posteingangsassistenen: Analyse und Optimierung der Qualitätssicherungsmaßnahmen,extern,Master
-"Implementierung einer Ethernet-basierten Kommunikationsschnittstelle für das ""embedded system"" eines Medizingerätes",extern,Bachelor
-Konzeptionierung und Realisierung einer Wissensbasis für Sharepoint 2013 Entwickler bei Siemens Energy,extern,Bachelor
-Vision-based Object Tracking Using an Unmanned Aerial Vehicle,extern,Master
-Evaluation von HTML5/CSS3 zur plattformübergreifenden Gestaltung und Entwicklung im Web,extern,Bachelor
-Konzept der Überleitung vom Produktmanagementsystem PLM@IEC auf das Projektmanagementsystem PM(i)@IEC,extern,Bachelor
-Konzeption und prototypische Implementierung eines webbasierten Kundengeschenke-Portals für kleine und mittelständische Unternehmen,extern,Bachelor
-Konzeption und Realisierung einer multimodalen Routenplanung,extern,Master
-Entwurf und Implementierung eines Algorithmus zur individuellen Optimierung des Lernerfolges in einer eLearning-Plattform,extern,Bachelor
-Linguistische Analyse von DATEV Servicewesen zur Herausarbeitung von Wissenskonzepten unter Verwendung der Beschreibungssprache Salsa,extern,Bachelor
-Traceability in der Model Driven Architecture,extern,Bachelor
+Routenoptimierung für ein autonom fahrendes Segelboot - Implementierung und Validierung geeigneter Algorithmen,intern,Bachelor
+"Design und Implementierung eines Continuous Integration Prozesses für die Business-Intelligence-Software ""QlikView""",extern,Bachelor
+Modellierung und Implementierung eines Event-Mechanismus in einem verteilten Software-Framework zur Testautomatisierung,extern,Master
+Untersuchung maschineller Lernverfahren für Frage-Antwort-Systeme,intern,Bachelor
+Analyse und Integration des iiRDS Standards zum Austausch intelligenter Informationen in der Technischen Dokumentation,extern,Bachelor
+Design eines Benutzer-Lifecycle-Prozesses mit Microsoft Identity Manager für Verzeichnisdienste,extern,Bachelor
+"Implementierungsanalyse ausgewählter Augmented-Reality Smart Glasses (ARSG) mit anschließender Konzeption und Realisierung einer Anbindung zu bereits vorhandenen, individuellen Webanwendungen über einen REST-Service",extern,Bachelor
+Beschreibung und strukturierte Darstellung aktueller Trends im Bereich Lernende Organisationen,intern,Bachelor
+Analyse und Auswertung von Stellenausschreibungen durch Methoden des maschinellen Lernens,intern,Bachelor
+Benutzerschnittstelle zur Visualisierung von Gesichtserkennungsverfahren,intern,Bachelor
+"Extraction, processing and visualization of real estate relevant information from planning permits  Part 1: Concept and development of a text-mining pipeline",extern,Bachelor
+"Extraktion, Aufbereitung und Darstellung immobilienwertrelevanter Informationen aus Baugenehmigungen. Teil 2: Konzeption und Entwicklung einer Applikation zur Visualisierung auf einer digitalen Karte",extern,Bachelor
+Optimale Lagerplatzvergabe: Generierung von endlichen Automaten zur Unterstützung der performanten Suche bei der Dematic GmbH,extern,Bachelor
+Konzeption und Implementierung einer Schnittstelle zur automatischen Erkennung von Fehlermustern und deren Bereinigung bei der Siemens AG,extern,Bachelor
+Gestaltungsoptionen für die IT-Governance und IT-Portfoliomanagement an Hochschulen,intern,Master
+"Evaluation und Technologievergleich der Container-Orchestrierungstools Docker-Swarm, Kubernetes und Pivotal-Container-Services zur Skalierung des zentralen Buildsystems Jenkins",extern,Bachelor
+Konzeption und prototypische Implementierung eines Chatbots für die Themen W-LAN und VPN an einer Hochschule,intern,Bachelor
+Entwicklung eines kontextbezogenen Wortvorschlagssystems unter Einsatz von Machine Learning,intern,Bachelor
+Verarbeitung von Projektaktivitätsdaten aus SW-Entwicklungsprozessen,intern,Bachelor
+Kompetenzentwicklung in MINT-Berufen - Ermittlung zukünftig notwendiger Kompetenzen mittels Machine Learning,intern,Master
+Development of a distributed cloud-based system for crawling public real estate relevant data for a large German real estate portal,extern,Bachelor
+Modellierung einer Customer-Journey-Map für die Informatik Fakultät der Technischen Hochschule Nürnberg  Georg Simon Ohm,intern,Master
+Entwicklung und prototypische Umsetzung von Konzepten für digitale Bildungsmaßnahmen zur Unterstützung benachteiligter Studierender,intern,Master
+Konzeption und Evaluierung eines agilen Vorgehensmodells und Realisierung im Bereich Intralogistik bei der Dematic GmbH,extern,Bachelor
+Design and implementation of a customizable movie collection software program,intern,Bachelor
+Konzeption und Implementierung eines Codegenerators zur Exportierung eines in EB-GUIDE erstellten Modells nach HTML5,extern,Bachelor
+Entwerfen einer Referenzarchitektur für die Entwicklung und den Betrieb von Microservices,extern,Bachelor
+Konzeption und Kodierung einer unkonventionellen optoelektronisch lesbaren Schrift,extern,Bachelor
+Entwicklung eines WebRTC-Dienstes mit dynamischer Netzwerktopologie,extern,Bachelor
+A Comparison of physically based Rendering Algorithms,intern,Master
+Konzeptionierung und Evaluation der Einbindung eines Force Feedback Geräts in eine VR Umgebung,intern,Bachelor
+Performance-Analyse populärer Web-Frontend Frameworks,extern,Master
+Anwendung einer Gamification-Mustersprache zur Verbesserung der motivationalen Wirkung von Lehrveranstaltungen an Hochschulen,intern,Bachelor
+Entwicklung eines KI-basierten Answer Bots zur Lösung von Low-Touch-Tickets für ein Helpdesk-System,extern,Bachelor
+Räumliche Sonifikation für sehbeeinträchtigte Menschen in Form eines Augmented Reality Zeilenscanners,intern,Master
+Analyse von E-Learning im Studium und empirischer Vergleich zu traditionellen Lehreinheiten zur Ableitung von Empfehlungen bezüglich des Einsatzes von E-Learning-Elementen,intern,Master
+Einsatz maschineller Lernverfahren zur Genre-Klassifizierung von Brettspielen,extern,Master
+Erstellung einer Webanwendung zur Visualisierung sozialwissenschaftlicher Texte,intern,Bachelor
+Machine Learning Approaches to Emotion and Personality Detection in the Context of Social Counseling,intern,Master
+HR-Cloud-Transformation - Analyse zur Auswahl einer Digital Adoption Platform für SAP SuccessFactors in der Schaeffler Gruppe ,extern,Bachelor
+Benutzerfreundliche und optimierte Generierung von prozeduralen Gangsystemen mit dem Levelgraph-Verfahren ,intern,Bachelor
+Prototypische Implementierung eines interaktiven Analyse-Dashboards auf Basis des referenzierten DATEV-Jahresabschlusses  ,extern,Bachelor
+Entwicklung und Implementierung eines Konzepts für die Automatisierung von administrativen Prozessen des User-Managements für Unix-Systeme,extern,Bachelor
+"Konzeption und Implementierung effizienter, paralleler Datenzugriffe für einen C#-basierten Webdienst",extern,Bachelor
+Bestimmung von Dehnungsereignissen in polymerophischen Fasern anhand von OTDR-Daten,intern,Bachelor
+Konzeption und Implementierung eines Tools zum Auslesen von Energiezählern über das Modbus-Protokoll bei der ProleiT AG ,extern,Bachelor
+Robotic Process Automation: Analyse von Erfolgspotenzialen anhand von ausgewählten Fallbeispielen,intern,Bachelor
+Einsatz maschineller Lernverfahren zur Entitätserkennung in der Trendanalyse,intern,Bachelor
+Big Data Log-File Analytics - Vom Batch zum Stream Konzeption und prototypische Implementierung eines REST-Webservice zum Streaming von Messwerten der DATEV Programmstatistik ,intern,Bachelor
+Objekterkennung mittels neuronaler Netze zur Anwendung in der Robotik,intern,Bachelor
+"Konzeptionierung und Implementierung einer prototypischen, webbasierten Oberfläche zur elektronischen Prüfung von Eingangsrechnungen in Kooperation mit der DATEV eG",extern,Bachelor
+Migration einer nativen Desktopanwendung in eine Webanwendung: Konzeptionierung und prototypische Implementierung für das ERP-System v.Soft der Firma Vepos GmbH & Co. KG,extern,Bachelor
+Exploring employee onboarding processes for captive offshoring initiatives ,intern,Master
+Konzeption eines Assistenzsystems zur Unterstützung von Studieninteressierten bei der Entscheidung für ein MINT-Studium,intern,Master
+Konzeption eines Frühwarn- und Assistenzsystems zur Bewahrung von MINT-Studierenden vor einem Studienabbruch,intern,Master
+Nutzen und Grenzen von sozialen Netzwerkanalysen im Unternehmen,intern,Bachelor
+"Konzeption, prototypische Entwicklung und Implementierung eines Scrumpoker-Plugins für die Portal-Software Liferay",extern,Bachelor
+Entwurf und Realisierung eines Konzepts zur sicheren und zuverlässigen Integration einer Software-as-a-Service,extern,Bachelor
+Prototypische Entwicklung einer Webanwendung zur Administration projektspezifischer Hardware bei der e.solutions GmbH,extern,Bachelor
+Klassifikation und Informationsgewinnung bei bankrelevanten Texten durch den Einsatz von maschinellen Lern- und Textanalyse-Verfahren,extern,Master
+Konzeption und prototypische Realisierung einer mobilen Webapplikation für Obdachlose,intern,Bachelor
+Geruchsprädiktion aus Molekülstrukturen mittels Deep Learning,extern,Bachelor
+Digitalisierung in der Landwirtschaft: Entwicklung einer App für die optimale Bearbeitung von Feldern,extern,Bachelor
+Automatische Bewertung von Programmieraufgaben aus der Web-Entwicklung,intern,Bachelor
+Analyse einer rechtskonformen Erhebung von personenbezogenen Nutzungsdaten auf mobilen Endgeräten und prototypische Implementierung am Beispiel der DATEV Programmstatistik,extern,Bachelor
+Enterprise Digital Rights Management als Instrument zur Flexibilisierung von IT-Arbeitsplätze bei einem Software- und IT-Dienstleister - Analyse und Umsetzungskonzept bei der Firma DATEV eG,extern,Master
+Konzeption und Entwicklung einer prototypischen Cross-Plattform-App zur Störungskommunikation im RZ-Umfeld,extern,Bachelor
+Entwicklung einer Bluetooth-gestützten Applikation zur Organisation und Kommunikation im Veranstaltungssegment,intern,Bachelor
+Evaluation von Multi-Modell-Datenbankkonzepten zur Verwaltung polystrukturierter Daten,intern,Bachelor
+Konzeption und prototypische Implementierung eines HA-Clusters als Infrastruktur eines mittelständischen Unternehmens.,extern,Bachelor
+"Analyse, Klassifizierung und Visualisierung von Daten zur Ermittlung von Optimierungspotenzialen bei der Sparda-Bank Nürnberg eG",extern,Bachelor
+Konzeption und Entwicklung eines E-Mailverificationsmicroservices für ein Data Providing System,extern,Bachelor
+Konzeption einer zentral verwalteten Linux-Server-Infrastruktur für ein hochskalierbares Umfeld,extern,Bachelor
+Effektive Datenintegration für verbesserte Geschäftsprozesse im Anwendungsfall einer intelligenten Zeiterfassung für Projektarbeit,extern,Master
+Effiziente Überprüfung von Auftragsverarbeitern unter Zuhilfenahme von Prüfkatalogen,extern,Bachelor
+Kursberechnungen und Steuerung eines autonomen Segelbootes,intern,Bachelor
+Agiles Testen auf Weboberflächen - eine Guideline für Studenten,intern,Bachelor
+Ideenmanagement: State of the Art,intern,Bachelor
+Anonymisierung von natürlichsprachigen Texten,intern,Master
+Interaktive Visualisierung von LKW-Komponenten mittels Augmented Reality,extern,Bachelor
+Business Process Optimization - Digitalisierung der Auftragsabwicklung innerhalb des Datenübergabeprozesses im Rahmen der Kündigung von DATEV-SmartIT / DATEVasp,extern,Bachelor
+Konzeption und Entwicklung einer Nachrichtenzentrale für ein plattformübergreifendes Mediaberatersystem mit Xamarin,extern,Bachelor
+Untersuchung und Konzeptionierung des Einsatzes von IoT-Komponenten im ERP-System NAV,extern,Bachelor
+Einfluss verschiedener Inertial- und Funksensordaten auf die Posenschätzung von Menschen mittels Rekurrenter Neuronaler Netze,extern,Master
+Erkennung und Klassifikation von Mustern sowie Ähnlichkeiten innerhalb der UI-Texte bei einem ERP-System,extern,Master
+Change-Controlling im IT Projektmanagement:  Qualitätssteigerung mithilfe von Data-Mining  ,extern,Master
+Analyse und Bewertung einer Mustersprache zur Beschreibung suchterzeugender Mechanismen in sozio-technischen Informationssystemen ,intern,Bachelor
+Deep-Learning Verfahren zur semantischen Segmentierung von Gebäudefassaden im sichtbaren und infraroten Bereich,intern,Master
+Zeitliche Synchronisation von Video-Streams aus unterschiedlichen Spektralbereichen,intern,Master
+Anonymisierung von Drohnen-Videoaufnahmen,intern,Master
+"Unterstützung von Führungsaufgaben im Informationsmanagement durch ausgewählte Aspekte der Unternehmensmodellierung Anforderungen im Allgemeinen und Umsetzung speziell bei ARIS, MEMO und SOM",intern,Bachelor
+Fuzzy Budgetplanung mithilfe von Chatbots unter Verwendung der Methodik Computing with Words,intern,Master
+Einführung von SAP Enable Now als unternehmensinterne e-Learning-Lösung: Kritische Betrachtung und Gestaltungsvorschläge,intern,Bachelor
+Business process analytics with Celonis at Fresenius Medical Care - Applicability of business analysis software for sustainable process optimisation,extern,Bachelor
+Kontextbezogene Informationsbereitstellung für Studierende in den Räumlichkeiten einer Hochschule,intern,Bachelor
+Erstellung von Softwaremetriken in der Automatisierungstechnik (Arbeitstitel) ,extern,Master
+"Wandel der Anforderungen an die Informatik im Zeitalter von Industrie 4.0 am Beispiel eines ""Custom Visuals"" in Microsoft Power BI",extern,Bachelor
+Maschinelle Identifikation von Verhaltensmodellen automatisierter Produktionsanlagen,extern,Bachelor
+Refactoring legacy .NET architectures towards asynchronous event-driven communication,extern,Bachelor
+Plastikmüll in unseren Ozeanen - Untersuchung verschiedener technologischer Ansätze zur Eindämmung der Meeresverschmutzung,intern,Bachelor
+Konzeption und Entwicklung von Eingabemöglichkeiten für die flexible Abfrage von Informationen aus workflowgestützten Prozessen in einem Content-Management-System,extern,Bachelor
+Is machine learning viable to predict short-term market reactions after business report releases?,intern,Bachelor
+Automatisierte Provisionierungsmechanismen für Laufzeitumgebungen von Legacy z/OS Anwendungen mit IBM Cloud Provisioning and Management for z/OS am Beispiel der Rechnungsschreibung bei DATEV eG,extern,Bachelor
+Automatic Speech Recognition for Quality Audits in Phone Conversations,extern,Bachelor
+Kann ein datengetriebenes Word Embedding-Modell einen redaktionellen Thesaurus für Query Expansion ersetzen?,extern,Bachelor
+Entwicklung eines Backup-/Restore-Werkzeuges für Multiserver-Installationen von Steuerungssoftware verfahrenstechnischer Anlagen,extern,Bachelor
+Konzeption und prototypische Realisierung von automatisierten Tests für hybride Anwendungen,extern,Bachelor
+Aufbau einer Integrationsarchitektur für  ein Auslastungsanalysetool in Grafana,extern,Bachelor
+KPIs eines Zertfikatsmanagement-Systems,extern,Bachelor
+Konzeption und Entwicklung einer Web-Applikation zur Visualisierung medizinischer Bilddaten auf HTML5 Clients durch server-seitiges Rendering,extern,Bachelor
+"Voll ausgearbeiteten Business Model Canvas, mit einer abschließenden Go/No-Go Analyse für einen Demonstrator.",intern,Bachelor
+Adaptive EB GUIDE Studio 6 mit Machine Learning: Prototypische Implementierung eines Plugins zur Datensammlung und Vorhersage der nächsten Modellierungsschritte,extern,Bachelor
+Analyse und Überarbeitung des Graphical User Interfaces von EB GUIDE Studio 6 zur Steigerung der Usability,extern,Bachelor
+Auswirkungen der Digitalen Transformation auf den operativen Beschaffungsprozess bei einem Industrieunternehmen,intern,Bachelor
+Konzeption und Entwicklung eines Systems zur automatisierten Installation und Konfiguration von z/Linux Systemen,extern,Bachelor
+Verbesserung der Prognosegenauigkeit für die Ressourceneinsatzplanung als Erweiterung einer ERP-Branchenlösung ,extern,Bachelor
+Improving containment of linux-based container platforms,extern,Bachelor
+Abstractive Text Summarization of Meetings,intern,Bachelor
+Vergleich der Analytics APIs einer Cloudplattform mit maschinellen Lernverfahren anhand einer Trendanalyse,extern,Bachelor
+Virtueller Assistent für Studierende - eine Möglichkeit zur Hilfestellung für Studierende der TH Nürnberg ,intern,Bachelor
+Adaption einer Kommentarfunktion für eine Multi-User-Webanwendung,extern,Bachelor
+Merkmalsbasierte Wiedererkennung von Objekten mit Anwendung für die Robotik,intern,Bachelor
+Nutzung von Low-Code-Plattformen für die effiziente Entwicklung betriebswirtschaftlicher Anwendungen bei DATEV,extern,Bachelor
+Untersuchung unterschiedlicher Machine-Learning-Modelle in der Risikoanalyse zur Gewichtung von Vorabanmeldungen in der Bundeszollverwaltung.,extern,Bachelor
+Analyse von Drohnentechnologien zur Digitalisierung von Prozessen in der Bauwirtschaft - Zukunftschancen in Anbetracht von Kosten und Nutzen,intern,Bachelor
+Ortsbezogene Visualisierung ausgewählter Datensätze zum Visual Data Mining in der virtuellen Realität,extern,Bachelor
+Die Analyse und Optimierung von Human Computer Interaction in einem komplexen Autokonfigurator für Neufahrzeuge.,extern,Bachelor
+Konzeption und Implementierung einer Webapplikation zur Erfüllung der materiell-rechtlichen Nachweispflicht der Umsatzsteuer-ID für innergemeinschaftliche Lieferungen bei der DATEV eG,extern,Bachelor
+Herausforderungen im internationalen agilen Projektmanagement mit Fokus auf Vietnam und Deutschland,intern,Bachelor
+Konzeption und systemtechnische Implementierung eines Kennzahlensystems im Einkauf der Carl Schlenk AG,extern,Bachelor
+Virtueller Assistent zur automatisierten Erstellung von Immobilieninseraten,intern,Bachelor
+Konzeption und Realisierung automatisierter Qualitätsprozesse für maßgeschneiderte Kundenlösungen: Testautomatisierung bei Customizing Personalwirtschaft in der DATEV eG,extern,Bachelor
+Automatisierte Echtzeit-Lösungsmitteilung bei Maschinenmeldungen innerhalb verschiedener Produktionslinien,extern,Master
+Improving Real Estate Valuation using Side Information and Advanced Machine Learning Techniques,extern,Bachelor
+A Single Database Solution for Complex Production Pipelines,intern,Master
+Effiziente Aufbereitung von Energiemanagement-Daten durch Integration eines Elastic Stacks,extern,Bachelor
+"Entwicklung, Implementierung und Evaluierung eines WebGL-basierten Volumen-Raycasters",intern,Bachelor
+Konzeption und Implementation einer Contact-Center-Umgebung für einen Kundenservice,extern,Bachelor
+Entwicklung und Automatisierung von Testfällen für das Batteriemanagementsystem einer Starterbatterie ,extern,Bachelor
+Gesten- und Audioerkennung zur Steuerung einer intelligenten Jukebox ,extern,Bachelor
+Konzeption und Realisierung einer RRT*-Bahnplanung,intern,Bachelor
+Die Fernsignatur als Ersatz für Unterschriften im Rahmen der digitalen Transformation: Eine Machbarkeitsstudie für die DATEV eG,extern,Bachelor
+Deployment of margin based loss functions and attention mechanism on the x-vector concept for speaker recognition and diarization,intern,Bachelor
+Analyse von Abhängigkeiten in der Softwareentwicklung der DATEV eG im Geschäftsfeld der Personalwirtschaft und Konzeptionierung von Maßnahmen zur Reduzierung der Durchlaufzeiten von Projekten,extern,Bachelor
+Automatisierte Einordnung von Unternehmen in Wirtschaftszweige anhand deren Internetpräsenz,extern,Bachelor
+Vorselektion eines externen Dienstleisters zur Weiterentwicklung der Einkaufsdigitalisierung bei der Nürnberger Versicherung,extern,Bachelor
+Bewertung bekannter Ad-hoc-Routing-Protokolle zur prototypischen Realisierung einer mobilen Messenger-Applikation,intern,Bachelor
+Entwicklung eines Konzepts zur deutschlandweiten Einführung von Business Intelligence bei der Geschäftseinheit Regionalnetze der DB Netz AG,extern,Bachelor
+Untersuchungen zur Modellierung in der Spracherkennung: Auswirkungen der phonetischen Modellierung im Deutschen auf die Wort- und Silbenfehlerrate,intern,Bachelor
+Entwicklung eines automatisierten Integrationstestverfahrens für graphische Benutzeroberflächen auf Automotive-HMI-Bedienelementen,extern,Bachelor
+Behavior Driven Development im Bankenumfeld - Konzeption und Implementierung eines Prozesses zur Testautomatisierung auf Basis des PHP-Frameworks Behat,extern,Bachelor
+Analyse der Entscheidungsfaktoren unterrepräsentierter Gruppen bei der Wahl von MINT-Studiengängen durch Methoden des maschinellen Lernens,intern,Bachelor
+"Gegenüberstellung der Materialflusstechnologien SAP EWM MFS und Dematic MFS - Technische Analyse, Kundenbefragung und Konzeption eines Tools für die Anforderungsanalyse bei Neukunden",extern,Bachelor
+Identifikation von Entscheidungsfaktoren auf die Studienwahl in der Fachrichtung MINT auf Basis von Datenerhebungen in Form von Befragungen und deren statistischer Auswertungen,intern,Master
+Entwicklung eines grundlegenden sensomotorischen Prozesses für das Greifen und Verlagern einfacher Objekte auf dem Robotersystem Pepper,intern,Bachelor
+Konzeption und prototypische Umsetzung einer minimalen API-Management Umgebung um Unternehmen aus dem Finanzsektor den Einstieg in die API Economy zu erleichtern.,extern,Bachelor
+Konzeptionierung und Implementierung eines Webservice für ein MES System von verfahrenstechnischen Anlagen ,extern,Bachelor
+Prototypische Entwicklung eines Empfehlungssystems zur Unterstützung von Absolventen bei der Job-Suche,intern,Bachelor
+Steigerung der Kundenservice-Exzellenz durch KI-basiertes Output-Management ,extern,Bachelor
+Integration des User Centered Design in das Model-Based Systems Engineering für die Entwicklung gebrauchstauglicher Cyber-physischer Systeme.,extern,Bachelor
+Einführung von ITIL Operation Prozessen im Service Desk,extern,Bachelor
+"Automatic image recognition in upload filters ? computing of transparent decisions (XAI), with the help of Deep Learning methods.",intern,Bachelor
+IT-based Automatic Text Summarization with the Use of Textgeneration Methods,intern,Bachelor
+Entwicklung eines optimierten Punkte-Containers für das k-nearest-neighbor-Problem,intern,Master
+Erkennung und Kartographierung beweglicher Objekte am Beispiel eines mobilen Roboters,intern,Bachelor
+Verortung von Platinenbauteilen durch Parsen von Schaltplänen anhand eines Embedded Evaluation Boards,extern,Bachelor
+Identifikation und Analyse von Misserfolgsfaktoren beim Einsatz von Gamification ,intern,Bachelor
+Konzeption und Evaluation einer Testumgebung zur Erkundung virtueller taktiler Karten,intern,Bachelor
+Einsatz maschineller Lernverfahren zur automatischen Erkennung psycho-sozialer Kategorien in Forenbeiträgen,intern,Bachelor
+Evaluation verschiedener Tools zum automatisierten Einrichten einer skalierbaren Testinstanz sowie Prüfung der Testergebnisse zur Qualitätsverbesserung des bpanda-Produkts der MID GmbH,extern,Bachelor
+Optimierung einer Webanwendung zur Verbesserung der Termintreue in der Schaeffler AG im Rahmen eines Six-Sigma-Projekts,extern,Bachelor
+Analyse der IT-Strategien der bayrischen Hochschulen und der Studierendenanforderungen für die Entwicklung der IT-Strategie der Technischen Hochschule Nürnberg,intern,Bachelor
+Erstellen eines prototypischen Systems zur Empfehlung von Finanzmarktnachrichten auf Basis von Benutzerdaten,extern,Bachelor
+Evaluierung und Vergleich verschiedener Open Source DeepLearning-Frameworks,extern,Bachelor
+Evaluierung eines Standards in der industriellen Softwareentwicklung für Robotikanwendungen,extern,Bachelor
+Konzeption und Entwicklung eines Web-Crawlers zur Ermittlung von Veröffentlichungen von Professoren der TH Nürnberg,intern,Bachelor
+Design und Umsetzung eines Windows Programms zum Auslesen und Interpretieren von Diagnosedaten über das UDS Diagnose Protokoll eines CAN Steuergerätes in C#,extern,Bachelor
+Untersuchung aktueller maschineller Lernverfahren zur Erkennung von Emotionen in Beratungsverläufen,intern,Bachelor
+"Einführung von Business Intelligence Lösungen in mittelständischen Unternehmen: Requirements Engineering, Prozessentwicklung und Tool-Auswahl.",extern,Bachelor
+Entwicklung einer GUI zur Konfiguration von IoT Systemen mit RDF Graphen,extern,Bachelor
+Didaktische Aufbereitung eines autonom fahrenden Modellfahrzeuges auf Basis einer Arduino Plattform,intern,Bachelor
+Künstliche Intelligenz im strategischen Einkauf: Transformation von Geschäftsprozessen am Beispiel eines Prototypen.,intern,Bachelor
+"Erweiterung einer App um eine Nutzerauthentifizierung am Beispiel ""Das Telefonbuch""",extern,Bachelor
+3D Kartografierung mit einer Time-of-Flight-Kamera,intern,Bachelor
+Einsatz von dynamischen Multilevel-Multitheory-basierten Modellen zur Analyse digitaler Wissensnetzwerke am Beispiel einer interdisziplinären wissensintensiven Organisation,intern,Master
+Empfehlung von Führungsmethoden in der Softwareentwicklung unter Einbeziehung unterrepräsentierter Gruppen,extern,Master
+Echtzeit-Raytracing mit modernen GPUs,intern,Master
+Ein System zum visuellen Navigieren in Räumen am Beispiel System Pepper,intern,Bachelor
+Accessing NoSQL-Databases in Exasol using Virtual Schemas,extern,Master
+Ermittlung der Wertschöpfung im System Engineering durch Anwendung der im Supply Chain Management vorhandenen Methoden,extern,Master
+"Prototypische Umsetzung einer Anwendung zur Durchführung, Dokumentation und Auswertung der Reifegradmodell-Bewertung im BMW Werk Regensburg",extern,Bachelor
+Analyse der Ist-Situation und der Stakeholder-Anforderungen an ein Dokumentenmanagementsystem und Ableitung der technischen Systemanforderungen am Beispiel der TH Nürnberg,intern,Master
+Cooperative Behavior in a Multi-Agent Reinforcement Learning System for Reactive Scheduling in Flexible Manufacturing,extern,Master
+design and implementation of a natural language inspired domain specific languague formalizing the specification of extract-transform-load scenarios for non-programmers,intern,Bachelor
+Entwicklung eines patternbasierten Game-Design-Prozesses auf Basis generischer Design-Misfit-Graphen,intern,Bachelor
+"Untersuchen der Folgen von Digitalisierung, Fachkräftemangel und demographischen Wandel auf Unternehmen der IT-Branche - Literaturstudie und eine Gegenüberstellung von Lösungsmöglichkeiten ",intern,Bachelor
+Clustering von Berufen anhand der Identifikation von Ähnlichkeiten,extern,Master
+"Neukonzeption, Usability Evaluierung, Entwicklung und iterative Verbesserung eines Features für ein Projektvermittlungsportal",extern,Bachelor
+Entwicklung einer performanten und linguistisch hochwertigen query auto completion ,extern,Bachelor
+Adaption eines SoC an ein SIMATIC-Peripheriesystem unter Echtzeit-Aspekten,extern,Bachelor
+Automatische Generierung von Titeln und Abstracts,intern,Bachelor
+Paralinguistische Analyse mittels Residual und Time Delay Neural Network,intern,Bachelor
+Visualisierung der in einer Hochschule eingesetzten IT-Systeme in Form von IT-Bebauungsplänen und Ableitung von Handlungsempfehlungen,intern,Bachelor
+Evaluation von State-of-the-Art-Ansätzen der Relation Extraction zur Erzeugung von Knowledge Graphen,extern,Master
+Auditive Landmarken für blinde Menschen zur Integration in VR-Umgebungen,extern,Master
+Cloud Based Systems for AI Driven Computer Vision Applications,intern,Master
+Klassifikation psycho-sozialer Äußerungen mittels tiefer neuronaler Netze,intern,Master
+Using the optical signals produced by the ranging system of a modern LiDAR device to estimate mirror positions in real-time,extern,Master
+Entwicklung und Verifizierung von Testkonzepten für Machine Learning Modelle am Beispiel von Datendrifts in den Eingangsdaten eines Modells,extern,Bachelor
+Scrutable Responsive Web Design,intern,Master
+Analyse zur effizienten Kopplung heterogener Systemlandschaften unter der besonderen Berücksichtigung der Datentransformation,extern,Bachelor
+Prototypische Implementierung eines Chatbots zur Administration einer Wissensdatenbank,intern,Bachelor
+Integration eines zentralen Assistenzsystems in Webanwendungen,intern,Master
+Evaluierung einer Simulationsumgebung für die Erzeugung von Umgebungsdaten für den Test von ADAS-Systemen,extern,Bachelor
+Implementierung einer erweiterbaren Webanwendung zur interaktiven Textvisualisierung,intern,Bachelor
+Emotionsanalyse von automatisch übersetzten Texten mithilfe maschineller Lernverfahren,intern,Bachelor
+"Mehrwert eines virtuellen Assistenten zur Nutzung von Microsoft Dynamics 365 Business Central: Analyse geeigneter Frameworks, Konzeption und prototypische Realisierung",extern,Bachelor
+Progressive Web Apps - Möglichkeiten und Grenzen moderner Web-Anwendungen,intern,Bachelor
+Metriken als Mittel zur Verbesserung von agilen Teamprozessen am Beispiel eines Softwareentwicklungsteams bei DATEV eG,extern,Bachelor
+Visualisierung der Customer Journey in einer Online-Bank: Abbildung sämtlicher Website-Interaktionen in Form eines Netzwerkgraphen,extern,Master
+Intelligente Analyse des betriebswirtschaftlichen Jahresabschlusses: Konzeption und prototypische  Implementierung,intern,Bachelor
+Auswahl und Implementierung von Explainable-Artificial-Intelligence-Frameworks für einen Klassifikator im Text Mining,intern,Master
+Konzeption einer Informations-Cockpit-Architektur für missionskritische Systeme,extern,Bachelor
+Vergleich von traditioneller und End-to-End Modellierung sowie Regel und Slot-basierte Ansätze für Sprachassistenten im juristischen Kontext.,extern,Master
+Automatische Generierung von synchronisierten Liedtextdateien zu korrespondierenden Audioinhalten auf Basis vorhandener Liedtexte aus dem Internet,intern,Master
+Konzeption und prototypische Umsetzung der In-App-Werbung am Beispiel der Notenapp,intern,Bachelor
+Deep learning assisted vulnerability detection and classification in C/C++ source code,intern,Bachelor
+"Prozessoptimierung, Automatisierung durch Software-Roboter oder Outsourcing: Entwicklung eines Handlungsrahmens für Einkaufsleiter zur digitalen Transformation der betrieblichen Beschaffung.",intern,Bachelor
+Konzeption und prototypische Implementierung eines Blockchain-basierenden Systems zur Sicherung des Urheberrechtes sowie dem Übertragen und Überprüfen von Nutzungsrechten an digitalen Bildern,extern,Master
+Fehlerklassifizierung und Entwicklung einer Software zur Prävention von Produktivitätsverlusten bei vollautomatisierten Bestückungslinien,extern,Master
+Entwicklung und Untersuchung künstlicher neuronaler Netze zur Erstellung von Lastprognosen für Gebäude,intern,Bachelor
+Neural Architecture Search for Industrial Environments with Multi-Constraint Optimization on a Neural Network-Based Image Analysis,extern,Master
+Implementierung eines Telegram-Chatbots zur Automatisierung eines Verständlichkeitstests basierend auf dem Post-Laryngektomie Telefon Tests,intern,Bachelor
+Konzeption und Implementierung eines gamifizierten Systems zur Generierung von Trainings- und Testdaten für die Erkennung von Spieldesignelementen in Brettspielanleitungen,intern,Bachelor
+Entwicklung eines Framework zur semi-automatisierten Informationsextraktion für Knowledge Graphen,intern,Master
+Die Wirkung verschiedener Cookie Consent Banner-Darstellungsformen auf das Verhalten von Webseitenbesuchern,intern,Bachelor
+Konzeption und Implementierung eines Content Management Systems und Integration in das bestehende Webportal eines Beratungs- und IT-Dienstleistungsunternehmens,extern,Bachelor
+Beispiele zur Umsetzung ausgewählter Empfehlungen von Sicherheitsstandards für Kritische Infrastrukturen im Sektor Wasser & Abwasser,extern,Bachelor
+"Software-gestützte, kollaborative Planung pädagogischer Events",intern,Bachelor
+Enablement of Kubernetes Based Open-Source Projects on IBM Z,extern,Bachelor
+Agiles Lernen an der Technischen Hochschule Nürnberg ? Konzeption von agilen Handlungsempfehlungen für die Technische Hochschule Nürnberg,intern,Bachelor
+A feasibility study on RNN-supported Kalman filters: recurrent neural networks for position estimation on the example of radio signals,extern,Master
+Herausforderung Covid 19: Gestaltung von IT-Beratungsprojekten unter den Rahmenbedingungen einer Pandemie,intern,Bachelor
+Entwicklung eines Konzeptes zur Überführung von browserbasierten Anwendungen im Bankenumfeld in ein OpenShift-Cluster,intern,Bachelor
+Konzeption einer Personaleinsatzplanung zur Prozessoptimierung des firmeninternen Projektmanagements ,extern,Bachelor
+Entwicklung einer REST-API für das Dokumenten-Management-System der DATEV eG,extern,Master
+Threat Modeling - Ausarbeitung verschiedener Bedrohungsmodellierungen und deren Integration in die agilen Entwicklungsprozesse der DATEV,extern,Master
+Analyse technologischer Lösungen zur Bekämpfung der Riffverschmutzung,intern,Bachelor
+Ausgewählte Aspekte des Risikomanagement bei internationalen agilen Projekten mit Fokus auf Türkei und Deutschland ,intern,Bachelor
+Rendering Glyphs on the GPU with OpenGL,extern,Master
+Evaluation eines Modells zur Priorisierung von Geschäftsprozessen bezüglich des Automatisierungspotenzials am Beispiel der prototypischen Implementierung im Bereich von Robotic Process Automation,extern,Master
+Weiterentwicklung des Prozesses des Bestandsmanagements im IT-Infrastruktur Controlling der DATEV eG,extern,Bachelor
+Automatic Detection of emotional Hotspots in Meetings,extern,Master
+DATEV-Cloud-Sourcing: Analyse und Optimierung der Produktwechselprozesse,extern,Bachelor
+Search term Optimization for Federated Search,extern,Master
+Design and Implementation of a Chatbot Prototype in the Context of a Blended Learning Portal,extern,Master
+Konzeption und Entwicklung einer Benutzeroberfläche für die prozedurale Generierung von virtuellen Indoor-Welten mittels des Levelgraph-Verfahrens,intern,Master
+Entwicklung einer effizienten Parallelisierungsstrategie zur Rekonstruktion von 3D Volumendaten mit Multi-GPU Systemen,extern,Bachelor
+Visualisierung von (Code-)Analyse Daten mittels Graphdatenbanken,extern,Bachelor
+Konzeption und prototypische Umsetzung eines Segeltrimm-Assistenten auf Basis von NMEA2000-Daten,intern,Bachelor
+Domänenwissen-basierte Erkennung komplexer Ereignisse in Messdaten verteilter Sensoren,extern,Master
+Entwicklung einer touch orientierten Oberfläche nach MVVM für die Auftragsliste,extern,Bachelor
+"Prototypical Development of an Interactive, Dynamic AI System for Music Generation and Accompaniment Based on Existing Datasets",intern,Master
+Null Safety in modernen Programmiersprachen,intern,Bachelor
+Konzeption einer Gamification - Lösung für das Qualitätsmanagement,intern,Bachelor
+Software-Lifecycle Management bei der Datev eG: Konzeption und Implementierung einer maßgeschneiderten Lösung,extern,Bachelor
+Konzeption und prototypische Überführung von Jenkins-Pipelines in ein Kubernetes-Umfeld sowie Rückführung der Ergebnisse,extern,Bachelor
+Prototypische Konzeption und Implementierung eines Chatbots zur Unterstützung von Studierenden und Studieninteressenten,intern,Master
+Vergleich von ISO 27001 mit IT Grundschutz und ISIS 12 ,intern,Bachelor
+Evaluation von skalierbaren Technologien für Build-Infrastrukturen in großen IT-Unternehmen und Konzeptionierung der Umsetzung am Fallbeispiel der DATEV eG,extern,Bachelor
+Konzeption und prototypische Anbindung eins cloudbasierten JavaScript Monitoring Tools,extern,Bachelor
+Einflüsse der Digitalisierung in der Pathologie auf die Wirtschaftlichkeit und die Arbeitsabläufe im Labor ,intern,Bachelor
+"Konzeption, Design und Entwicklung einer nativen iOS App zur Untersuchung von responsive Design und Internationalisierung",intern,Bachelor
+Konzeption und prototypische Implementierung eines Tools zur Kennzahlenvisualisierung im Serviceprozess bei der Dematic GmbH ,extern,Bachelor
+Datenanalyse im Sport - Eine Untersuchung zur Übertragung von existierenden Datenanalyseprozessen von einer Sportart zur anderen,intern,Master
+Konzeptionierung einer agilen Softwareentwicklung im IT-Systemhaus der Bundesagentur für Arbeit,extern,Bachelor
+Analyse und Visualisierung der Datenqualität innerhalb eines Data Warehouse,extern,Bachelor
+Konzeptionierung und Implementierung einer Performance Analytics Plattform für Managed Services bei einem IT-Dienstleister.,extern,Bachelor
+Konzeption und prototypische Realisierung einer Softwarekomponente zur Direktkommunikation von Pick-by-Light-Komponenten mit einem SAP-System,extern,Bachelor
+Digitale Transformation im Einkauf: Positionsbestimmung und Weiterentwicklung anhand von Reifegradmodellen,intern,Bachelor
+Analyse der Auswirkungen der Corona-Pandemie auf E-Government,intern,Master
+Integration und Evaluierung eines Werkzeugs zur automatischen Klassifikation von Textinhalten in das Redaktionssystem SCHEMA ST4,extern,Bachelor
+Simulation einer HDR-Rohdaten-Kamera für Closed-Loop-HiL-Anwendungen im automotive Bereich ,extern,Bachelor
+Integration von Wissensmanagement in Content Delivery Systeme am Beispiel des SCHEMA CDS,intern,Bachelor
+Skalierung serverseitiger Module eines CMS mit Aktoren und Microservices,extern,Bachelor
+Konzeption und Entwicklung eines Tools zur Validierung der Schnittstellenkommunikation zwischen ERP-Systemen und dem internen Warehouse Management System im Entwicklungsprozess bei der Dematic GmbH  ,extern,Bachelor
+"Genauigkeit von Verschriftungen - Vergleich zwischen automatischer, Laien und professioneller Verschriftung",intern,Bachelor
+"Analyse, Konzeption und Implementierung eines barrierefreien Teilbereichs der ""Banking to go"" App für Android mit Fokus auf der Darstellung von Aktien-Charts bei der ING",extern,Bachelor
+"Spielen von ""Sonic the Hedgehog"" mit Reinforcement Learning",intern,Bachelor
+Digitalisierung der Jahresabschlussprüfung am Beispiel von Journal Entry Testing mithilfe des Tools Analytics4Audit,extern,Bachelor
+"Künstliche Intelligenz in der digitalen Forensik - Stand der Forschung, praktische Anwendungen und Weiterentwicklungen",intern,Master
+Lokalisierung Smarter Zähler,extern,Master
+Prototyp eines intelligenten Informationsfilter mittels visueller Bauteilerkennung auf mobilen Endgeräten,extern,Master
+Untersuchung einer Korrelation von Steuerfachbegriffen und betriebswirtschaftlichen Dokumenten durch maschinellem Lernen,extern,Bachelor
+Entwicklung eines Verfahrens zur Crawler-basierten Optimierung von Filterlisten zur Blockierung von Cookie-Hinweisen,intern,Master
+Erweiterung von DATEV SmartLogin zum WebAuthN Medium,extern,Bachelor
+"Optimierung bei der Wahl der Standortverteilung einer logistischen Supply Chain, mit Hilfe eines Ameisenalgorithmus",intern,Master
+Automatisierte Erzeugung von Headerdateien für Embedded Automotive Systeme mit AUTOSAR,extern,Bachelor
+"Automatische Klassifikation von virus-, bakterien- und Covid-19 induzierten Lungenentzündungen auf Basis von Röntgenbildern",extern,Bachelor
+Verfahren zur ganzheitlichen Offline-Fähigkeit von Single Page Applications,extern,Bachelor
+Visualisierung der Corona-Verbreitung in Europa mit Data-Science- und 3D-Verfahren,extern,Bachelor
+Interpolation von Panoramen,intern,Bachelor
+Automatisiertes Deployment von Webanwendungen in eine OpenShift Cloud-Computing-Plattform  bei der NÜRNBERGER Versicherung ,extern,Bachelor
+Konzeption und Einsatz von Wake on LAN im Systemmanagement eines mittelständigen Unternehmens,extern,Bachelor
+Entwicklung und Ergebnis eines Kriterienkatalogs für den Einsatz von Low Code in Projekten.,extern,Bachelor
+Konzeption und Umsetzung einer Datenintegration zwischen einem touristischen Reservierungssystem und der CRM-Lösung Salesforce für den Austausch von Kunden- und Reiseauftragsdaten.,extern,Bachelor
+Entwicklung einer Softwarelösung mit grafischer Bedienoberfläche zur Parametrierung von Steuergeräten anhand deren Binärcode,extern,Bachelor
+Untersuchung und Konzeption der Softwaresysteme Ansible und Terraform für die Provisionierung virtueller Maschinen,extern,Bachelor
+Untersuchung maschineller Lernverfahren zur Übersetzung natürlicher Sprache in SQL,intern,Bachelor
+Wissenstransfer in Softwareentwicklungsteams - eine praxisbezogene Analyse bei DATEV eG,extern,Bachelor
+DeepFake-Videos: Stand der Technik und praktische Evaluation,intern,Bachelor
+Information Extraction aus Suchanfragen bei der DATEV,extern,Bachelor
+Kamerabasierte Visualisierung von 3D-gedruckten Objekten,intern,Bachelor
+Konzept für die künftige IT-Unterstützung von Mitarbeitern im mobilen Einsatz,extern,Bachelor
+Konzipierung und Implementierung eines Smarthomeplaners ,intern,Bachelor
+Service Design und Service Transition gemäß ITIL - Konzeption eines Self-Service-Portals unter dem Aspekt der Performanceoptimierung ,extern,Bachelor
+Entwurf und prototypische Realisierung einer containerbasierten Pipeline zur Entwicklung und Bereitstellung von Machine-Learning-Projekten,extern,Master
+Konzeption einer Cloud Strategie in einem Pharmazeutischen Unternehmen: Technologieentscheidung und Providerauswahl,extern,Bachelor
+Konzeption und Implementierung von Metriken zur Auswertung von IT-Infrastrukturdaten,extern,Bachelor
+Analyse und Optimierung der Einrichtung produktiver Laufzeitumgebungen im Unternehmensumfeld ,extern,Master
+Anbindung der betrieblichen Infrastruktur an Cloud-Anwendungen am Beispiel von E-Mail und Workday HCM,extern,Bachelor
+Anomalieerkennung mittels Autoencoder in cyber-physischen Produktionssystemen,extern,Bachelor
+Untersuchung verschiedener Ansätze des Dynamic Topic Modeling zur Analyse thematischer Trends,intern,Bachelor
+Supervoxel-Clustering zur Reduktion von Übersegmentierung in der Instanz-Segmentierung großvolumiger CT-Volumen,extern,Bachelor
+HMM-based Musical Improvisation,intern,Master
+Konzeption und prototypische Umsetzung eines Freemium-Modells zur Monetarisierung einer App im Bildungsbereich,intern,Bachelor
+Visuelle Emotionserkennung durch Deep Learning,intern,Bachelor
+Landessprachenerkennung mittels X-Vektoren und Meta-Klassifikation,intern,Bachelor
+Einführung einer Pipeline für Continous Integration und Continous Deployment in einer Kubernetes-Umgebung im Kontext der Zertifizierung als Medizinprodukt,extern,Bachelor
+Anomalieerkennung in industriellen Fertigungsprozessen durch den Einsatz von Autoencodern,extern,Master
+Anonymisierung von Sprechern in Vorlesungsvideos,intern,Bachelor
+Einfluss der Covid-19 Pandemie auf das Wissensmanagement und die Geschäftsprozesse der Hoffmann Group in Nürnberg,intern,Bachelor
+Agilität außerhalb der Softwareentwicklung - Konzeption für die agile Transition der Abteilung IT-Infrastruktur Services (T233) der DATEV eG ,extern,Bachelor
+Flexible Einlagerung mit Multishuttle: Konzeption und prototypische Umsetzung in SAP EWM,extern,Bachelor
+Datenvisualisierung in Virtual Reality,extern,Bachelor
+"Analyse und Design eines barrierefreien Interfaces mit Flutter, zur Unterstützung stark sehbeeinträchtigter Personen.",intern,Bachelor
+Auswahl und Evaluierung von Verfahren zur Identifikation von Dubletten am Beispiel der Ersatzteilbereitstellung bei Siemens Mobility GmbH,extern,Bachelor
+Konzeption und prototypische Entwicklung eines integrativen Testframeworks für ein Warehouse Execution System,extern,Bachelor
+Voice Cloning: Stand der Technik und praktische Evaluation,intern,Bachelor
+Konzeption und Implementierung einer Web-Applikation für die interaktive Filterung und Visualisierung textueller Daten,intern,Bachelor
+"Entwicklung einer Webanwendung, die mit Hilfe von modernen Technologien einen internen Prozess im Umfeld der Gehaltsberatung automatisiert.",extern,Bachelor
+Aufbau einer automatisierten Workflowlandschaft für das IKS eines Finanzdienstleisters auf Basis der TIM Solutions Process Engine,extern,Master
+Topic Segmentation and Visualization for Video Lectures,intern,Bachelor
+Neukonzeption eines Monitoring-Tools für den Einzelhandel auf der Basis von Microsoft 365 Business Central,extern,Bachelor
+"Untersuchung von Decentralized Identifiern, deren Auswirkung auf den Datenschutz sowie ihre Anwendung in einem Prototyp eines digitalen Geldbeutels",extern,Bachelor
+Konzeption einer Entity Linking-Pipeline zur Disambiguierung von Unternehmensentitäten in unstrukturierten Texten,intern,Bachelor
+Prozessverbesserung durch Methoden des maschinellen Lernens am Beispiel der Kategorisierung von Artikeln im E-Commerce,extern,Bachelor
+Semi-automatische Erstellung von Wissensdatenbanken für Question-Answering-Systeme,intern,Bachelor
+Framework für die Simulation kooperierender verteilter Prozesse,intern,Master
+Entwicklung eines Konzepts zur kontinuierlichen Verbesserung der Usability einer Online-Beratungssoftware,intern,Bachelor
+Konzeption und protypische Implementierung einer Suchmaschine für Stellenangebote der Hochschuljobbörse,intern,Bachelor
+Konzeption und Implementierung einer Komponente zur benutzerfreundlichen Visualisierung von Veränderungen in Datenstrukturen.,extern,Bachelor
+Sicherheit im E-Mail-Verkehr,intern,Master
+Einfluss von Transkriptionen auf die Leistungsfähigkeit von Methoden des maschinellen Lernens am Beispiel USOMS,intern,Bachelor
+Analyse temporaler Word-Embedding-Verfahren zur Feststellung von Bedeutungsveränderungen,intern,Bachelor
+Konzipierung und prototypische Umsetzung einer digitalen IT-Sicherheitsschulung nach IT-Grundschutz ,extern,Bachelor
+Customer Lifetime Value Prediction -  Evaluierung geeigneter CLV-Prognose-Methoden im Gesundheitswesen ,extern,Master
+"Konzeption und Realisierung eines automatisierten und standardisierten Prozesses zur Beantragung, Einrichtung und Kontrolle von Administrationsrechten ",extern,Bachelor
+Erforschung und prototypische Entwicklung eines multimodalen Machine-Learning-Systems zur Erfolgsbewertung eingehender Kundenanfragen,intern,Master
+Regelung der Nachrichtenaustauschrate zur Überlastvermeidung in verteilten Systemen,extern,Bachelor
+Entwicklung einer Android App als Erweiterung eines Android TV Players für die Optimierung der User Experience im Bereich des OTT Streaming Service,extern,Master
+Digitale Signaturen: Theoretischer Hintergrund und Evaluierung am Beispiel der Technischen Hochschule Nürnberg,intern,Bachelor
+Betrachtung aktueller Chancen von Progressive Web Apps im Gegensatz zu Native Apps,extern,Bachelor
+Spielerische Gestaltungselemente von Social Scoring Systemen in China,intern,Bachelor
+Erstellung einer Handlungsempfehlung zur Flexibilisierung agiler Teams im Entwicklungsbereich der DATEV e.G.,extern,Bachelor
+Agiles Requirements Engineering in verteilten Softwareentwicklungsteams,intern,Master
+Einsatz von Qualitätsmanagement-Methoden zur Sicherstellung der Lieferantenqualität zur Generierung zuverlässiger Trainings- und Testdaten für maschinelle Lernverfahren,intern,Bachelor
+Cloud-Transformation: Entwicklung von Geschäftsmodellen bei DATEV,extern,Bachelor
+Künstliche Intelligenz im Rechnungseingangsprozess: Bewertung von Einsatzpotenzialen und Grenzen ,intern,Master
+Entwicklung eines Konzepts zur Messung von IT-Security Awareness - Wie kann man Sicherheitsbewusstsein messen?,extern,Bachelor
+Auswirkungen der Coronapandemie auf die Nutzung von Omnichannel-Strategien am Beispiel des amerikanischen Einzelhandels,intern,Bachelor
+"Analyse, Integration und Evaluierung von geometrischen Bin Packing Verfahren zur Optimierung des Drucks von Faltschachteln in der Verpackungsindustrie",extern,Bachelor
+Detektion von Konversationsmustern in psycho-sozialen Online-Foren mittels maschineller Lernverfahren,intern,Bachelor
+Konzeption und prototypische Implementierung eines Controllingsystems für ein Software-Entwicklungs-Unternehmen,extern,Bachelor
+Barrierefreie Informations- und Kontrolleinheit für autarke Lebensräume am Beispiel Wohnmobil und Caravan,intern,Bachelor
+"Erweiterung des Elektrobit ""Voice Assistant Broker"" um einen weiteren Sprachassistenten (RASA)",extern,Master
+Entwicklung von Maßnahmen zur Verbesserung der ökologischen Nachhaltigkeit der IT-Infrastruktur der Senacor Technologies AG ,extern,Bachelor
+Phantom Malware: Implementierung und Analyse am Beispiel von Ransomware,intern,Bachelor
+Integration von Usability und User Experience in einem Model Driven Architecture Ansatz im Kontext der modellbasierten Produktentstehung,extern,Master
+Fallstudie: Echtzeit-Monitoring von Herstellungsprozessen in der Industrie 4.0 ,extern,Master
+Evaluation von ecl@ss zur semantischen Beschreibung von Mittelspannungsumrichtern,extern,Bachelor
+Konzeption und Realisierung einer Plattform zum Ausgleich von Unter- und Überbeständen für ein Webportal des pharmazeutischen Einzelhandels,extern,Bachelor
+Eine sentimentbasierte Analyse meinungsabhängiger Verknüpfungstendenzen im Twitter-Netzwerk im Kontext der politischen Maßnahmen zur Eindämmung der Corona-Pandemie in Deutschland,intern,Bachelor
+Vergleich von GraphQL und REST - Evaluation einer möglichen Performancesteigerung durch den gezielten Einsatz der beiden Ansätze,extern,Bachelor
+Entwicklung eines prototypischen Knowledge Graphen zur Ermöglichung des automatisierten Wissenszugriffs durch Softwarelösungen der DATEV eG,extern,Master
+Entwicklung und Adoption der Kryptowährung Bitcoin in finanziellen Krisenzeiten,intern,Bachelor
+Diarization und Overlap Detection für Arzt-Patienten-Gespräche,intern,Bachelor
+Untersuchung von Methoden zur lexikalischen und semantischen Vereinfachung deutschsprachiger Texte mittels statistischer Sprachmodelle,intern,Master
+Analyse von Bewerbungen mittels Text Mining zur Vorsortierung geeigneter  Bewerber ,intern,Bachelor
+Entwicklung eines dezentralen WebRTC Videokonferenzdienstes,extern,Master
+Unterrepräsentierte Studierendengruppen in der digitalen Lehre. Auswahl digitaler Lehr- und Lernmethoden zur Vermeidung individuell auftretender Probleme.,intern,Bachelor
+"Konzeption und Implementierung eines Texteditors mit Autocomplete und Typeahead, zur schnellen Verschriftung von Sprachaufnahmen",intern,Bachelor
+Prototypische Entwicklung eines Systems zur flexiblen Extraktion und Analyse unstrukturierter Daten in technischen Planungsdokumenten,extern,Bachelor
+Optimierung der Intent-Erkennung eines Chatbots durch Evaluation verschiedener Sprachmodelle  ,intern,Bachelor
+"Einsatz von Open-Source-Systemen für Business Intelligence - Analyse, Handlungsempfehlung und prototypische Implementierung für ein konkretes BI-Projekt",extern,Bachelor
+Entwicklung eines KI-basierten Algorithmus zur Erkennung von Fehlern unter Nutzung einer robotergestützten Bildaufnahme,extern,Bachelor
+"Entwurf und Umsetzung eines universellen ""Notification centre"" als Microservice ",extern,Bachelor
+Kombinatorische Optimierung mittels Reinforcement Learning am Beispiel des Behälterproblems,extern,Master
+Snapshotbasierte Versionierung für die iterative hypothesengetriebene Entwicklung eines Business Model Canvas,intern,Bachelor
+Autorisierungstechnologien für Banken APIs am konkreten Beispiel FAPI,extern,Bachelor
+Der Produktportfoliowandel von On-Premises- zu Cloud-Anwendungen: Bestandsaufnahme und Gestaltungsempfehlungen innerhalb der DATEV eG,extern,Master
+"Konzeption und prototypische Implementierung eines Dashboards zur kontrollierten Begleitung des Portfoliowandels im Rahmen der ""Cloud-only""-Strategie bei der DATEV eG",extern,Bachelor
+"Untersuchung der nativen Schnittstellen zur Einbindung von C++ in iOS, Android und NodeJs basierten Anwendungen",extern,Bachelor
+Event-basierte Auditierung von Softwareapplikationen über den gesamten Entwicklungsprozess,extern,Master
+Transformer-Technologien zur Analyse von Bewerberdaten,extern,Bachelor
+Evaluierung einer WEB IDE im Unternehmenseinsatz ,extern,Bachelor
+Robotic Process Automation für die automatisierte Verwaltung von Serversystemen im Unternehmen,extern,Master
+Einsatz von Gamification und E-Learning zur Unterstützung der Erstsemester-Studierenden in der Distanzlehre.,intern,Bachelor
+SWOT-Analyse zu unterschiedlichen Lehrformen in der Hochschullehre mithilfe von Literatur- und Datenanalysen.,intern,Bachelor
+"Herausforderungen COVID-19: Analyse der Hindernissfaktoren bei unterrepräsentierten Studentengruppen in ihrem Distanzunterricht, unterstützt durch die Methoden der Künstlichen Intelligenz.",intern,Bachelor
+Potenziale und Herausforderungen einer softwaregestützten Organisationsintegration mit Simulationen,extern,Bachelor
+Erfassung und Analyse von Problemen in unterrepräsentierten Gruppen von Studierenden während der COVID-19-Pandemie mithilfe von Daten aus Internetbeiträgen.,intern,Bachelor
+Evaluation of Fairness Tools to Assess Machine Learning Algorithms for Pedestrian Detection,intern,Master
+Neukonzeption und Implementierung einer Cross-Plattform-App zur Bereitstellung von Automotive-Spice-Prozessmodellen,extern,Bachelor
+Development and Evaluation of a Smart Home Interface based on Electrostatic Tactile Feedback for Visually Impaired Users,extern,Master

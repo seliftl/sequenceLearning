@@ -41,7 +41,6 @@ def build_vocab(classification_type: str):
     train_data, test_data = data.TabularDataset.splits(path='data/', train='theses_train.csv', validation=None, test='theses_test.csv', format='csv', fields = fields)
     TEXT.build_vocab(train_data, vectors=GloVe(name='6B', dim=300))
     LABEL.build_vocab(train_data)
-    print(LABEL.vocab.stoi)
     return train_data, test_data, TEXT, LABEL
 
 # %%
@@ -172,11 +171,11 @@ def cross_valid(classification_type: str, model):
     print('Overall Recall:', np.mean(recall))
     print('Overall F1:', np.mean(f1))
 
-# insert preferred model and classification type (ort/art)
-# as training takes quite a while, an overview of the model scores is provided in "model_scores_ort/art.pdf"
+# insert preferred model and classification type
+# as training takes quite a while, an overview of the model scores is provided in "model_scores.pdf"
 rnn = RNN
 gru = GRU
 lstm = LSTM
 bilstm = BiLSTM
-cross_valid('ort', rnn)
+cross_valid('ort', gru)
 # %%

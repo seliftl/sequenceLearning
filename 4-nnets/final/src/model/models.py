@@ -74,7 +74,7 @@ class LSTM(nn.Module):
 		
 		self.word_embeddings = nn.Embedding(vocab_size, embedding_length)# Initializing the look-up table.
 		self.word_embeddings.weight = nn.Parameter(weights, requires_grad=False) # Assigning the look-up table to the pre-trained GloVe word embedding.
-		self.lstm = nn.LSTM(embedding_length, hidden_size)
+		self.lstm = nn.LSTM(embedding_length, hidden_size, bidirectional = False)
 		self.art = nn.Linear(hidden_size, output_size)
 		
 	def forward(self, input_sentence, batch_size=None):
@@ -106,7 +106,7 @@ class BiLSTM(nn.Module):
 		
 		self.word_embeddings = nn.Embedding(vocab_size, embedding_length)# Initializing the look-up table.
 		self.word_embeddings.weight = nn.Parameter(weights, requires_grad=False) # Assigning the look-up table to the pre-trained GloVe word embedding.
-		self.lstm = nn.LSTM(embedding_length, hidden_size)
+		self.lstm = nn.LSTM(embedding_length, hidden_size, bidirectional = True)
 		self.art = nn.Linear(hidden_size, output_size)
 		
 	def forward(self, input_sentence, batch_size=None):
@@ -125,3 +125,4 @@ class BiLSTM(nn.Module):
 		final_output = self.art(final_hidden_state[-1]) # final_hidden_state.size() = (1, batch_size, hidden_size) & final_output.size() = (batch_size, output_size)
 		
 		return final_output
+# %%
