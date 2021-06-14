@@ -40,9 +40,7 @@ def load_phrases_data(path='res/train.tsv', remove_outlier=True):
     return df, vocab
 
 # %%
-# Just some testing
 df, vocab = load_phrases_data()
-print('finished')
 
 # %%
 class MyGRU(nn.Module):
@@ -86,15 +84,16 @@ class MyGRU(nn.Module):
         fc_size = self.hidden_size * self.num_directions
         self.fc = nn.Linear(fc_size, output_size)
 
-    def forward(self, x, lengths, h_n=None):
+    def forward(self, x, h_n=None):
         if h_n is None:
             h_0 = self.init_hidden(x.size(1))
         else:
             h_0 = h_n
-        embed = self.embedding(x)
-        padded_seq = pack_padded_sequence(embed, lengths)
+
+        embed = self.embedding(x).view(1,1,-1)
+        #padded_seq = pack_padded_sequence(embed, lengths)
         # state will have dimensions of num_layers x batch_size x hidden_size
-        out, h_n = self.rnn(padded_seq, h_0)
+        out, h_n = self.rnn(embed, h_0)
         # out_unpacked, lens_unpacked = pad_packed_sequence(out_packed)
         # output.view(seq_len, atch, num_directions, hidden_size) for unpacked sequence
         # h_n.view(num_layers, num_directions, batch, hidden_size) # addressable per layer
@@ -105,6 +104,7 @@ class MyGRU(nn.Module):
         else:
             logits = self.fc(h_n[-1]) #h only hidden state at last layer, if bidrect out[-1 contains the concatenated hidden state]
         # dont use batch first here, seq_len must be first dimension
+
         return logits, h_n # only hidden state for the last layer is needed for loss calculation
 
     def init_hidden(self, batch_size=1):
@@ -114,6 +114,35 @@ class MyGRU(nn.Module):
         h_dim_0 = self.num_layers * self.num_directions
         hidden = torch.zeros(h_dim_0, batch_size, self.hidden_size, device=device)
         return hidden
+
+class AttnDecoder(nn.Module):
+    def __init__(self, input_size, output_size, dropout_p=0.1):
+        super(AttnDecoder, self).__init__()
+        self.input_size = input_size
+        self.output_size = output_size
+        self.dropout_p = dropout_p
+        
+        self.hidden_layer = nn.Linear(input_size, input_size) 
+        # since we use last hidden state as input and want to apply dot prodcut of result and hidden states of encoder 
+
+        #self.dropout = nn.Dropout(self.dropout_p)
+        self.out = nn.Linear(self.input_size * 2, self.output_size)
+
+    def forward(self, input, encoder_outputs):
+        x = F.relu(self.hidden_layer(input))
+
+        attention_scores = []
+        for encoder_hidden_state in encoder_outputs:
+            attention_scores.append(torch.dot(encoder_hidden_state, x[0][0]))
+        
+        attention_scores = torch.FloatTensor(attention_scores)
+        attention_distribution = F.softmax(attention_scores, dim=0)
+        attn_applied = torch.bmm(attention_distribution.unsqueeze(0).unsqueeze(0), encoder_outputs.unsqueeze(0))
+        
+        concat = torch.cat((x[0], attn_applied[0]), 1)
+        output = F.softmax(self.out(concat), dim=1)
+        return output
+
 
 class SequencePadder():
     def __init__(self, symbol) -> None:
@@ -172,30 +201,62 @@ print(len(vectors[1]))
 
 # %%
 criterion = nn.CrossEntropyLoss()
-model = MyGRU(input_size=len(vocab), 
+encoder_model = MyGRU(input_size=len(vocab), 
               embedding_size=50,
               hidden_size=2,
               output_size=5, 
               vectors=vectors)
 
-optim = torch.optim.Adam(filter(lambda p: p.requires_grad, model.parameters()))
-loss_fn = F.cross_entropy
+decoder_model = AttnDecoder(input_size=2, output_size=5)
 
+encoder_optim = torch.optim.Adam(filter(lambda p: p.requires_grad, encoder_model.parameters()))
+decoder_optim = torch.optim.Adam(filter(lambda p: p.requires_grad, decoder_model.parameters()))
 
 # %%
-model.train()
+encoder_model.train()
+decoder_model.train()
 
-for data, labels, lens in DataLoader(loader, batch_size=2,
-                collate_fn=SequencePadder(loader.word2idx['<pad>'])):
-    # do stuff here
-    # hint: collate_fn is a function that operates on each batch.
-    # This one handles padding for us
-    optim.zero_grad()
+max_length = 20
 
-    out_cls_packed, h_unp = model(data, lens)
-    loss_pick_h = criterion(out_cls_packed,
-                            torch.LongTensor(labels))
-    loss_pick_h.backward() # Does backpropagation and calculates gradients
-    optim.step() # Updates the weights accordingly
+for epoch in range(2):
+    running_loss = 0
+    mini_batch_nr = 0
+
+    for data, labels, lens in DataLoader(loader, batch_size=1,
+                    collate_fn=SequencePadder(loader.word2idx['<pad>'])):
+        # do stuff here
+        # hint: collate_fn is a function that operates on each batch.
+        # This one handles padding for us
+        encoder_optim.zero_grad()
+        decoder_optim.zero_grad()
+        encoder_hidden = encoder_model.init_hidden(batch_size=1)
+        
+        encoder_output = None
+        single_data_point = data[0][0]
+
+        encoder_hidden_states = torch.zeros(max_length, 2)
+
+        loss = 0
+
+        for i in range(lens):
+            encoder_output, encoder_hidden = encoder_model(data[i], encoder_hidden)
+            encoder_hidden_states[i] = encoder_output[0,0]
+
+        output = decoder_model(encoder_hidden, encoder_hidden_states)
+
+        loss = criterion(output, torch.LongTensor(labels))
+        loss.backward() # Does backpropagation and calculates gradients
+        
+        encoder_optim.step() # Updates the weights accordingly
+        decoder_optim.step()
+
+        # print statistics
+        running_loss += loss.item()
+        if mini_batch_nr % 2000 == 1999:    # print every 2000 mini-batches
+            print('[%d, %5d] loss: %.3f' %
+                  (epoch + 1, mini_batch_nr + 1, running_loss / 2000))
+            running_loss = 0.0
+        
+        mini_batch_nr += 1
 
 # %%
