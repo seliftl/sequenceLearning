@@ -1,4 +1,8 @@
 # %%
+# Solution to Assignment 5 - Exercise: Sentiment Analysis
+# Selina Feitl, Alexander Birkner
+
+#Imports:
 import numpy as np
 import torchtext
 from torch import nn
@@ -10,14 +14,23 @@ import re
 from torch.utils.data import Dataset, DataLoader
 from torch.nn.utils.rnn import pad_packed_sequence, pack_padded_sequence, pad_sequence
 import torch.nn.functional as F
+import matplotlib.pyplot as plt; plt.rcdefaults()
+import matplotlib.pyplot as plt
 
 # %%
+# Load GloVe Word Embeddings
+
 # The first time you run this will download a ~823MB file
 glove = torchtext.vocab.GloVe(name="6B", # trained on Wikipedia 2014 corpus
                               dim=50)   # embedding size = 100
 # %%
+# Download Part-of-Speech Tagger from nltk
+
 nltk.download('averaged_perceptron_tagger')
+
 #%%
+# Load the data into a dataframe and create vocab
+
 def load_phrases_data(path='res/train.tsv', remove_outlier=True):
     df = pd.read_csv(path, sep='\t',
                      names=['PhraseId', 'SentenceId', 'Phrase', 'Sentiment'], skiprows=1)
@@ -39,18 +52,20 @@ def load_phrases_data(path='res/train.tsv', remove_outlier=True):
     vocab = df['Phrase'].str.split(expand=True).stack().value_counts().index.values
     return df, vocab
 
-# %%
 df, vocab = load_phrases_data()
 
 # %%
-# seperate train and test data
+# Seperate Train and Test Data
+
 msk = np.random.rand(len(df)) < 0.8
 
 train_df = df[msk]
 test_df = df[~msk]
 
 # %%
-class MyGRU(nn.Module):
+# Definition of Encoder and Decoder Pytorch models
+
+class Encoder(nn.Module):
     def __init__(self,
                 input_size,
                 embedding_size,
@@ -60,7 +75,7 @@ class MyGRU(nn.Module):
                 bidirectional=False,
                 vectors=None):
 
-        super(MyGRU, self).__init__()
+        super(Encoder, self).__init__()
         self.input_size = input_size # vocabulary size
         self.embedding_size = embedding_size
         self.hidden_size = hidden_size
@@ -151,8 +166,10 @@ class AttnDecoder(nn.Module):
         #output = F.softmax(out, dim=0)
 
         output = F.softmax(self.out(concat), dim=1)
-        return output
+        return output, attention_distribution
 
+# %%
+# Definition of SequencePadder and Class Loader for Training and Test later on
 
 class SequencePadder():
     def __init__(self, symbol) -> None:
@@ -198,20 +215,25 @@ class PhrasesClassLoader(Dataset):
 
 
 # %%
+# Preperation for training and test of the models
+
 pad_sym = '<pad>'
 vocab = np.append(vocab, pad_sym)
-loader = PhrasesClassLoader(train_df, vocab, glove)
+train_loader = PhrasesClassLoader(train_df, vocab, glove)
+test_loader = PhrasesClassLoader(test_df, vocab, glove)
 
-vectors = []
+# Create list of word embeddings -> to have matching indices (since indices of glove don´t match vocab)
+word_embeddings = []
 for word in vocab:
-    vectors.append(glove[word])
+    word_embeddings.append(glove[word])
 
 criterion = nn.CrossEntropyLoss()
-encoder_model = MyGRU(input_size=len(vocab), 
+
+encoder_model = Encoder(input_size=len(vocab), 
               embedding_size=50,
               hidden_size=2,
               output_size=5, 
-              vectors=vectors)
+              vectors=word_embeddings)
 
 decoder_model = AttnDecoder(input_size=2, output_size=5)
 
@@ -219,6 +241,8 @@ encoder_optim = torch.optim.Adam(filter(lambda p: p.requires_grad, encoder_model
 decoder_optim = torch.optim.Adam(filter(lambda p: p.requires_grad, decoder_model.parameters()))
 
 # %%
+# Training of the models
+
 encoder_model.train()
 decoder_model.train()
 
@@ -228,8 +252,8 @@ for epoch in range(2):
     running_loss = 0
     mini_batch_nr = 0
 
-    for data, labels, lens in DataLoader(loader, batch_size=1,
-                    collate_fn=SequencePadder(loader.word2idx['<pad>'])):
+    for data, labels, lens in DataLoader(train_loader, batch_size=1,
+                    collate_fn=SequencePadder(train_loader.word2idx['<pad>'])):
         # do stuff here
         # hint: collate_fn is a function that operates on each batch.
         # This one handles padding for us
@@ -240,7 +264,7 @@ for epoch in range(2):
         encoder_output = None
         single_data_point = data[0][0]
 
-        encoder_hidden_states = torch.zeros(max_length, 2)
+        encoder_hidden_states = torch.zeros(lens, 2)
 
         loss = 0
 
@@ -248,7 +272,7 @@ for epoch in range(2):
             encoder_output, encoder_hidden = encoder_model(data[i], encoder_hidden)
             encoder_hidden_states[i] = encoder_output[0,0]
 
-        output = decoder_model(encoder_hidden, encoder_hidden_states)
+        output, attention_distribution = decoder_model(encoder_hidden, encoder_hidden_states)
 
         loss = criterion(output, torch.LongTensor(labels))
         loss.backward() # Does backpropagation and calculates gradients
@@ -266,7 +290,7 @@ for epoch in range(2):
         mini_batch_nr += 1
 
 # %%
-test_loader = PhrasesClassLoader(test_df, vocab, glove)
+# Test of the models
 
 encoder_model.eval()
 decoder_model.eval()
@@ -274,13 +298,17 @@ decoder_model.eval()
 num_corrects = 0
 num_items = 0
 
-for data, labels, lens in DataLoader(loader, batch_size=1,
-                collate_fn=SequencePadder(loader.word2idx['<pad>'])):
+good_results = []
+
+max_length = 20
+
+for data, labels, lens in DataLoader(test_loader, batch_size=1,
+                collate_fn=SequencePadder(train_loader.word2idx['<pad>'])):
     
     encoder_hidden = encoder_model.init_hidden(batch_size=1)
         
     encoder_output = None
-    encoder_hidden_states = torch.zeros(max_length, 2)
+    encoder_hidden_states = torch.zeros(lens, 2)
 
     loss = 0
 
@@ -288,11 +316,15 @@ for data, labels, lens in DataLoader(loader, batch_size=1,
         encoder_output, encoder_hidden = encoder_model(data[i], encoder_hidden)
         encoder_hidden_states[i] = encoder_output[0,0]
 
-    output = decoder_model(encoder_hidden, encoder_hidden_states)
+    output, attention_distribution = decoder_model(encoder_hidden, encoder_hidden_states)
 
     loss = criterion(output, torch.LongTensor(labels))
 
     prediction = torch.argmax(output)
+
+    if loss.item() < 1.3:
+        good_results.append((data.data.tolist(), labels.data.tolist()[0], prediction.data.tolist(), attention_distribution.data.tolist()))
+
 
     if prediction == labels[0]:
         num_corrects += 1
@@ -302,5 +334,32 @@ for data, labels, lens in DataLoader(loader, batch_size=1,
     if num_items % 1000 == 0:
         print('Accuracy after %d items: %.3f' %
             (num_items + 1, num_corrects / num_items))
+
+# %%
+# Visualization of some results with attention distribution
+
+nr_results_to_print = 3
+
+results_to_print = good_results[:nr_results_to_print]
+
+for result in results_to_print:
+    # Structure result:
+    # 0 -> data (is list of lists because of data loader and possibility for batches)
+    # 1 -> label
+    # 2 -> prediction
+    # 3 -> attention distribution
+
+    objects = [vocab[val] for sublist in result[0] for val in sublist]
+    y_pos = np.arange(len(objects))
+    attention_dist = result[3]
+
+    plt.figure(figsize=(15, 5))  # width:20, height:3
+    plt.bar(y_pos, attention_dist, align='center', alpha=0.5, width=0.5)
+    plt.xticks(y_pos, objects)
+    plt.ylabel('Attention Distribution')
+    title = 'Label: ' + str(result[1]) + ' - Prediction ' + str(result[2])
+    plt.title(title)
+
+    plt.show()
 
 # %%
