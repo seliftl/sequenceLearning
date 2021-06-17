@@ -43,6 +43,13 @@ def load_phrases_data(path='res/train.tsv', remove_outlier=True):
 df, vocab = load_phrases_data()
 
 # %%
+# seperate train and test data
+msk = np.random.rand(len(df)) < 0.8
+
+train_df = df[msk]
+test_df = df[~msk]
+
+# %%
 class MyGRU(nn.Module):
     def __init__(self,
                 input_size,
@@ -140,6 +147,9 @@ class AttnDecoder(nn.Module):
         attn_applied = torch.bmm(attention_distribution.unsqueeze(0).unsqueeze(0), encoder_outputs.unsqueeze(0))
         
         concat = torch.cat((x[0], attn_applied[0]), 1)
+        #out = self.out(concat[0])
+        #output = F.softmax(out, dim=0)
+
         output = F.softmax(self.out(concat), dim=1)
         return output
 
@@ -186,20 +196,16 @@ class PhrasesClassLoader(Dataset):
              idx = idx.tolist()
          return self.data[idx], self.labels[idx]
 
+
 # %%
 pad_sym = '<pad>'
 vocab = np.append(vocab, pad_sym)
-loader = PhrasesClassLoader(df, vocab, glove)
+loader = PhrasesClassLoader(train_df, vocab, glove)
 
-# %%
 vectors = []
 for word in vocab:
     vectors.append(glove[word])
 
-# %%
-print(len(vectors[1]))
-
-# %%
 criterion = nn.CrossEntropyLoss()
 encoder_model = MyGRU(input_size=len(vocab), 
               embedding_size=50,
@@ -258,5 +264,43 @@ for epoch in range(2):
             running_loss = 0.0
         
         mini_batch_nr += 1
+
+# %%
+test_loader = PhrasesClassLoader(test_df, vocab, glove)
+
+encoder_model.eval()
+decoder_model.eval()
+
+num_corrects = 0
+num_items = 0
+
+for data, labels, lens in DataLoader(loader, batch_size=1,
+                collate_fn=SequencePadder(loader.word2idx['<pad>'])):
+    
+    encoder_hidden = encoder_model.init_hidden(batch_size=1)
+        
+    encoder_output = None
+    encoder_hidden_states = torch.zeros(max_length, 2)
+
+    loss = 0
+
+    for i in range(lens):
+        encoder_output, encoder_hidden = encoder_model(data[i], encoder_hidden)
+        encoder_hidden_states[i] = encoder_output[0,0]
+
+    output = decoder_model(encoder_hidden, encoder_hidden_states)
+
+    loss = criterion(output, torch.LongTensor(labels))
+
+    prediction = torch.argmax(output)
+
+    if prediction == labels[0]:
+        num_corrects += 1
+    
+    num_items += 1
+
+    if num_items % 1000 == 0:
+        print('Accuracy after %d items: %.3f' %
+            (num_items + 1, num_corrects / num_items))
 
 # %%
