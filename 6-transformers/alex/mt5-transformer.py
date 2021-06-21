@@ -138,8 +138,9 @@ for i in [random.randint(0, len(df) - 1) for _ in range(10)]:
 
 # As you could see, the summary quality is pretty much hit-or-miss. Let's use
 # a good share of the data to fine-tune the pre-trained model to our task.
-
-from torch.utils.data import Dataset
+import torch
+import torch.nn.functional as F
+from torch.utils.data import Dataset, DataLoader, RandomSampler, SequentialSampler
 
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 device
@@ -163,8 +164,8 @@ class ThesisDataset(Dataset):
         title = str(self.Titel[index])
 
         # TODO use tokenizer.batch_encode_plus to also get the masking
-        source_tok = self.tokenizer.batch_encode_plus(...)
-        label_tok = self.tokenizer.batch_encode_plus(...)
+        source_tok = self.tokenizer.batch_encode_plus([abstract], max_length= self.source_len, pad_to_max_length=True,return_tensors='pt')
+        label_tok = self.tokenizer.batch_encode_plus([title], max_length= self.summ_len, pad_to_max_length=True,return_tensors='pt')
 
         input_ids = source_tok['input_ids'].squeeze()
         input_mask = source_tok['attention_mask'].squeeze()
@@ -198,7 +199,7 @@ def train(epoch, tokenizer, model, device, loader, optimizer):
         mask = data['input_mask'].to(device, dtype=torch.long)
 
         # TODO compute forward pass
-        outputs = model(...)
+        outputs = model(input_ids = inputs, attention_mask = mask, decoder_input_ids=y_ids, labels=lm_labels)
 
         loss = outputs[0]
 
@@ -206,7 +207,10 @@ def train(epoch, tokenizer, model, device, loader, optimizer):
             print({"Training Loss": loss.item()})
 
         # TODO reset optimizer, do backwards pass and optimizer step    
-    
+        optimizer.zero_grad()
+        loss.backward()
+        optimizer.step()
+
     print(f'Epoch: {epoch}, Loss:  {loss.item()}')
         
 
@@ -224,11 +228,18 @@ def validate(epoch, tokenizer, model, device, loader):
             mask = data['input_mask'].to(device, dtype=torch.long)
 
             # TODO make prediction
-            generated_ids = model.generate(...)
+            generated_ids = model.generate(input_ids = ids,
+                                attention_mask = mask, 
+                                num_beams=num_beams,
+                                max_length=max_output_length,
+                                repetition_penalty=repetition_penalty,
+                                length_penalty=length_penalty,
+                                early_stopping=early_stopping,
+                            )
             
             # TODO use tokenizer.decode to get predicted and target string
-            preds = ...
-            target = ...
+            preds = [tokenizer.decode(g, skip_special_tokens=True, clean_up_tokenization_spaces=True) for g in generated_ids]
+            target = [tokenizer.decode(t, skip_special_tokens=True, clean_up_tokenization_spaces=True)for t in y]
             
             if i % 100 == 0:
                 print(f'Completed {i}')
@@ -254,6 +265,11 @@ np.random.seed(seed)
 torch.backends.cudnn.deterministic = True
 
 # TODO verify: tokenizer and df still loaded and current?
+if tokenizer is None:
+    tokenizer = AutoTokenizer.from_pretrained("ml6team/mt5-small-german-finetune-mlsum")
+
+if df is None:
+    df = load_thesis_data()
 
 # split the dataframe into training and validation
 df_train = df.sample(frac=0.8, random_state=seed)
@@ -295,18 +311,27 @@ models = []
 
 for epoch in range(epochs_train):
     # TODO call the training routine from above
-    train(...)
+    train(epoch=epoch, 
+        tokenizer=tokenizer, 
+        model=model, 
+        device=device, 
+        loader=dl_train, 
+        optimizer=optimizer)
 
     # save the model after each epoch; warning: model size is ~1.2G
     #model.save_pretrained('res/mt5-small-fine-tune-'+epoch)
 
     if epoch in epochs_vali:
         # TODO call the vali routine from above to generate some summaries
-        predictions, actuals = validate(...)
+        predictions, actuals = validate(epoch=epoch,
+                                tokenizer=tokenizer,
+                                model=model, 
+                                device=device, 
+                                loader=dl_vali)
 
         # display some...
         for i in [random.randint(0, len(predictions) - 1) for _ in range(10)]:
-        displaysum(None, generated, reference)
+            displaysum(None, generated, reference)
 
 #%%
 
