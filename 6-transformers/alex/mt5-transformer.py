@@ -2,8 +2,13 @@
 import numpy as np
 import pandas as pd
 
+import string
+import re
+
 import torch
 import random
+
+from HanTa import HanoverTagger as ht
 
 # huggingface
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
@@ -14,6 +19,41 @@ from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 def load_thesis_data(path='res/theses.tsv', limit_title_len=None):
     # https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_csv.html
     # TODO limit to 'Sprache'==DE and title_len if necessary
+    df = pd.read_csv(path, sep='\t',
+                     names=['Anmeldedatum', 'JahrAkademisch', 'Art', 'Grad', 'Sprache', 'Titel', 'Abstract'], skiprows=1)
+    
+    #tagger = ht.HanoverTagger('morphmodel_ger.pgz')
+    #def process_title(title):
+    #    remove_pun = str.maketrans(string.punctuation, ' '*len(string.punctuation))
+    #    remove_digits = str.maketrans(string.digits, ' '*len(string.digits))
+    #    title = title.translate(remove_digits)
+    #    title = title.translate(remove_pun)
+    #    title = re.sub(' {2,}', ' ', title)
+    #    title = ' '.join([lemma for _, lemma, _ in tagger.tag_sent(title.split(' '), casesensitive=False)])
+    #    return title.lower()
+    
+    #def process_abstract(abstract):
+    #    remove_pun = str.maketrans(string.punctuation, ' '*len(string.punctuation))
+    #    remove_digits = str.maketrans(string.digits, ' '*len(string.digits))
+    #    abstract = abstract.translate(remove_digits)
+    #    abstract = abstract.translate(remove_pun)
+    #    abstract = re.sub(' {2,}', ' ', abstract)
+    #    abstract = ' '.join([lemma for _, lemma, _ in tagger.tag_sent(abstract.split(' '), casesensitive=False)])
+    #    return abstract.lower()
+
+    # df['Verarbeiteter_Titel'] = df['Titel'].apply(process_title)
+    # df['Verarbeiteter_Abstract'] = df['Abstract'].apply(process_abstract)
+
+    df = df[df['Sprache'] == 'DE']
+
+    df['Laenge'] = df['Titel'].apply(lambda x: len(x.split()))
+    if limit_title_len:
+        df = df[df['Laenge'].between(limit_title_len[0], limit_title_len[1])]
+
+    #vocab = df['Phrase'].str.split(expand=True).stack().value_counts().index.values
+    #return df, vocab
+
+    return df
 
 #%%
 # set up the models; they will download on first time use but this will take some time (1.2 GB)
@@ -22,17 +62,38 @@ def load_thesis_data(path='res/theses.tsv', limit_title_len=None):
 
 # TODO tokenizer = ...
 # TODO model = ...
+tokenizer = AutoTokenizer.from_pretrained("ml6team/mt5-small-german-finetune-mlsum")
+model = AutoModelForSeq2SeqLM.from_pretrained("ml6team/mt5-small-german-finetune-mlsum")
 
 #%%
 # method for summary generation, using the global model and tokenizer
 def generate_summary(model, abstract, num_beams, repetition_penalty,
                     length_penalty, early_stopping, max_output_length):
     # TODO source_encoding = tokenizer(...)
+    source_encoding = tokenizer(abstract,
+                                max_length=784,
+                                padding="max_length",
+                                truncation=True,
+                                return_attention_mask=True,
+                                add_special_tokens=True,
+                                return_tensors="pt")
 
     # TODO generated_ids = model.generate(...)
+    generated_ids = model.generate(input_ids=source_encoding["input_ids"],
+                                    attention_mask=source_encoding["attention_mask"],
+                                    num_beams=num_beams,
+                                    max_length=max_output_length,
+                                    repetition_penalty=repetition_penalty,
+                                    length_penalty=length_penalty,
+                                    early_stopping=early_stopping,
+                                    use_cache=True
+  )
 
     # TODO ...map to string using tokenizer.decode and return
+    preds=[tokenizer.decode(gen_id, skip_special_tokens=True, clean_up_tokenization_spaces=True) 
+            for gen_id in generated_ids]
 
+    return "".join(preds)
 
 # %%
 # main program
@@ -67,6 +128,8 @@ for i in [random.randint(0, len(df) - 1) for _ in range(10)]:
     reference = df.iloc[i].Titel
 
     # TODO generated = generate_summary(...)
+    generated = generate_summary(model, summarize, num_beams, repetition_penalty,
+                    length_penalty, early_stopping, max_output_length)
 
     displaysum(summarize, generated, reference)
 
