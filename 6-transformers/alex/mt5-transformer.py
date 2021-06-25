@@ -349,9 +349,12 @@ thesis_picks = [random.randint(0, len(df_vali) - 1) for _ in range(10)]
 for num, i in enumerate(thesis_picks):
     print()
 
+    summarize = df_vali.iloc[i].Abstract
     # TODO generate a summary with each of the models
-    s1 = generate_summary(...)
-    s2 = generate_summary(...)
+    s1 = generate_summary(base, summarize, num_beams, repetition_penalty,
+                    length_penalty, early_stopping, max_output_length)
+    s2 = generate_summary(fine, summarize, num_beams, repetition_penalty,
+                    length_penalty, early_stopping, max_output_length)
     
     display(HTML(f"""<table>
     <tr><td>summarize:</td><td>{df_vali.iloc[i].Abstract}</td></tr>
